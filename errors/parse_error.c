@@ -6,9 +6,11 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 09:45:55 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 14:19:02 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../header.h"
 
 void	parse_error(char a, char b)
 {

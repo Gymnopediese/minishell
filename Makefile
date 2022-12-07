@@ -6,19 +6,17 @@
 #    By: albaud <albaud@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 11:18:52 by albaud            #+#    #+#              #
-#    Updated: 2022/12/07 10:04:41 by albaud           ###   ########.fr        #
+#    Updated: 2022/12/07 14:27:58 by albaud           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-FILE	= *.c
+FILES	= args.c execute.c injectors.c main.c vars.c builtins/builtins.c builtins/ft_cd.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_pwd.c builtins/ft_unset.c errors/parse_error.c list/string_list.c list/vars_list.c parser/parser.c parser/parser_handler.c signals/signals.c
 OBJS 	= ${FILES:.c=.o}
 INCL	= ./
 LIB		= koflibc/libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-CCC 	= $(wildcard */*.c) $(wildcard *.c)
-C		= ${CCC:*/*=*\\/*}
 
 .c.o 	:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -27,13 +25,10 @@ C		= ${CCC:*/*=*\\/*}
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		gcc -Wall -Werror -Wextra -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include ${OBJS} ${LIB} -o ${NAME} 
+		gcc -g -Wall -Werror -Wextra -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include ${OBJS} ${LIB} -o ${NAME} 
 
-c++:
-	sed '14s/.*/FILE = ${C}/' Makefile > test
-	cat test > Makefile
-
-
+c:
+	find *.c */*.c | tr '\n' ' '
 
 clean :
 	rm -f $(OBJS)

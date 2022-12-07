@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 10:30:40 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:00:17 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,33 @@ int	level(int m)
 
 	if (m == 0)
 		mo = 0;
-	else
+	else if (mo == 1 || mo == -1)
 		mo += m;
 	return (mo);
 }
 
 int	handle_pipes(char *prompt, int *index, t_buff *buffer, char *res)
 {
-	if (prompt[*index] == "|" && prompt[*index + 1] == "|" && ++*index)
+	(void) buffer;
+	(void) res;
+
+	if (prompt[*index] == '|' && prompt[*index + 1] == '|' && ++*index)
 		mode(OR);
-	else if (prompt[*index] == "&" && prompt[*index + 1] == "&" && ++*index)
+	else if (prompt[*index] == '&' && prompt[*index + 1] == '&' && ++*index)
 		mode (AND);
-	else if (prompt[*index] == "|")
+	else if (prompt[*index] == '|')
 		mode (PIPE);
-	else if (prompt[*index] == "<" && prompt[*index + 1] == "<" && ++*index)
+	else if (prompt[*index] == '<' && prompt[*index + 1] == '<' && ++*index)
 		mode(LLEFT);
-	else if (prompt[*index] == "<")
+	else if (prompt[*index] == '<')
 		mode(LEFT);
-	else if (prompt[*index] == ">" && prompt[*index + 1] == ">" && ++*index)
+	else if (prompt[*index] == '>' && prompt[*index + 1] == '>' && ++*index)
 		mode(RRIGHT);
-	else if (prompt[*index] == ">")
+	else if (prompt[*index] == '>')
 		mode(RIGHT);
-	else if (prompt[*index] == "(")
+	else if (prompt[*index] == '(') // mode(PLEFT)
 		level(1);
-	else if (prompt[*index] == ">")
+	else if (prompt[*index] == ')') // mode(PRIGHT)
 		level(-1);
 	*index += 1;
 	if (is_symbole(prompt[*index]))
@@ -75,7 +78,8 @@ char	*get_next_word(char *prompt, int *index)
 	{
 		if (prompt[*index] == '"' && ++*index)
 			handle_double_quote(prompt, index, &buffer, res);
-		else if (is_symbole(prompt[*index]) && handle_pipes())
+		else if (is_symbole(prompt[*index])
+			&& handle_pipes(prompt, index, &buffer, res))
 			break ;
 		else if (prompt[*index] == ')' && ++*index)
 			level--;
@@ -102,18 +106,6 @@ char	*get_next_word(char *prompt, int *index)
 		*index += 1;
 	return (res);
 }
-
-enum
-{
-	TEXT,
-	PIPE,
-	LEFT,
-	LLEFT,
-	RIGHT,
-	RRIGHT,
-	OR,
-	AND,
-};
 
 int	wildcards_match(char *tomatch, char *target)
 {
@@ -156,7 +148,7 @@ int	wildcards(char *arg, t_slst *res)
 	{
 		mode(0);
 		if (wildcards_match(glob[i], arg) == 0 && ++match)
-			slst_add_back(res, strdup(glob[i]));
+			slst_add_back(res, strdup(glob[i]), TEXT, level(2));
 	}
 	if (!match)
 	{
@@ -177,15 +169,19 @@ t_slst	*parser(char *prompt)
 	while (prompt[i] && prompt[i] == ' ') //TODOT WHITESPAVE
 		i++;
 	res = allok(sizeof(*res), 1, 1);
+	res->first = 0;
+	res->last = 0;
+	res->size = 0;
 	while (prompt[i])
 	{
 		mode(0);
 		arg = get_next_word(prompt, &i);
-		if (arg && arg[0] && !wildcards(arg, res))
-			slst_add_back(res, arg); //, TEXT
-		//si le mode est null ca signifie qui y a pas eu de signe sinn y a eu un alors on le rajoute; seul le type sufira normalement
+		ft_putendl(arg);
+		ft_putnbrn(mode(-1));
+		if (mode(-1) == 0 && arg && arg[0] && !wildcards(arg, res))
+			slst_add_back(res, arg, TEXT, level(2));
 		if (mode(-1) != 0)
-			slst_add_back(res, "pipe"); //todo add a type to add, TEXT
+			slst_add_back(res, "pipe", mode(-1), level(2));
 	}
 	return (res);
 }
