@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 14:42:49 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:04:03 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <sys/errno.h>
-# include "/opt/homebrew/Cellar/readline/8.2.1/include/readline/readline.h"
+// # include "/opt/homebrew/Cellar/readline/8.2.1/include/readline/readline.h"
 
 enum
 {

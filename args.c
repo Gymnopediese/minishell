@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 14:42:18 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:13:26 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,18 @@ int	arg_num(t_slink *link)
 t_args	slst_to_tab(t_slst *args)
 {
 	t_args	res;
-	t_slink	*node;	
+	t_slink	*node;
 	int		i;
 
 	i = -1;
 	node = args->first;
 	res.args = allok(sizeof(char *), arg_num(node), 1);
+	res.right = allok(sizeof(*res.right), 1, 1);
+	res.rright = allok(sizeof(*res.right), 1, 1);
+	res.right->first = 0;
+	res.right->last = 0;
+	res.rright->first = 0;
+	res.rright->last = 0;
 	if (pipe(res.fd) == -1)
 		ft_garbage_colector(0, 1, 1);
 	//TODO treat no args after <>><>><<<

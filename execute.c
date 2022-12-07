@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/07 14:41:35 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:18:02 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	execute(t_slst *args)
 	t_args		argv;
 	int			fd[2];
 
+	printf("Enter execute\n");
 	errno = 0;
 	file = get_executable(args->first->content);
 	if (file == 0)
@@ -63,6 +64,7 @@ int	execute(t_slst *args)
 
 	pipe(fd);
 	argv = slst_to_tab(args);
+	write(1, "good\n", 5);
 	pid = fork();
 	if (pid == 0)
 	{
