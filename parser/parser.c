@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 15:00:17 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:24:30 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	level(int m)
 	return (mo);
 }
 
-int	handle_pipes(char *prompt, int *index, t_buff *buffer, char *res)
+int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 {
 	(void) buffer;
 	(void) res;
@@ -72,8 +72,9 @@ char	*get_next_word(char *prompt, int *index)
 	char		*res;
 	int			level;
 
+	buffer.i = 0;
 	level = 0;
-	res = allok(1, 1, 1);
+	res = ft_calloc(1, 1);
 	while (prompt[*index] && prompt[*index] != ' ')
 	{
 		if (prompt[*index] == '"' && ++*index)
@@ -99,64 +100,12 @@ char	*get_next_word(char *prompt, int *index)
 		}
 		handle_buffer(&buffer, res);
 	}
+	if (mode(-1))
+		return (0);
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
 		ft_garbage_colector(0, 1, 1);
-	while (prompt[*index] == ' ')
-		*index += 1;
 	return (res);
-}
-
-int	wildcards_match(char *tomatch, char *target)
-{
-	int		i;
-	int		j;
-
-	i = -1;
-	j = 0;
-	while (target[++i])
-	{
-		if (target[i] == '*')
-		{
-			while (target[i] && target[i] == '*')
-				i++;
-			while (tomatch[j] && tomatch[j] != target[i])
-				j++;
-		}
-		if (!target[i] || !target[i] || target[i] != tomatch[j])
-			break ;
-		j++;
-	}
-	return (target[i] - tomatch[j]);
-}
-
-int	wildcards(char *arg, t_slst *res)
-{
-	char	**glob;
-	char	v[778];
-	int		len;
-	int		i;
-	int		match;
-
-	if (ft_contain_subs(arg, "*") == 0)
-		return (0);
-	glob = ft_glob(getcwd(v, 777), 0);
-	len = ft_strtablen(glob);
-	i = -1;
-	match = 0;
-	while (++i < len)
-	{
-		mode(0);
-		if (wildcards_match(glob[i], arg) == 0 && ++match)
-			slst_add_back(res, strdup(glob[i]), TEXT, level(2));
-	}
-	if (!match)
-	{
-		ft_putstr_fd("minish: no matches found: ", 2);
-		ft_putstr_fd(arg, 2);
-	}
-	ft_free_pp((void **)glob);
-	return (1);
 }
 
 t_slst	*parser(char *prompt)
@@ -166,8 +115,6 @@ t_slst	*parser(char *prompt)
 	char	*arg;
 
 	i = 0;
-	while (prompt[i] && prompt[i] == ' ') //TODOT WHITESPAVE
-		i++;
 	res = allok(sizeof(*res), 1, 1);
 	res->first = 0;
 	res->last = 0;
@@ -175,12 +122,19 @@ t_slst	*parser(char *prompt)
 	while (prompt[i])
 	{
 		mode(0);
+		while (prompt[i] && prompt[i] == ' ') //TODOT WHITESPAVE
+			i++;
+		ft_putendl("new");
+		ft_putendl(&prompt[i]);
 		arg = get_next_word(prompt, &i);
-		ft_putendl(arg);
 		ft_putnbrn(mode(-1));
-		if (mode(-1) == 0 && arg && arg[0] && !wildcards(arg, res))
+		if (arg && arg[0] && !wildcards(arg, res))
+		{
+			ft_putendl(arg);
 			slst_add_back(res, arg, TEXT, level(2));
-		if (mode(-1) != 0)
+			free(arg);
+		}
+		if (mode(-1))
 			slst_add_back(res, "pipe", mode(-1), level(2));
 	}
 	return (res);
