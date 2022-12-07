@@ -10,49 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-void	exec_line(t_slst *args)
+int	builtins(t_slst *args)
 {
-	int		exec;
-	char	*temp;
-
-	if (builtins(args) == 0)
-	{
-		exec = execute(args);
-		temp = ft_itoa(exec);
-		vars("?", temp);
-		free(temp);
-		if (exec != 0)
-		{
-			ft_putendl(strerror(errno));
-		}
-	}
-}
-
-void	init_vars(void)
-{
-	vars("Test", "Je suis la valeur d'une variable");
-	vars("PATH", "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin\
-:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono\
-.framework/Versions/Current/Commands:/Users/albaud/opt/anaconda3/bin\
-:/Users/albaud/opt/anaconda3/condabin:/opt/homebrew/bin\
-:/opt/homebrew/sbin");
-	vars("?", "0");
-}
-
-int	main(void)
-{
-	char	*prompt;
-
-	init_vars();
-	while (1)
-	{
-		connect_signals();
-		prompt = readline("$> ");
-		if (!prompt)
-			ft_garbage_colector(0, 1, 1);
-		add_history(prompt);
-		exec_line(parser(prompt));
-	}
+	if (ft_strcmp(args->first->content, "echo") == 0)
+		ft_echo(args);
+	else if (ft_strcmp(args->first->content, "cd") == 0)
+		ft_cd(args);
+	else if (ft_strcmp(args->first->content, "pwd") == 0)
+		ft_pwd(args);
+	else if (ft_strcmp(args->first->content, "export") == 0)
+		ft_export(args);
+	else if (ft_strcmp(args->first->content, "unset") == 0)
+		ft_unset(args);
+	else if (ft_strcmp(args->first->content, "env") == 0)
+		ft_env(args);
+	else if (ft_strcmp(args->first->content, "exit") == 0)
+		exit(errno);
+	else
+		return (0);
+	return (1);
 }

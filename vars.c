@@ -12,11 +12,6 @@
 
 #include "header.h"
 
-void	add_var(const char *name, char *data, t_vlink **vars)
-{
-	vlst_add_front(vars, (t_var){strdup(name), strdup(data)});
-}
-
 char	*get_var_value(const char *name, t_vlink *vars)
 {
 	while (vars)
@@ -25,14 +20,50 @@ char	*get_var_value(const char *name, t_vlink *vars)
 			return (vars->content.data);
 		vars = vars->next;
 	}
-	return (0);
+	return ("");
+}
+
+void	add_var(const char *name, char *data, t_vlink **vars)
+{
+	t_vlink	*link;
+
+	link = *vars;
+	if (get_var_value(name, *vars)[0] != '\0')
+	{
+		while (vars)
+		{
+			if (ft_strcmp((char *)link->content.name, (char *)name) == 0)
+			{
+				free(link->content.data);
+				link->content.data = ft_strdup(data);
+				return ;
+			}
+			link = link->next;
+		}
+	}
+	vlst_add_front(vars, (t_var){strdup(name), strdup(data)});
+}
+
+void	print_vars(t_vlink *vars)
+{
+	while (vars)
+	{
+		ft_putstr((char *)vars->content.name);
+		ft_putstr("=");
+		ft_putendl(vars->content.data);
+		vars = vars->next;
+	}
 }
 
 char	*vars(const char *name, char *data)
 {
 	static t_vlink	*vars;
 
-	if (data == 0)
+	if (name == 0)
+	{
+		print_vars(vars);
+	}
+	else if (data == 0)
 	{
 		return (get_var_value(name, vars));
 	}

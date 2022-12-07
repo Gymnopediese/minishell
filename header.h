@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/06 14:43:48 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/07 09:47:22 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "koflibc/sources.h"
 # include <signal.h>
 # include <termios.h>
+# include <sys/errno.h>
+# include "/opt/homebrew/Cellar/readline/8.2.1/include/readline/readline.h"
 
 enum
 {
@@ -89,4 +91,16 @@ void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
 
 void		connect_signals(void);
 void		declare_variable(char *declaration);
+//builtins
+int			builtins(t_slst *args);
+void		ft_cd(t_slst *argv);
+void		ft_echo(t_slst *args);
+void		ft_pwd(t_slst *argv);
+void		ft_unset(t_slst *argv);
+void		ft_export(t_slst *args);
+void		ft_env(t_slst *args);
+t_slink		*slst_new(char *str);
+void		parse_error(char a, char b);
+int			is_symbole(char c);
+int			execute(t_slst *args);
 #endif
