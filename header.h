@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 14:42:49 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:24:24 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ t_args		slst_to_tab(t_slst *args);
 int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);
 int			fd_fd_injection(int dst, int src);
+int			wildcards(char *arg, t_slst *res);
 
 #endif
