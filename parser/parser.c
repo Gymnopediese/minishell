@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 09:46:56 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/07 10:30:40 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char	*get_next_word(char *prompt, int *index)
 
 enum
 {
+	TEXT,
 	PIPE,
 	LEFT,
 	LLEFT,
@@ -178,9 +179,13 @@ t_slst	*parser(char *prompt)
 	res = allok(sizeof(*res), 1, 1);
 	while (prompt[i])
 	{
+		mode(0);
 		arg = get_next_word(prompt, &i);
 		if (arg && arg[0] && !wildcards(arg, res))
-			slst_add_back(res, arg);
+			slst_add_back(res, arg); //, TEXT
+		//si le mode est null ca signifie qui y a pas eu de signe sinn y a eu un alors on le rajoute; seul le type sufira normalement
+		if (mode(-1) != 0)
+			slst_add_back(res, "pipe"); //todo add a type to add, TEXT
 	}
 	return (res);
 }

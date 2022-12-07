@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/06 13:26:48 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/07 10:32:58 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
+
+//utilise notre varibale path pour trouver une version valid de lexecutable demander
 char	*get_executable(char *exec)
 {
 	char	**paths;
@@ -42,6 +44,7 @@ char	*get_executable(char *exec)
 	return (0);
 }
 
+//convertie notre list en table de string (en args pout execv), TODO: CONVERTIRE JUSQUA TOMBER SUR UN SYMBOLE (|<> etc...)
 char	**slst_to_tab(t_slst *args)
 {
 	char	**res;
