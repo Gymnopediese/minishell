@@ -6,31 +6,11 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 15:24:30 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 02:03:44 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-int	mode(int m)
-{
-	static int	mo;
-
-	if (m > -1)
-		mo = m;
-	return (mo);
-}
-
-int	level(int m)
-{
-	static int	mo;
-
-	if (m == 0)
-		mo = 0;
-	else if (mo == 1 || mo == -1)
-		mo += m;
-	return (mo);
-}
 
 int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 {
@@ -56,8 +36,10 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	else if (prompt[*index] == ')') // mode(PRIGHT)
 		level(-1);
 	*index += 1;
-	if (is_symbole(prompt[*index]))
-		parse_error(prompt[*index], prompt[*index + 1]);
+	while (prompt[*index] == ' ')
+		*index += 1;
+	//if (ft_index(prompt[*index]))
+	//	parse_error(prompt[*index], prompt[*index + 1]);
 	return (1);
 }
 
@@ -75,6 +57,7 @@ char	*get_next_word(char *prompt, int *index)
 	buffer.i = 0;
 	level = 0;
 	res = ft_calloc(1, 1);
+	handle_buffer(&buffer, res);
 	while (prompt[*index] && prompt[*index] != ' ')
 	{
 		if (prompt[*index] == '"' && ++*index)
@@ -100,8 +83,6 @@ char	*get_next_word(char *prompt, int *index)
 		}
 		handle_buffer(&buffer, res);
 	}
-	if (mode(-1))
-		return (0);
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
 		ft_garbage_colector(0, 1, 1);
@@ -124,18 +105,14 @@ t_slst	*parser(char *prompt)
 		mode(0);
 		while (prompt[i] && prompt[i] == ' ') //TODOT WHITESPAVE
 			i++;
-		ft_putendl("new");
-		ft_putendl(&prompt[i]);
 		arg = get_next_word(prompt, &i);
-		ft_putnbrn(mode(-1));
-		if (arg && arg[0] && !wildcards(arg, res))
+		if (arg && arg[0])//&& !wildcards(arg, res))
 		{
-			ft_putendl(arg);
 			slst_add_back(res, arg, TEXT, level(2));
-			free(arg);
 		}
 		if (mode(-1))
 			slst_add_back(res, "pipe", mode(-1), level(2));
 	}
+	//put_slst(res);
 	return (res);
 }

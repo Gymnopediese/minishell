@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 15:13:26 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/07 23:47:51 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,55 +43,80 @@ int	arg_num(t_slink *link)
 }
 
 
-//pas safe
-
-//convertie notre list en table de string (en args pout execv),
-//TODO: CONVERTIRE JUSQUA TOMBER SUR UN SYMBOLE (|<> etc...)
-t_args	slst_to_tab(t_slst *args)
+t_args	*allok_args(t_slst *args)
 {
-	t_args	res;
+	t_args	*res;
+
+	res = allok(sizeof(*res), 1, 1);
+	res->args = allok(sizeof(char *), arg_num(args->first), 1);
+	res->right = allok(sizeof(*res->right), 1, 1);
+	res->rright = allok(sizeof(*res->right), 1, 1);
+	res->right->first = 0;
+	res->right->last = 0;
+	res->rright->first = 0;
+	res->rright->last = 0;
+	res->end = 0;
+	return (res);
+}
+
+void	herdock(int fd, char *sub)
+{
+	char	*herd;
+
+	while (1)
+	{
+		herd = readline("herdoc> ");
+		if (strcmp(sub, herd) == 0)
+			return ;
+		else
+			ft_putendl_fd(herd, fd);
+	}
+}
+
+t_args	*slst_to_tab(t_slst *args)
+{
+	t_args	*res;
 	t_slink	*node;
 	int		i;
 
 	i = -1;
 	node = args->first;
-	res.args = allok(sizeof(char *), arg_num(node), 1);
-	res.right = allok(sizeof(*res.right), 1, 1);
-	res.rright = allok(sizeof(*res.right), 1, 1);
-	res.right->first = 0;
-	res.right->last = 0;
-	res.rright->first = 0;
-	res.rright->last = 0;
-	if (pipe(res.fd) == -1)
-		ft_garbage_colector(0, 1, 1);
+	res = allok_args(args);
+	if (pipi()->to_pipe == 0)
+	{
+		pipi()->to_pipe = 1;
+		pipe(pipi()->fd);
+	}
 	//TODO treat no args after <>><>><<<
 	while (node && !is_the_end(node))
 	{
 		if (node->type == RIGHT)
 		{
-			slst_add_back(res.right, node->next->content, 0, 0);
+			slst_add_back(res->right, node->next->content, 0, 0);
 			node = node->next;
 		}
 		else if (node->type == RRIGHT)
 		{
-			slst_add_back(res.rright, node->next->content, 0, 0);
 			node = node->next;
+			slst_add_back(res->rright, node->content, 0, 0);
 		}
 		else if (node->type == LEFT)
 		{
-			fd_injection(node->next->content, res.fd[1]);
 			node = node->next;
+			fd_injection(node->content, pipi()->fd[1]);
 		}
 		else if (node->type == LLEFT)
 		{
-			fd_injection(node->next->content, res.fd[1]);
 			node = node->next;
+			herdock(pipi()->fd[1], node->content);
 		}
 		else
-			res.args[++i] = node->content;
+			res->args[++i] = node->content;
 		node = node->next;
 	}
 	if (node)
-		res.end = node->type;
+		res->end = node->type;
+	close(pipi()->fd[1]);
+	res->args[++i] = 0;
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 14:37:36 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 01:34:21 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void	open_fds(t_args *args, int *fds)
 	start = args->right->first;
 	while (start)
 	{
-		fds[index++] = open(start->content, O_WRONLY | O_CREAT);
+		fds[index++] = open(start->content, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		start = start->next;
 	}
 	start = args->rright->first;
 	while (start)
 	{
-		fds[index++] = open(start->content, O_WRONLY | O_CREAT | O_APPEND);
+		fds[index++] = open(start->content,
+				O_WRONLY | O_APPEND | O_CREAT, 0666);
 		start = start->next;
 	}
 }
@@ -77,9 +78,11 @@ int	filename_injection(t_args *args, int read_fd)
 	int		fds_len;
 
 	fds_len = args->right->size + args->rright->size;
-	fds = allok(fds_len, sizeof(4), 1);
+	fds = allok(fds_len, sizeof(int), 1);
 	open_fds(args, fds);
 	size = 1;
+	if (args->end == PIPE)
+		pipe(pipi()->fd);
 	while (size)
 	{
 		size = read(read_fd, buffer, 999);
@@ -89,6 +92,11 @@ int	filename_injection(t_args *args, int read_fd)
 		i = -1;
 		while (++i < fds_len)
 			ft_putstr_fd(buffer, fds[i]);
+		if (args->end == PIPE)
+			ft_putstr_fd(buffer, pipi()->fd[1]);
 	}
+	i = -1;
+	while (++i < fds_len)
+		close(fds[i]);
 	return (0);
 }

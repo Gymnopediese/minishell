@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 15:26:10 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/08 01:46:13 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ typedef struct s_var
 	char		*data;
 }	t_var;
 
+typedef struct s_pipe
+{
+	int	fd[2];
+	int	to_pipe;
+}	t_pipe;
+
 typedef struct s_vlink
 {
 	t_var			content;
@@ -77,7 +83,6 @@ typedef struct s_args
 	char	**args;
 	t_slst	*right;
 	t_slst	*rright;
-	int		fd[2];
 	int		end;
 }	t_args;
 
@@ -90,7 +95,6 @@ char		*vars(const char *name, char *data);
 t_vlink		*vlst_new(t_var content);
 void		vlst_add_front(t_vlink **lst, t_var var);
 // string_list.c
-t_slink		*slst_new(char *str);
 void		slst_add_front(t_slst *lst, char *str, int type, int level);
 void		slst_add_back(t_slst *lst, char *str, int type, int level);
 void		handle_buffer(t_buff *buffer, char *res);
@@ -99,7 +103,8 @@ void		handle_double_quote(char *prompt,
 void		handle_simple_quote(char *prompt,
 				int *index, t_buff *buffer, char *res);
 void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
-
+void		put_slst(t_slst *lst);
+t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);
 void		declare_variable(char *declaration);
 //builtins
@@ -110,13 +115,16 @@ void		ft_pwd(t_slst *argv);
 void		ft_unset(t_slst *argv);
 void		ft_export(t_slst *args);
 void		ft_env(t_slst *args);
-t_slink		*slst_new(char *str);
 void		parse_error(char a, char b);
-int			execute(t_slst *args);
-t_args		slst_to_tab(t_slst *args);
+int			execute(t_args *args);
 int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);
 int			fd_fd_injection(int dst, int src);
 int			wildcards(char *arg, t_slst *res);
+int			mode(int m);
+int			level(int m);
+t_pipe		*pipi(void);
+int			is_the_end(t_slink *link);
+void		put_pipi(void);
 
 #endif
