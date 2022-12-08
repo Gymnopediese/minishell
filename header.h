@@ -6,7 +6,7 @@
 /*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 15:46:33 by ben              ###   ########.fr       */
+/*   Updated: 2022/12/08 19:01:44 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_slink
 {
 	char			*content;
 	struct s_slink	*next;
-	int				type;
+	int				type; // faire un enum
 	int				level;
 }	t_slink;
 
