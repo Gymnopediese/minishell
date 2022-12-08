@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/08 12:56:38 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 17:49:33 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_executable(char *exec)
 {
 	char	**paths;
 	int		i;
-	char	buff[777];
+	char	buff[777]; // A mettre dynamique
 
 	i = -1;
 	if (exec && exec[0] == '.' && exec[1] == '/')
@@ -52,30 +52,28 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	//char d[100000];
 
 	close(fd[0]);
-	dup2(pipi()->fd[0], STDIN_FILENO);
+	dup2(pipi()->fd[0], STDIN_FILENO); // Pas sur de l'utilité du pipi()
 	//d[read(pipi()->fd[0], d, 1000)] = 0;
 	//ft_putendl(d);
 	if (argv->end == PIPE || argv->right->size || argv->rright->size)
-	{
 		dup2(fd[1], STDOUT_FILENO);
-	}
 	else
-	{
 		dup2(STDOUT_FILENO, STDOUT_FILENO);
-	}
 	execve(file, argv->args, 0);
 	ft_putstr_fd(file, 2);
 	ft_putendl_fd(" failed to execute\n", 2);
 	return (1);
 }
 
-int	wait_execution(t_args *argv, int *status_code, int *wstatus, int *fd)
+int	wait_execution(t_args *argv, int *fd)
 {
+	int	wstatus;
+	int	status_code;
+
 	errno = 0;
-	waitpid(0, wstatus, 1);
-	*status_code = 0;
+	wait(&wstatus); // Pas sur
 	if (WIFEXITED(wstatus))
-		*status_code = WEXITSTATUS(wstatus);
+		status_code = WEXITSTATUS(wstatus);
 	close(fd[1]);
 	close(pipi()->fd[1]);
 	close(pipi()->fd[0]);
@@ -83,30 +81,25 @@ int	wait_execution(t_args *argv, int *status_code, int *wstatus, int *fd)
 	if (argv->end != PIPE)
 		pipi()->to_pipe = 0;
 	close(fd[0]);
-	return (*status_code);
+	return (status_code);
 }
 
 // Execute "file" and return it's return value
 int	execute(t_args *args)
 {
 	int			pid;
-	int			wstatus;
-	int			status_code;
 	const char	*file;
 	int			fd[2];
 
 	errno = 0;
-	status_code = 0;
-	wstatus = 0;
 	file = get_executable(args->args[0]);
 	if (file == 0)
 		return (-1);
-	pipe(fd); //TODOWTF si len met qun ca marvhe pas lol
 	pipe(fd);
 	ft_putstra_clean(args->args);
 	pid = fork();
 	if (pid == 0)
 		return (exute_process(args, file, fd));
 	else
-		return (wait_execution(args, &status_code, &wstatus, fd));
+		return (wait_execution(args, fd));
 }

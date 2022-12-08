@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   levels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:29:57 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 15:30:22 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 17:49:33 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	mode(int m)
+int	mode(int m) // Ajouter commentaire STP
 {
 	static int	mo;
 
@@ -19,7 +19,7 @@ int	mode(int m)
 	return (mo);
 }
 
-int	level(int m)
+int	level(int m) // Ajouter commentaire STP
 {
 	static int	mo;
 

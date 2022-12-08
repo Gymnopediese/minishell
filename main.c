@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:10:29 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 17:49:33 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exec_line(t_slst *args)
 	t_args	*argv;
 
 	//put_slst(args);
-	wait(&exec);
+	wait(&exec); // Je ne vois pas l'utilité du wait et de exec
 	if (args->first == 0)
 		return ;
 	argv = slst_to_tab(args);
@@ -119,7 +119,7 @@ int	main(void)
 		prompt = readline("$> ");
 		if (!prompt)
 			ft_garbage_colector(0, 1, 1);
-		add_history(prompt);
+		add_history(prompt); // Ne pas ajouter si prompt vide
 		exec_line(parser(prompt));
 	}
 }

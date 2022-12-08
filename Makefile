@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: albaud <albaud@student.42.fr>              +#+  +:+       +#+         #
+#    By: ben <ben@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 11:18:52 by albaud            #+#    #+#              #
-#    Updated: 2022/12/08 13:14:06 by albaud           ###   ########.fr        #
+#    Updated: 2022/12/08 16:05:47 by ben              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,13 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 SAN		= 
 .c.o 	:
-		${CC} -g ${CFLAGS} -c $< -o ${<:.c=.o}
+		${CC} -g ${CFLAGS} -c $< -o ${<:.c=.o} -lreadline
 		
 
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		gcc -g -Wall -Werror -Wextra -lreadline ${SAN} ${OBJS} ${LIB} -o ${NAME} 
+		gcc -g -Wall -Werror -Wextra ${SAN} ${OBJS} ${LIB} -o ${NAME} -lreadline
 
 c:
 	find *.c */*.c | tr '\n' ' '

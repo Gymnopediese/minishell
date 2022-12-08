@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcontain.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 18:49:56 by tate              #+#    #+#             */
-/*   Updated: 2022/07/17 18:57:32 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 15:59:04 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_strcontain(char *to_count, char target)
 {
-	int	counter;
-
-	counter = 0;
 	while (*to_count)
 	{
 		if (*to_count == target)
