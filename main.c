@@ -6,7 +6,7 @@
 /*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 17:49:33 by ben              ###   ########.fr       */
+/*   Updated: 2022/12/08 18:03:41 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ int	main(void)
 		prompt = readline("$> ");
 		if (!prompt)
 			ft_garbage_colector(0, 1, 1);
-		add_history(prompt); // Ne pas ajouter si prompt vide
+		if (prompt[0] != 0)
+			add_history(prompt); // Ne pas ajouter si prompt vide
 		exec_line(parser(prompt));
 	}
 }
