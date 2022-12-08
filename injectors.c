@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 01:34:21 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 12:18:33 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,30 @@ void	open_fds(t_args *args, int *fds)
 	}
 }
 
+void	write_in_fds(char *buffer, int *fds, int fds_len, int pip)
+{
+	int	i;
+
+	i = -1;
+	while (++i < fds_len)
+		ft_putstr_fd(buffer, fds[i]);
+	if (pip == PIPE)
+		ft_putstr_fd(buffer, pipi()->fd[1]);
+}
+
+void	close_fds(int *fds, int fds_len)
+{
+	int	i;
+
+	i = -1;
+	while (++i < fds_len)
+		close(fds[i]);
+}
+
 int	filename_injection(t_args *args, int read_fd)
 {
 	char	buffer[1000];
 	int		size;
-	int		i;
 	int		*fds;
 	int		fds_len;
 
@@ -89,14 +108,8 @@ int	filename_injection(t_args *args, int read_fd)
 		if (size == -1)
 			return (0);
 		buffer[size] = 0;
-		i = -1;
-		while (++i < fds_len)
-			ft_putstr_fd(buffer, fds[i]);
-		if (args->end == PIPE)
-			ft_putstr_fd(buffer, pipi()->fd[1]);
+		write_in_fds(buffer, fds, fds_len, args->end);
 	}
-	i = -1;
-	while (++i < fds_len)
-		close(fds[i]);
+	close_fds(fds, fds_len);
 	return (0);
 }

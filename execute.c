@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/08 02:19:01 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 12:56:38 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	execute(t_args *args)
 	wstatus = 0;
 	file = get_executable(args->args[0]);
 	if (file == 0)
-		return (1);
+		return (-1);
 	pipe(fd); //TODOWTF si len met qun ca marvhe pas lol
 	pipe(fd);
 	ft_putstra_clean(args->args);

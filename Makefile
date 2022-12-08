@@ -6,7 +6,7 @@
 #    By: albaud <albaud@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 11:18:52 by albaud            #+#    #+#              #
-#    Updated: 2022/12/08 01:10:49 by albaud           ###   ########.fr        #
+#    Updated: 2022/12/08 13:14:06 by albaud           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCL	= ./
 LIB		= koflibc/libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-
+SAN		= 
 .c.o 	:
 		${CC} -g ${CFLAGS} -c $< -o ${<:.c=.o}
 		
@@ -25,7 +25,7 @@ CFLAGS	= -Wall -Wextra -Werror
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		gcc -g -Wall -Werror -Wextra -lreadline ${OBJS} ${LIB} -o ${NAME} 
+		gcc -g -Wall -Werror -Wextra -lreadline ${SAN} ${OBJS} ${LIB} -o ${NAME} 
 
 c:
 	find *.c */*.c | tr '\n' ' '

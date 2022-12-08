@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/06 14:16:20 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:33:15 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_unset(t_slst *argv)
+void	ft_unset(char **args, int argc, int fd)
 {
+	int	i;
+
+	(void) fd;
+	i = 0;
 	errno = 0;
-	if (argv->size == 2)
-		vars(argv->first->next->content, ""); //TODO true_delete
+	if (argc == 1)
+		ft_putendl_fd("unset: not enough arguments", 2);
+	else
+	{
+		while (++i < argc)
+			vars(args[i], ""); //TODO true_delete
+	}
 	if (errno)
 		ft_putendl_fd(strerror(errno), 2);
 }

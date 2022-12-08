@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 02:05:28 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 13:10:29 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	put_pipi(void)
 	ft_putendl("printing pipi done");
 }
 
+//gere les priorité
 void	priorities(t_slst *args, t_args *argv, int success)
 {
 	t_slink	*start;
@@ -65,19 +66,29 @@ void	exec_line(t_slst *args)
 	char	*temp;
 	t_args	*argv;
 
+	//put_slst(args);
+	wait(&exec);
+	if (args->first == 0)
+		return ;
 	argv = slst_to_tab(args);
 	exec = 0;
 	if (args->first == 0)
 		return ;
-	if (builtins(args) == 0)
+	if (builtins(argv) == -1)
 	{
 		exec = execute(argv);
-		temp = ft_itoa(exec);
-		vars("?", temp);
-		free(temp);
+		if (exec != -1)
+		{
+			temp = ft_itoa(exec);
+			vars("?", temp);
+			free(temp);
+		}
+		else if (ft_strtablen(argv->args) == 1)
+		{
+			declare_variable(argv->args[0]);
+		}
 	}
-	ft_putnbrn(exec);
-	priorities(args, argv, !exec);
+	priorities(args, argv, !errno);
 	exec_line(args);
 }
 
@@ -100,7 +111,8 @@ int	main(void)
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
-	add_history("cat Makefile | wc");
+	add_history(strdup("cat Makefile | wc"));
+	add_history(strdup("ls > test >> test | cat -e"));
 	while (1)
 	{
 		connect_signals();

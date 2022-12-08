@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 01:46:13 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 12:58:41 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_var
 {
 	const char	*name;
 	char		*data;
+	int			export;
 }	t_var;
 
 typedef struct s_pipe
@@ -86,6 +87,8 @@ typedef struct s_args
 	int		end;
 }	t_args;
 
+# include "builtins/builtins.h"
+
 // parser.c
 int			is_symbole(char c);
 t_slst		*parser(char *prompt);
@@ -108,13 +111,6 @@ t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);
 void		declare_variable(char *declaration);
 //builtins
-int			builtins(t_slst *args);
-void		ft_cd(t_slst *argv);
-void		ft_echo(t_slst *args);
-void		ft_pwd(t_slst *argv);
-void		ft_unset(t_slst *argv);
-void		ft_export(t_slst *args);
-void		ft_env(t_slst *args);
 void		parse_error(char a, char b);
 int			execute(t_args *args);
 int			filename_injection(t_args *args, int read_fd);

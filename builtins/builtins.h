@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:07:33 by albaud           ###   ########.fr       */
+/*   Created: 2022/12/08 11:25:00 by albaud            #+#    #+#             */
+/*   Updated: 2022/12/08 12:19:12 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-void	ft_pwd(char **args, int argc, int fd)
-{
-	char	v[778];
+# include "../header.h"
 
-	(void) args;
-	if (argc == 1)
-		ft_putendl_fd(getcwd(v, 777), fd);
-	else
-		ft_putendl_fd("pwd: too many arguments", 2);
-}
+int			builtins(t_args *args);
+void		ft_cd(char **args, int argc, int fd);
+void		ft_echo(char **args, int argc, int fd);
+void		ft_pwd(char **args, int argc, int fd);
+void		ft_unset(char **args, int argc, int fd);
+void		ft_export(char **args, int argc, int fd);
+void		ft_env(char **args, int argc, int fd);
+
+#endif

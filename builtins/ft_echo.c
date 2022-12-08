@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/06 14:16:20 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:00:35 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_echo(t_slst *args)
+void	ft_echo(char **args, int argc, int fd)
 {
-	t_slink	*start;
 	int		nline;
+	int		i;
 
 	nline = 1;
-	start = args->first->next;
-	if (start && ft_strcmp(start->content, "-n") == 0 && nline--)
-		start = start->next;
-	while (start)
+	i = 0;
+	if (argc > 1 && ft_strcmp(args[1], "-n") == 0 && nline--)
+		i++;
+	while (++i < argc)
 	{
-		ft_putstr(start->content);
-		if (start->next)
-			ft_putstr(" ");
-		start = start->next;
+		ft_putstr_fd(args[i], fd);
+		if (i < argc - 1)
+			ft_putstr_fd(" ", fd);
 	}
 	if (nline)
-		ft_putendl("");
+		ft_putendl_fd("", fd);
 }

@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 02:03:44 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 13:13:44 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_slst	*parser(char *prompt)
 		while (prompt[i] && prompt[i] == ' ') //TODOT WHITESPAVE
 			i++;
 		arg = get_next_word(prompt, &i);
-		if (arg && arg[0])//&& !wildcards(arg, res))
+		if (arg && arg[0] && !wildcards(arg, res))
 		{
 			slst_add_back(res, arg, TEXT, level(2));
 		}
