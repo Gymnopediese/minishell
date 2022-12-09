@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 12:58:41 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 13:38:55 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <sys/errno.h>
+
 // # include "/opt/homebrew/Cellar/readline/8.2.1/include/readline/readline.h"
 
 enum
@@ -122,5 +123,6 @@ int			level(int m);
 t_pipe		*pipi(void);
 int			is_the_end(t_slink *link);
 void		put_pipi(void);
+int			is_redirection(t_slink *link);
 
 #endif

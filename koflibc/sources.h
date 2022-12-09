@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sources.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:33:27 by tate              #+#    #+#             */
-/*   Updated: 2022/10/31 11:48:31 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 13:27:25 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <stdarg.h>
 # include "struct.h"
 # include <math.h>
-# include "minilixx/theminilibx/minilibx_macos/mlx.h"
 # include <sys/errno.h>
 # include <dirent.h>
 # include <term.h>
@@ -29,7 +28,6 @@
 # include <time.h>
 # include "macro.h"
 
-# include "random/random.h"
 # include "int_matrix/int_matrix.h"
 # include "math/math.h"
 # include "string/string.h"
@@ -39,7 +37,6 @@
 # include "int_array/int_array.h"
 # include "list/list.h"
 # include "memory/memory.h"
-# include "minilibx/minilibx.h"
 # include "put/put.h"
 # include "str_array/str_array.h"
 # include "vector/vector.h"

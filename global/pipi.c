@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pipi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:25:00 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:38:44 by albaud           ###   ########.fr       */
+/*   Created: 2022/12/07 20:39:24 by albaud            #+#    #+#             */
+/*   Updated: 2022/12/09 10:39:20 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../header.h"
 
-# include "../header.h"
+t_pipe	*pipi(void)
+{
+	static t_pipe	pipe;
 
-int			builtins(t_args *args);
-void		ft_cd(char **args, int argc, int fd);
-void		ft_echo(char **args, int argc, int fd);
-void		ft_pwd(char **args, int argc, int fd);
-void		ft_unset(char **args, int argc, int fd);
-void		ft_export(char **args, int argc, int fd);
-void		ft_env(char **args, int argc, int fd);
-
-#endif
+	return (&pipe);
+}

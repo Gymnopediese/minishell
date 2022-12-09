@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   fd_injection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 11:25:00 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:38:44 by albaud           ###   ########.fr       */
+/*   Created: 2022/12/08 13:55:28 by albaud            #+#    #+#             */
+/*   Updated: 2022/12/08 13:55:37 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../header.h"
 
-# include "../header.h"
+int	fd_injection(char *filename, int fd)
+{
+	char	buffer[1000];
+	int		size;
+	int		file;
 
-int			builtins(t_args *args);
-void		ft_cd(char **args, int argc, int fd);
-void		ft_echo(char **args, int argc, int fd);
-void		ft_pwd(char **args, int argc, int fd);
-void		ft_unset(char **args, int argc, int fd);
-void		ft_export(char **args, int argc, int fd);
-void		ft_env(char **args, int argc, int fd);
-
-#endif
+	file = open(filename, O_RDONLY);
+	size = 1;
+	while (size)
+	{
+		size = read(file, buffer, 999);
+		if (size == -1)
+			return (0);
+		buffer[size] = 0;
+		ft_putstr_fd(buffer, fd);
+	}
+	return (0);
+}
