@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 15:29:57 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:33:08 by albaud           ###   ########.fr       */
+/*   Created: 2022/12/09 10:51:33 by albaud            #+#    #+#             */
+/*   Updated: 2022/12/09 12:06:59 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	mode(int m)
 	return (mo);
 }
 
-int	level(int m)
+int	level(int new_level)
 {
-	static int	mo;
+	static int	current_level;
 
-	if (m == 0)
-		mo = 0;
-	else if (mo == 1 || mo == -1)
-		mo += m;
-	return (mo);
+	if (new_level == 0)
+		current_level = 0;
+	else if (new_level == 1 || new_level == -1)
+		current_level += new_level;
+	return (current_level);
 }

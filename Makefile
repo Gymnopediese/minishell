@@ -5,13 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: albaud <albaud@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/06 11:18:52 by albaud            #+#    #+#              #
-#    Updated: 2022/12/09 10:41:29 by albaud           ###   ########.fr        #
+#    Created: 2022/12/09 10:47:51 by albaud            #+#    #+#              #
+#    Updated: 2022/12/09 11:29:17 by albaud           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-FILES	= args/args.c args/args_utils.c bonus/levels.c bonus/wildcards.c builtins/ft_cd.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_pwd.c builtins/ft_unset.c errors/parse_error.c global/execute.c global/main.c global/pipi.c injection/fd_fd_injection.c injection/fd_injection.c injection/filename_injection.c list/string_list.c list/vars_list.c parser/parser.c parser/parser_handler.c signals/signals.c vars/vars.c
+FILES	= args/args.c args/args_utils.c bonus/levels.c bonus/wildcards.c builtins/builtins.c builtins/ft_cd.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_pwd.c builtins/ft_unset.c errors/parse_error.c global/execute.c global/main.c global/pipi.c injection/fd_fd_injection.c injection/fd_injection.c injection/filename_injection.c list/string_list.c list/vars_list.c parser/parser.c parser/parser_handler.c signals/signals.c vars/vars.c
 OBJS 	= ${FILES:.c=.o}
 INCL	= ./
 LIB		= koflibc/libft.a
@@ -26,7 +26,7 @@ SAN		=
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		gcc -g -Wall -Werror -Wextra -lreadline ${SAN} ${OBJS} ${LIB} -o ${NAME} 
+		gcc -g -Wall -Werror -Wextra ${SAN} ${OBJS} ${LIB} -o ${NAME} -lreadline
 
 c:
 	find *.c */*.c | tr '\n' ' '

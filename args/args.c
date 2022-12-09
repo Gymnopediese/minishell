@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:36:47 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/09 12:55:16 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_args	*allok_args(t_slst *args)
 	res->right->last = 0;
 	res->rright->first = 0;
 	res->rright->last = 0;
+	res->read = 0;
 	res->end = 0;
 	return (res);
 }
@@ -72,7 +73,7 @@ void	treat_element(t_args *res, t_slink *node, int *i)
 		node = node->next;
 		slst_add_back(res->rright, node->content, 0, 0);
 	}
-	else if (node->type == LEFT)
+	else if (node->type == LEFT && ++res->read)
 	{
 		node = node->next;
 		fd_injection(node->content, pipi()->fd[1]);
@@ -99,10 +100,7 @@ t_args	*slst_to_tab(t_slst *args)
 	node = args->first;
 	res = allok_args(args);
 	if (pipi()->to_pipe == 0)
-	{
-		pipi()->to_pipe = 1;
 		pipe(pipi()->fd);
-	}
 	while (node && !is_the_end(node))
 	{
 		treat_element(res, node, &i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_contain_subs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 12:29:01 by albaud            #+#    #+#             */
-/*   Updated: 2022/07/17 18:17:17 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 15:58:45 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_contain_subs(char *to_count, char *target)
 {
-	int	counter;
-
-	counter = 0;
 	while (*to_count)
 	{
 		if (ft_strcmpl(to_count, target) == 0)

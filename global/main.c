@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 10:39:14 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/09 12:14:11 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,26 @@ void	priorities(t_slst *args, t_args *argv, int success)
 	if (argv->end == OR && success)
 	{
 		while (start && start->level >= args->first->level)
+		{
+			if (start->type == AND && start->level == args->first->level)
+			{
+				start = start->next;
+				break ;
+			}
 			start = start->next;
+		}
 	}
 	else if (argv->end == AND && !success)
 	{
 		while (start && start->level >= args->first->level)
+		{
+			if (start->type == OR && start->level == args->first->level)
+			{
+				start = start->next;
+				break ;
+			}
 			start = start->next;
+		}
 	}
 	else
 	{
@@ -66,7 +80,6 @@ void	exec_line(t_slst *args)
 	char	*temp;
 	t_args	*argv;
 
-	//put_slst(args);
 	wait(&exec);
 	if (args->first == 0)
 		return ;
@@ -84,11 +97,10 @@ void	exec_line(t_slst *args)
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
-		{
 			declare_variable(argv->args[0]);
-		}
 	}
-	priorities(args, argv, !errno);
+	ft_putnbrn(exec);
+	priorities(args, argv, !exec);
 	exec_line(args);
 }
 
@@ -114,13 +126,19 @@ int	main(void)
 	add_history(strdup("cat Makefile | wc"));
 	add_history(strdup("ls > test >> test | cat -e"));
 	add_history(strdup("norminette | grep -v OK"));
+	add_history(strdup("echo -n salut"));
+	add_history(strdup("(ls asd && ls) || ls"));
 	while (1)
 	{
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
 			ft_garbage_colector(0, 1, 1);
-		add_history(prompt);
-		exec_line(parser(prompt));
+		if (prompt[0])
+		{
+			add_history(prompt);
+			exec_line(parser(prompt));
+		}
+		free(prompt);
 	}
 }

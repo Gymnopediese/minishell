@@ -6,12 +6,14 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:33:11 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/09 12:53:24 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
+//TODO: gerer les " " sa mere
+//TODO: GLOB GERER LES ERREUR
 int	wildcards_match(char *tomatch, char *target)
 {
 	int		i;

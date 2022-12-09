@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:47:22 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/09 12:05:05 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ t_slst	*parser(char *prompt)
 	res->first = 0;
 	res->last = 0;
 	res->size = 0;
+	level(0);
 	while (prompt[i])
 	{
 		mode(0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 16:55:13 by albaud            #+#    #+#             */
-/*   Updated: 2022/07/18 18:58:29 by albaud           ###   ########.fr       */
+/*   Updated: 2022/12/08 15:55:57 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	ft_remove(t_list **list, void *data, int (*cmp)(), void (*freef)())
 {
-	t_list	*list_ptr;
 	t_list	*temp;
 	int		ind;
 
-	list_ptr = *list;
 	ind = ft_indexof_list(*list, data, cmp);
 	if (ind == -1)
 		return (0);

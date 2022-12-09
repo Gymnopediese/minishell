@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/06 11:02:45 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 13:38:55 by albaud           ###   ########.fr       */
+/*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
+/*   Updated: 2022/12/09 12:54:40 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <signal.h>
 # include <termios.h>
 # include <sys/errno.h>
-
-// # include "/opt/homebrew/Cellar/readline/8.2.1/include/readline/readline.h"
+# include <sys/types.h>
+# include <sys/wait.h>
 
 enum
 {
@@ -69,7 +69,7 @@ typedef struct s_slink
 {
 	char			*content;
 	struct s_slink	*next;
-	int				type;
+	int				type;//todo: enum
 	int				level;
 }	t_slink;
 
@@ -86,10 +86,12 @@ typedef struct s_args
 	t_slst	*right;
 	t_slst	*rright;
 	int		end;
+	int		read;
 }	t_args;
 
 # include "builtins/builtins.h"
 
+void		rl_replace_line(const char *text, int clear_undo);
 // parser.c
 int			is_symbole(char c);
 t_slst		*parser(char *prompt);

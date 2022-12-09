@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ben <ben@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/06 14:35:59 by bphilago         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:53:00 by ben              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	add_var(const char *name, char *data, t_vlink **vars)
 			link = link->next;
 		}
 	}
-	vlst_add_front(vars, (t_var){strdup(name), strdup(data)});
+	vlst_add_front(vars, (t_var){strdup(name), strdup(data), 0}); // Voir pour changer le 0
 }
 
 void	print_vars(t_vlink *vars)
