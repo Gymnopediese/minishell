@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/07 14:19:02 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 13:29:03 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,15 @@ void	parse_error(char a, char b)
 	if (is_symbole(a))
 		printf("minish: parse error near `%c'", a);
 	//todo: new line
+}
+
+void	finish(char *message)
+{
+	if (message != 0)
+		ft_putstr_fd(message, 2);
+	close(pipi()->fd[0]);
+	close(pipi()->fd[1]);
+	vars(0, 0, VARS_FREE);
+	clear_history();
+	ft_garbage_colector(0, 1, 1); // EN dernier
 }

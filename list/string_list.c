@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:56:30 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/07 16:01:09 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 13:48:32 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ t_slink	*slst_new(char *str, int type, int level)
 {
 	t_slink	*new_lst;
 
-	new_lst = ft_calloc(1, sizeof(t_slink));
-	new_lst->content = strdup(str);
+	new_lst = allok(1, sizeof(t_slink), 1);
+	new_lst->content = str;
+	ft_garbage_colector(str, 0, 1);
 	new_lst->type = type;
 	new_lst->level = level;
 	new_lst->next = 0;

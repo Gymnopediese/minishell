@@ -30,6 +30,7 @@
 		"limits": "c",
 		"ratio": "c",
 		"tuple": "c",
-		"ios": "c"
+		"ios": "c",
+		"builtins.h": "c"
 	}
 }

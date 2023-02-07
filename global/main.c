@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 12:14:11 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:04:12 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,26 @@ void	exec_line(t_slst *args)
 		if (exec != -1)
 		{
 			temp = ft_itoa(exec);
-			vars("?", temp);
+			vars("?", temp, VARS_ADD);
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
 			declare_variable(argv->args[0]);
 	}
-	ft_putnbrn(exec);
+	//ft_putnbrn(exec);
 	priorities(args, argv, !exec);
 	exec_line(args);
 }
 
 void	init_vars(void)
 {
-	vars("Test", "Je suis la valeur d'une variable");
+	vars("Test", "Je suis la valeur d'une variable", VARS_ADD);
 	vars("PATH", "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin\
 :/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono\
 .framework/Versions/Current/Commands:/Users/albaud/opt/anaconda3/bin\
 :/Users/albaud/opt/anaconda3/condabin:/opt/homebrew/bin\
-:/opt/homebrew/sbin");
-	vars("?", "0");
+:/opt/homebrew/sbin", VARS_ADD);
+	vars("?", "0", VARS_ADD);
 }
 
 int	main(void)
@@ -123,18 +123,18 @@ int	main(void)
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
-	add_history(strdup("cat Makefile | wc"));
-	add_history(strdup("ls > test >> test | cat -e"));
-	add_history(strdup("norminette | grep -v OK"));
-	add_history(strdup("echo -n salut"));
-	add_history(strdup("(ls asd && ls) || ls"));
+	add_history("cat Makefile | wc");
+	add_history("ls > test >> test | cat -e");
+	add_history("norminette | grep -v OK");
+	add_history("echo -n salut");
+	add_history("(ls asd && ls) || ls");
 	while (1)
 	{
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
-			ft_garbage_colector(0, 1, 1);
-		if (prompt[0])
+			finish("No problemo\n");
+		if (prompt[0] != 0)
 		{
 			add_history(prompt);
 			exec_line(parser(prompt));

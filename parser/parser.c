@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 12:05:05 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:21:53 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*get_next_word(char *prompt, int *index)
 
 	buffer.i = 0;
 	res = ft_calloc(1, 1);
+	if (res == 0)
+		finish("Calloc error\n");
 	handle_buffer(&buffer, res);
 	while (prompt[*index] && prompt[*index] != ' ')
 	{
