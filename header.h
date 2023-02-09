@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/07 14:46:45 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:56:21 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 # define VARS_PRINT 0
 # define VARS_GET 1
 # define VARS_ADD 2
-# define VARS_FREE 3
-# define VARS_DEL 4
+# define VARS_ADDENV 3
+# define VARS_FREE 4
+# define VARS_DEL 5
 
 enum
 {
@@ -104,6 +105,12 @@ int			is_symbole(char c);
 t_slst		*parser(char *prompt);
 // vars.c
 char		*vars(const char *name, char *data, char commande);
+void		add_vars(const char *name, char *data);
+char		*get_var_value(const char *name);
+void		print_vars(void);
+void		free_vars(void);
+void		del_vars(const char *name);
+void		declare_variable(char *declaration);
 // vars_list.c
 t_vlink		*vlst_new(t_var content);
 void		vlst_add_front(t_vlink **lst, t_var var);
@@ -119,7 +126,6 @@ void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
 void		put_slst(t_slst *lst);
 t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);
-void		declare_variable(char *declaration);
 //parse_error
 void		parse_error(char a, char b);
 void		finish(char *message);
@@ -135,5 +141,5 @@ t_pipe		*pipi(void);
 int			is_the_end(t_slink *link);
 void		put_pipi(void);
 int			is_redirection(t_slink *link);
-
+int 		*my_errno();
 #endif

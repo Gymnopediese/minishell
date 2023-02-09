@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/07 14:21:53 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:03:41 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	(void) buffer;
 	(void) res;
 
+	ft_putendl("salut");
 	if (prompt[*index] == '|' && prompt[*index + 1] == '|' && ++*index)
 		mode(OR);
 	else if (prompt[*index] == '&' && prompt[*index + 1] == '&' && ++*index)
@@ -39,8 +40,10 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	while (prompt[*index] == ' ')
 		*index += 1;
 	//TODO HANDLE PARSE ERRORS, ALLL OF THEM
-	//if (ft_index(prompt[*index]))
-	//	parse_error(prompt[*index], prompt[*index + 1]);
+	ft_putstr((char *)&prompt[*index]);
+	ft_putstr("\n");
+	if (ft_str_index_of("()|<>&", prompt[*index]) > -1)
+		parse_error(prompt[*index], prompt[*index + 1]);
 	return (1);
 }
 

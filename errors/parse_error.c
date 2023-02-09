@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/07 13:29:03 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:54:01 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@ void	parse_error(char a, char b)
 	//todo: new line
 }
 
+int *my_errno()
+{
+	static int *err;
+	
+	return err;
+}
+
 void	finish(char *message)
 {
 	if (message != 0)
 		ft_putstr_fd(message, 2);
 	close(pipi()->fd[0]);
 	close(pipi()->fd[1]);
-	vars(0, 0, VARS_FREE);
+	free_vars();
 	clear_history();
 	ft_garbage_colector(0, 1, 1); // EN dernier
 }
