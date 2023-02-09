@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/07 14:43:35 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:30:04 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*vars(const char *name, char *data, char commande)
 		prev = 0;
 		while (tmp)
 		{
-			if (!ft_strcmp(vars->content.name, name))
+			if (!ft_strcmp(vars->content.name, (char *)name))
 			{
 				free(tmp->content.data);
 				free((void *)tmp->content.name);
@@ -94,7 +94,7 @@ char	*vars(const char *name, char *data, char commande)
 				else
 					vars = vars->next;
 				free(vars);
-				return 
+				return (0);
 			}
 			prev = tmp;
 			tmp = tmp->next;
