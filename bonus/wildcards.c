@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 12:53:24 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:45:43 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,31 @@ int	wildcards_match(char *tomatch, char *target)
 	j = 0;
 	while (target[++i])
 	{
-		if (target[i] == '*')
+		if (target[i] == -1)
 		{
-			while (target[i] && target[i] == '*')
+			while (target[i] && target[i] == -1)
 				i++;
 			while (tomatch[j] && tomatch[j] != target[i])
 				j++;
 		}
-		if (!target[i] || !target[i] || target[i] != tomatch[j])
+		if (!target[i] || !target[j] || target[i] != tomatch[j])
 			break ;
 		j++;
 	}
 	return (target[i] - tomatch[j]);
+}
+
+char	*ft_replace_char(char *str, char target, char new)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == target)
+			str[i] = new;
+	}
+	return (str);
 }
 
 int	wildcards(char *arg, t_slst *res)
@@ -45,7 +58,7 @@ int	wildcards(char *arg, t_slst *res)
 	int		i;
 	int		match;
 
-	if (ft_contain_subs(arg, "*") == 0)
+	if (ft_strcontain(arg, -1) == 0)
 		return (0);
 	glob = ft_glob(getcwd(v, 777), 0);
 	len = ft_strtablen(glob);
@@ -55,12 +68,7 @@ int	wildcards(char *arg, t_slst *res)
 	{
 		mode(0);
 		if (wildcards_match(glob[i], arg) == 0 && ++match)
-			slst_add_back(res, strdup(glob[i]), TEXT, level(2));
-	}
-	if (!match)
-	{
-		ft_putstr_fd("minish: no matches found: ", 2);
-		ft_putstr_fd(arg, 2);
+			slst_add_back(res, ft_strdup(glob[i]), TEXT, level(2));
 	}
 	ft_free_pp((void **)glob);
 	return (1);

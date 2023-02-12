@@ -3,47 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/02/09 13:54:55 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:09:01 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
 //utilise notre varibale path pour trouver une version valid de lexecutable 
-char	*get_executable(char *exec)
+
+char	*find_path(char *exec)
 {
-	char	**paths;
-	int		i;
 	char	buff[777];
+	int		i;
+	char	**paths;
 
 	i = -1;
+	paths = ft_split(get_var_value("PATH"), ':');
+	if (paths == 0)
+		ft_garbage_colector(0, 1, 1);
+	while (paths[++i])
+	{
+		strcpy(buff, paths[i]); // ft_strcopy
+		ft_strcat(buff, "/");
+		ft_strcat(buff, exec);
+		if (access(buff, F_OK) == 0)
+		{
+			ft_free_pp((void **)paths);
+			return (ft_strdup(buff));
+		}
+	}
+	ft_free_pp((void **)paths);
+	return (0);
+}
+
+char	*get_executable(char *exec)
+{
+
+	if (exec[0] == '/')
+		return (exec);
 	if (exec && exec[0] == '.' && exec[1] == '/')
 	{
 		if (access(&exec[2], F_OK) == 0)
 			return (exec);//todot else erno; paths
+		else
+			ft_putendl("no such file or directory");
 	}
-	else
-	{
-		paths = ft_split(get_var_value("PATH"), ':');
-		if (paths == 0)
-			ft_garbage_colector(0, 1, 1);
-		while (paths[++i])
-		{
-			strcpy(buff, paths[i]); //todo ft_strcpy
-			ft_strcat(buff, "/");
-			ft_strcat(buff, exec);
-			if (access(buff, F_OK) == 0)
-			{
-				ft_free_pp((void **)paths);
-				return (ft_strdup(buff));
-			}
-		}
-		ft_free_pp((void **)paths);
-	}
-	return (0);
+	return (find_path(exec));
 }
 
 int	exute_process(t_args *argv, const char	*file, int *fd)

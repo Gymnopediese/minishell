@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:52:22 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:26:54 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-static t_vlink	**get_vars(void)
+t_vlink	**get_vars(void)
 {
 	static t_vlink	*vars;
 
@@ -33,7 +33,24 @@ char	*get_var_value(const char *name)
 	return ("");
 }
 
-void	add_vars(const char *name, char *data)
+void	export_var(char *name)
+{
+	t_vlink	*vars;
+
+	vars = *get_vars();
+	while (vars)
+	{
+		if (ft_strcmp((char *)vars->content.name, (char *)name) == 0)
+		{
+			vars->content.export = 1;
+			return ;
+		}
+		vars = vars->next;
+	}
+	add_vars(name, "", 1);
+}
+
+void	add_vars(const char *name, char *data, int export)
 {
 	t_vlink	*link;
 	t_vlink	**vars;
@@ -48,71 +65,15 @@ void	add_vars(const char *name, char *data)
 			{
 				free(link->content.data);
 				link->content.data = ft_strdup(data);
+				link->content.export = export;
 				return ;
 			}
 			link = link->next;
 		}
 	}
-	vlst_add_front(vars, (t_var){strdup(name), strdup(data), 0});
+	vlst_add_front(vars, (t_var){strdup(name), strdup(data), export});
 }
 
-void	print_vars(void)
-{
-	t_vlink	*vars;
-
-	vars = *get_vars();
-	while (vars)
-	{
-		ft_putstr((char *)vars->content.name);
-		ft_putstr("=");
-		ft_putendl(vars->content.data);
-		vars = vars->next;
-	}
-}
-
-void	free_vars(void)
-{
-	t_vlink		*vars;
-	t_vlink		*tmp;
-
-	vars = *get_vars();
-	tmp = vars;
-	while (tmp)
-	{
-		free(tmp->content.data);
-		free((void *)tmp->content.name);
-		tmp = vars->next;
-		vars = tmp;
-		ft_putstr("Free\n");
-	}
-}
-
-void	del_vars(const char *name)
-{
-	t_vlink		*vars;
-	t_vlink		*tmp;
-	t_vlink		*prev;
-
-	vars = *get_vars();
-	tmp = vars;
-	prev = 0;
-	while (tmp)
-	{
-		if (!ft_strcmp(vars->content.name, (char *)name))
-		{
-			free(tmp->content.data);
-			free((void *)tmp->content.name);
-			if (prev)
-				prev->next = tmp->next;
-			else
-				*get_vars() = vars->next;
-			free(vars);
-			return ;
-		}
-		prev = tmp;
-		tmp = tmp->next;
-	}
-}
 // char	*vars(const char *name, char *data, char commande)
 // {
 // 	static t_vlink	*vars;
@@ -173,5 +134,5 @@ void	declare_variable(char *declaration)
 	declaration[i] = 0;
 	ft_putendl(declaration);
 	ft_putendl(&declaration[i + 1]);
-	add_vars(declaration, &declaration[i + 1]);
+	add_vars(declaration, &declaration[i + 1], 1);
 }

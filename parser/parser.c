@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 12:03:41 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:36:56 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	(void) buffer;
 	(void) res;
 
-	ft_putendl("salut");
 	if (prompt[*index] == '|' && prompt[*index + 1] == '|' && ++*index)
 		mode(OR);
 	else if (prompt[*index] == '&' && prompt[*index + 1] == '&' && ++*index)
@@ -39,11 +38,7 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	*index += 1;
 	while (prompt[*index] == ' ')
 		*index += 1;
-	//TODO HANDLE PARSE ERRORS, ALLL OF THEM
-	ft_putstr((char *)&prompt[*index]);
-	ft_putstr("\n");
-	if (ft_str_index_of("()|<>&", prompt[*index]) > -1)
-		parse_error(prompt[*index], prompt[*index + 1]);
+	*my_errno() = parse_error(prompt[*index], prompt[*index + 1]);
 	return (1);
 }
 
@@ -64,6 +59,8 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 		buffer->b[buffer->i++] = prompt[*index];
 		*index += 1;
 	}
+	else if (prompt[*index] == '*' && ++*index)
+		buffer->b[buffer->i++] = -1;
 	else if (prompt[*index] == '\'' && ++*index)
 		handle_simple_quote(prompt, index, buffer, res);
 	else if (prompt[*index] == '$' && ++*index)
@@ -91,6 +88,8 @@ char	*get_next_word(char *prompt, int *index)
 	{
 		if (!handler(prompt, index, &buffer, res))
 			break ;
+		if (*my_errno())
+			return (0);
 	}
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
@@ -116,6 +115,8 @@ t_slst	*parser(char *prompt)
 		while (prompt[i] && prompt[i] == ' ')
 			i++;
 		arg = get_next_word(prompt, &i);
+		if (*my_errno())
+			return (0);
 		if (arg && arg[0] && !wildcards(arg, res))
 		{
 			slst_add_back(res, arg, TEXT, level(2));

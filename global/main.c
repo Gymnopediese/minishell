@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:55:08 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:17:24 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-void	put_slst(t_slst *lst)
-{
-	t_slink	*n;
-
-	n = lst->first;
-	ft_putendl("printing list");
-	while (n)
-	{
-		ft_putendl(n->content);
-		n = n->next;
-	}
-	ft_putendl("printing list done");
-}
-
-void	put_pipi(void)
-{
-	ft_putendl("printing pipi");
-	ft_putia_clean(pipi()->fd, 2);
-	ft_putnbrn(pipi()->to_pipe);
-	ft_putendl("printing pipi done");
-}
 
 //gere les priorité
 void	priorities(t_slst *args, t_args *argv, int success)
@@ -80,9 +58,10 @@ void	exec_line(t_slst *args)
 	char	*temp;
 	t_args	*argv;
 
+	//put_slst(args);
 	wait(&exec);
-	if (args->first == 0)
-		return ;
+	if (args->first == 0 || args->first->type != 0)
+		return ;//TODO print parserror near...
 	argv = slst_to_tab(args);
 	exec = 0;
 	if (args->first == 0)
@@ -93,7 +72,7 @@ void	exec_line(t_slst *args)
 		if (exec != -1)
 		{
 			temp = ft_itoa(exec);
-			add_vars("?", temp);
+			add_vars("?", temp, 1);
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
@@ -104,43 +83,43 @@ void	exec_line(t_slst *args)
 	exec_line(args);
 }
 
+void	add_var(char *str, int export)
+{
+	int		n;
+
+	n = ft_strlen_to(str, '=');
+	str[n] = 0;
+	add_vars(ft_strdup(str), ft_strdup(&str[n + 1]), export);
+	str[n] = '=';
+}
+
 int	init_env(char **envp)
 {
 	int		i;
-	int		n;
-	
+
 	i = -1;
 	while (envp[++i])
-	{
-		n = ft_strlen_to(envp[i], '=');
-		envp[i][n] = 0;
-		printf("index = %d %s %s\n", n, strdup(envp[i]),  strdup(&envp[i][n + 1]));
-		envp[i][n] = '=';
-	}
+		add_var(envp[i], 1);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
+	t_slst	*args;
 
 	(void) argc;
 	(void) argv;
-	for (int i=0; envp[i]!=NULL; i++) {
-        printf("%d: %s\n", i, envp[i]);
-    }
+	// for (int i=0; envp[i]!=NULL; i++)
+    //     printf("%d: %s\n", i, envp[i]);
 	init_env(envp);
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
-	add_history("cat Makefile | wc");
-	add_history("ls > test >> test | cat -e");
-	add_history("norminette | grep -v OK");
-	add_history("echo -n salut");
-	add_history("(ls asd && ls) || ls");
-	add_history("|||");
+	debug_history();
 	while (1)
 	{
+		*my_errno() = 0;
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
@@ -148,7 +127,9 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);
-			exec_line(parser(prompt));
+			args = parser(prompt);
+			if (args)
+				exec_line(args);
 		}
 		free(prompt);
 	}

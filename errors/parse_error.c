@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:54:01 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 12:37:36 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	parse_error(char a, char b)
+int	parse_error(char a, char b)
 {
 	if (is_symbole(a) && is_symbole(b))
-		printf("minish: parse error near `%c%c'", a, b);
-	if (is_symbole(a))
-		printf("minish: parse error near `%c'", a);
-	//todo: new line
+		printf("minish: parse error near `%c%c'\n", a, b);
+	else if (is_symbole(a))
+		printf("minish: parse error near `%c'\n", a);
+	else
+		return (0);
+	return (1);
 }
 
-int *my_errno()
+int	*my_errno(void)
 {
-	static int *err;
-	
-	return err;
+	static int	err[1];
+
+	return (err);
 }
 
 void	finish(char *message)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:56:21 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:16:57 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_slink
 {
 	char			*content;
 	struct s_slink	*next;
-	int				type;//todo: enum
+	int				type;
 	int				level;
 }	t_slink;
 
@@ -99,47 +99,53 @@ typedef struct s_args
 
 # include "builtins/builtins.h"
 
-void		rl_replace_line(const char *text, int clear_undo);
+void			rl_replace_line(const char *text, int clear_undo);
 // parser.c
-int			is_symbole(char c);
-t_slst		*parser(char *prompt);
+int				is_symbole(char c);
+t_slst			*parser(char *prompt);
 // vars.c
-char		*vars(const char *name, char *data, char commande);
-void		add_vars(const char *name, char *data);
-char		*get_var_value(const char *name);
-void		print_vars(void);
-void		free_vars(void);
-void		del_vars(const char *name);
-void		declare_variable(char *declaration);
+t_vlink			**get_vars(void);
+char			*vars(const char *name, char *data, char commande);
+void			add_vars(const char *name, char *data, int export);
+void			add_var(char *str, int export);
+void			export_var(char *name);
+char			*get_var_value(const char *name);
+void			print_vars(void);
+void			free_vars(void);
+void			del_vars(const char *name);
+void			declare_variable(char *declaration);
 // vars_list.c
-t_vlink		*vlst_new(t_var content);
-void		vlst_add_front(t_vlink **lst, t_var var);
+t_vlink			*vlst_new(t_var content);
+void			vlst_add_front(t_vlink **lst, t_var var);
 // string_list.c
-void		slst_add_front(t_slst *lst, char *str, int type, int level);
-void		slst_add_back(t_slst *lst, char *str, int type, int level);
-void		handle_buffer(t_buff *buffer, char *res);
-void		handle_double_quote(char *prompt,
+void			slst_add_front(t_slst *lst, char *str, int type, int level);
+void			slst_add_back(t_slst *lst, char *str, int type, int level);
+void			handle_buffer(t_buff *buffer, char *res);
+void			handle_double_quote(char *prompt,
 				int *index, t_buff *buffer, char *res);
-void		handle_simple_quote(char *prompt,
+void			handle_simple_quote(char *prompt,
 				int *index, t_buff *buffer, char *res);
-void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
-void		put_slst(t_slst *lst);
-t_args		*slst_to_tab(t_slst *args);
-void		connect_signals(void);
+void			handle_var(char *prompt, int *index, t_buff *buffer, char *res);
+void			put_slst(t_slst *lst);
+t_args			*slst_to_tab(t_slst *args);
+void			connect_signals(void);
 //parse_error
-void		parse_error(char a, char b);
-void		finish(char *message);
+int				parse_error(char a, char b);
+void			finish(char *message);
 //builtins
-int			execute(t_args *args);
-int			filename_injection(t_args *args, int read_fd);
-int			fd_injection(char *filename, int fd);
-int			fd_fd_injection(int dst, int src);
-int			wildcards(char *arg, t_slst *res);
-int			mode(int m);
-int			level(int m);
-t_pipe		*pipi(void);
-int			is_the_end(t_slink *link);
-void		put_pipi(void);
-int			is_redirection(t_slink *link);
-int 		*my_errno();
+int				execute(t_args *args);
+int				filename_injection(t_args *args, int read_fd);
+int				fd_injection(char *filename, int fd);
+int				fd_fd_injection(int dst, int src);
+int				wildcards(char *arg, t_slst *res);
+int				mode(int m);
+int				level(int m);
+t_pipe			*pipi(void);
+int				is_the_end(t_slink *link);
+void			put_pipi(void);
+int				is_redirection(t_slink *link);
+int				*my_errno(void);
+
+void			debug_history(void);
+
 #endif
