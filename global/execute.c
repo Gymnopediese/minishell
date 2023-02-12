@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/02/12 17:09:01 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:56:23 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,12 @@ char	*find_path(char *exec)
 
 char	*get_executable(char *exec)
 {
-
 	if (exec[0] == '/')
 		return (exec);
 	if (exec && exec[0] == '.' && exec[1] == '/')
 	{
 		if (access(&exec[2], F_OK) == 0)
 			return (exec);//todot else erno; paths
-		else
-			ft_putendl("no such file or directory");
 	}
 	return (find_path(exec));
 }
@@ -97,7 +94,7 @@ int	wait_execution(t_args *argv, int *fd)
 int	execute(t_args *args)
 {
 	int			pid;
-	char	*file;
+	char		*file;
 	int			fd[2];
 
 	errno = 0;

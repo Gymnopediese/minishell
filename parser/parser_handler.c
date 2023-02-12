@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 12:22:45 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:50:57 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	handle_double_quote(char *prompt, int *index, t_buff *buffer, char *res)
 			*index += 1;
 		}
 		handle_buffer(buffer, res);
-
 	}
 	*index += 1;
 }

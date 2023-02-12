@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:01:40 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 17:01:49 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:53:48 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	print_vars(void)
 	vars = *get_vars();
 	while (vars)
 	{
-		ft_putstr((char *)vars->content.name);
-		ft_putstr("=");
-		ft_putendl(vars->content.data);
-		vars = vars->next;
+		if (vars->content.export)
+		{
+			ft_putstr((char *)vars->content.name);
+			ft_putstr("=");
+			ft_putendl(vars->content.data);
+			vars = vars->next;
+		}
 	}
 }
 

@@ -6,12 +6,13 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 17:16:57 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:01:17 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
+
 
 # include <fcntl.h>
 # include <unistd.h>
@@ -27,12 +28,7 @@
 # include <sys/wait.h>
 
 // Pour Vars
-# define VARS_PRINT 0
-# define VARS_GET 1
-# define VARS_ADD 2
-# define VARS_ADDENV 3
-# define VARS_FREE 4
-# define VARS_DEL 5
+# define NAME "minishell: "
 
 enum
 {
@@ -99,6 +95,7 @@ typedef struct s_args
 
 # include "builtins/builtins.h"
 
+void			priorities(t_slst *args, t_args *argv, int success);
 void			rl_replace_line(const char *text, int clear_undo);
 // parser.c
 int				is_symbole(char c);

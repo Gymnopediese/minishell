@@ -6,11 +6,13 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 12:37:36 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 17:55:52 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+
 
 int	parse_error(char a, char b)
 {
@@ -33,10 +35,14 @@ int	*my_errno(void)
 void	finish(char *message)
 {
 	if (message != 0)
+	{
+		ft_putstr_fd(NAME, 2);
 		ft_putstr_fd(message, 2);
+		ft_putstr_fd("\n", 2);
+	}
 	close(pipi()->fd[0]);
 	close(pipi()->fd[1]);
 	free_vars();
 	clear_history();
-	ft_garbage_colector(0, 1, 1); // EN dernier
+	ft_garbage_colector(0, 1, 1);
 }

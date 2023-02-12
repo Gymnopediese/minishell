@@ -31,6 +31,8 @@
 		"ratio": "c",
 		"tuple": "c",
 		"ios": "c",
-		"builtins.h": "c"
+		"builtins.h": "c",
+		"types.h": "c",
+		"wait.h": "c"
 	}
 }
