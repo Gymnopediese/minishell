@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 18:01:17 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:12:31 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ void			slst_add_front(t_slst *lst, char *str, int type, int level);
 void			slst_add_back(t_slst *lst, char *str, int type, int level);
 void			handle_buffer(t_buff *buffer, char *res);
 void			handle_double_quote(char *prompt,
-				int *index, t_buff *buffer, char *res);
+					int *index, t_buff *buffer, char *res);
 void			handle_simple_quote(char *prompt,
-				int *index, t_buff *buffer, char *res);
+					int *index, t_buff *buffer, char *res);
 void			handle_var(char *prompt, int *index, t_buff *buffer, char *res);
 void			put_slst(t_slst *lst);
 t_args			*slst_to_tab(t_slst *args);
@@ -142,7 +142,7 @@ int				is_the_end(t_slink *link);
 void			put_pipi(void);
 int				is_redirection(t_slink *link);
 int				*my_errno(void);
-
+void			init_pipi(void);
 void			debug_history(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 18:02:00 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:12:46 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exec_line(t_slst *args)
 
 	wait(&exec);
 	if (args->first == 0 || args->first->type != 0)
-		return ;//TODO print parserror near...
+		return ; //TODO print parserror near...
 	argv = slst_to_tab(args);
 	exec = 0;
 	if (args->first == 0)
@@ -71,9 +71,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_env(envp);
-	pipi()->fd[0] = 0;
-	pipi()->fd[1] = 1;
-	pipi()->to_pipe = 0;
+	init_pipi();
 	debug_history();
 	while (1)
 	{

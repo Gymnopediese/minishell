@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 17:45:43 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:10:55 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ int	wildcards(char *arg, t_slst *res)
 		mode(0);
 		if (wildcards_match(glob[i], arg) == 0 && ++match)
 			slst_add_back(res, ft_strdup(glob[i]), TEXT, level(2));
+	}
+	if (!match)
+	{
+		slst_add_back(res, ft_replace_char(arg, -1, '*'), TEXT, level(2));
 	}
 	ft_free_pp((void **)glob);
 	return (1);

@@ -6,11 +6,18 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:39:24 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 10:53:15 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:12:05 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
+
+void	init_pipi(void)
+{
+	pipi()->fd[0] = 0;
+	pipi()->fd[1] = 1;
+	pipi()->to_pipe = 0;
+}
 
 t_pipe	*pipi(void)
 {

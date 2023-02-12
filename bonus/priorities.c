@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:57:20 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 18:04:43 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:13:49 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_slink	*p_and(t_slink *start, t_slst *args)
 	return (start);
 }
 
-
 t_slink	*p_or(t_slink *start, t_slst *args)
 {
 	while (start && start->level >= args->first->level)
@@ -40,7 +39,6 @@ t_slink	*p_or(t_slink *start, t_slst *args)
 	}
 	return (start);
 }
-
 
 void	priorities(t_slst *args, t_args *argv, int success)
 {

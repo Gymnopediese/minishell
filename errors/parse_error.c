@@ -6,13 +6,11 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/12 17:55:52 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/12 18:13:06 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-
 
 int	parse_error(char a, char b)
 {
