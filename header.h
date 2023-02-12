@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:51:13 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 12:54:40 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:46:45 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 # include <sys/errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+
+// Pour Vars
+# define VARS_PRINT 0
+# define VARS_GET 1
+# define VARS_ADD 2
+# define VARS_FREE 3
+# define VARS_DEL 4
 
 enum
 {
@@ -48,7 +55,7 @@ typedef struct s_buff
 
 typedef struct s_var
 {
-	const char	*name;
+	char		*name;
 	char		*data;
 	int			export;
 }	t_var;
@@ -96,7 +103,7 @@ void		rl_replace_line(const char *text, int clear_undo);
 int			is_symbole(char c);
 t_slst		*parser(char *prompt);
 // vars.c
-char		*vars(const char *name, char *data);
+char		*vars(const char *name, char *data, char commande);
 // vars_list.c
 t_vlink		*vlst_new(t_var content);
 void		vlst_add_front(t_vlink **lst, t_var var);
@@ -113,8 +120,10 @@ void		put_slst(t_slst *lst);
 t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);
 void		declare_variable(char *declaration);
-//builtins
+//parse_error
 void		parse_error(char a, char b);
+void		finish(char *message);
+//builtins
 int			execute(t_args *args);
 int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);

@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/10 20:09:45 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/09 09:53:57 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*get_next_word(char *prompt, int *index)
 
 	buffer.i = 0;
 	res = ft_calloc(1, 1);
+	if (res == 0)
+		finish("Calloc error\n");
 	handle_buffer(&buffer, res);
 	while (prompt[*index] && prompt[*index] != ' ')
 	{

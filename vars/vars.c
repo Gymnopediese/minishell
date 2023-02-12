@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 14:21:58 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/09 09:56:51 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,50 @@ void	print_vars(t_vlink *vars)
 	}
 }
 
-char	*vars(const char *name, char *data)
+char	*vars(const char *name, char *data, char commande)
 {
 	static t_vlink	*vars;
+	t_vlink			*tmp;
+	t_vlink			*prev; //changer pour fonction
 
-	if (name == 0)
-	{
+	if (commande == VARS_PRINT)
 		print_vars(vars);
-	}
-	else if (data == 0)
-	{
+	else if (commande == VARS_GET)
 		return (get_var_value(name, vars));
-	}
-	else
-	{
+	else if (commande == VARS_ADD)
 		add_var(name, data, &vars);
+	else if (commande == VARS_FREE)
+	{
+		tmp = vars;
+		while (tmp)
+		{
+			free(tmp->content.data);
+			free((void *)tmp->content.name);
+			tmp = vars->next;
+			vars = tmp;
+			ft_putstr("Free\n");
+		}
+	}
+	else if (commande == VARS_DEL)
+	{
+		tmp = vars;
+		prev = 0;
+		while (tmp)
+		{
+			if (!ft_strcmp(vars->content.name, name))
+			{
+				free(tmp->content.data);
+				free((void *)tmp->content.name);
+				if (prev)
+					prev->next = tmp->next;
+				else
+					vars = vars->next;
+				free(vars);
+				return ;
+			}
+			prev = tmp;
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }
@@ -86,5 +115,5 @@ void	declare_variable(char *declaration)
 	declaration[i] = 0;
 	ft_putendl(declaration);
 	ft_putendl(&declaration[i + 1]);
-	vars(declaration, &declaration[i + 1]);
+	vars(declaration, &declaration[i + 1], VARS_ADD);
 }

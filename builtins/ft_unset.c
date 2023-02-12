@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/08 12:33:15 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 11:42:26 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_unset(char **args, int argc, int fd)
 	else
 	{
 		while (++i < argc)
-			vars(args[i], ""); //TODO true_delete
+			vars(args[i], "", VARS_ADD); //TODO true_delete
 	}
 	if (errno)
 		ft_putendl_fd(strerror(errno), 2);

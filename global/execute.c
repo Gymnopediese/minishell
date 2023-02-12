@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2022/12/09 11:49:05 by albaud           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:00:13 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_executable(char *exec)
 	}
 	else
 	{
-		paths = ft_split(vars("PATH", 0), ':');
+		paths = ft_split(vars("PATH", 0, VARS_GET), ':');
 		if (paths == 0)
 			ft_garbage_colector(0, 1, 1);
 		while (paths[++i])
@@ -89,7 +89,7 @@ int	wait_execution(t_args *argv, int *fd)
 int	execute(t_args *args)
 {
 	int			pid;
-	const char	*file;
+	char	*file;
 	int			fd[2];
 
 	errno = 0;
@@ -102,5 +102,8 @@ int	execute(t_args *args)
 	if (pid == 0)
 		return (exute_process(args, file, fd));
 	else
+	{
+		free(file);
 		return (wait_execution(args, fd));
+	}
 }
