@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:55:26 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:43:26 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 	var_name = allok(sizeof(*var_name), (i + 1), 1);
 	ft_strncpy(var_name, prompt + *index, i);
 	*index += i;
-	data = get_var_value(var_name);
+	data = vars(var_name, 0, VARS_GET);
 	value_size = ft_strlen(data);
 	i = -1;
 	while (++i < value_size)

@@ -6,7 +6,11 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/09 09:56:51 by albaud           ###   ########.fr       */
+=======
+/*   Updated: 2023/02/09 11:30:04 by bphilago         ###   ########.fr       */
+>>>>>>> parent of 4cf0605 (Vars upgarde !)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +89,11 @@ char	*vars(const char *name, char *data, char commande)
 		prev = 0;
 		while (tmp)
 		{
+<<<<<<< HEAD
 			if (!ft_strcmp(vars->content.name, name))
+=======
+			if (!ft_strcmp(vars->content.name, (char *)name))
+>>>>>>> parent of 4cf0605 (Vars upgarde !)
 			{
 				free(tmp->content.data);
 				free((void *)tmp->content.name);
@@ -94,7 +102,11 @@ char	*vars(const char *name, char *data, char commande)
 				else
 					vars = vars->next;
 				free(vars);
+<<<<<<< HEAD
 				return ;
+=======
+				return (0);
+>>>>>>> parent of 4cf0605 (Vars upgarde !)
 			}
 			prev = tmp;
 			tmp = tmp->next;

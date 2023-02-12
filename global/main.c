@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:55:08 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:04:12 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_line(t_slst *args)
 		if (exec != -1)
 		{
 			temp = ft_itoa(exec);
-			add_vars("?", temp);
+			vars("?", temp, VARS_ADD);
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
@@ -104,32 +104,22 @@ void	exec_line(t_slst *args)
 	exec_line(args);
 }
 
-int	init_env(char **envp)
+void	init_vars(void)
 {
-	int		i;
-	int		n;
-	
-	i = -1;
-	while (envp[++i])
-	{
-		n = ft_strlen_to(envp[i], '=');
-		envp[i][n] = 0;
-		printf("index = %d %s %s\n", n, strdup(envp[i]),  strdup(&envp[i][n + 1]));
-		envp[i][n] = '=';
-	}
-	return (0);
+	vars("Test", "Je suis la valeur d'une variable", VARS_ADD);
+	vars("PATH", "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin\
+:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono\
+.framework/Versions/Current/Commands:/Users/albaud/opt/anaconda3/bin\
+:/Users/albaud/opt/anaconda3/condabin:/opt/homebrew/bin\
+:/opt/homebrew/sbin", VARS_ADD);
+	vars("?", "0", VARS_ADD);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)
 {
 	char	*prompt;
 
-	(void) argc;
-	(void) argv;
-	for (int i=0; envp[i]!=NULL; i++) {
-        printf("%d: %s\n", i, envp[i]);
-    }
-	init_env(envp);
+	init_vars();
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
@@ -138,7 +128,6 @@ int	main(int argc, char **argv, char **envp)
 	add_history("norminette | grep -v OK");
 	add_history("echo -n salut");
 	add_history("(ls asd && ls) || ls");
-	add_history("|||");
 	while (1)
 	{
 		connect_signals();

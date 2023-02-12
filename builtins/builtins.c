@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/09 13:53:01 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:46:19 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtins(t_args *args)
 	else if (ft_strcmp(args->args[0], "env") == 0)
 		ft_env(args->args, argc, fd[1]);
 	else if (ft_strcmp(args->args[0], "exit") == 0)
-		del_vars(args->args[1]);
+		vars(args->args[1], 0, VARS_DEL);
 	else if (ft_strcmp(args->args[0], "exit") == 0)
 		exit(errno);
 	else
