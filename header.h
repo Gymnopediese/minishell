@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 10:57:55 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:32:51 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,12 @@ void		rl_replace_line(const char *text, int clear_undo);
 int			is_symbole(char c);
 t_slst		*parser(char *prompt);
 // vars.c
-char		*vars(const char *name, char *data, char commande);
+char		*get_vars_value(const char *name);
+void		add_vars(const char *name, char *data);
+void		print_vars(void);
+void		free_vars(void);
+void		del_vars(const char *name);
+void		declare_variable(char *declaration);
 // vars_list.c
 t_vlink		*vlst_new(t_var content);
 void		vlst_add_front(t_vlink **lst, t_var var);

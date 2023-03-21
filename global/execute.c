@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/02/07 14:00:13 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:33:05 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_executable(char *exec)
 	}
 	else
 	{
-		paths = ft_split(vars("PATH", 0, VARS_GET), ':');
+		paths = ft_split(get_vars_value("PATH"), ':');
 		if (paths == 0)
 			ft_garbage_colector(0, 1, 1);
 		while (paths[++i])

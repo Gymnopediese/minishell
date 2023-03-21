@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/02/07 14:04:12 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:28:53 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_line(t_slst *args)
 		if (exec != -1)
 		{
 			temp = ft_itoa(exec);
-			vars("?", temp, VARS_ADD);
+			add_vars("?", temp);
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
@@ -104,22 +104,10 @@ void	exec_line(t_slst *args)
 	exec_line(args);
 }
 
-void	init_vars(void)
-{
-	vars("Test", "Je suis la valeur d'une variable", VARS_ADD);
-	vars("PATH", "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin\
-:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono\
-.framework/Versions/Current/Commands:/Users/albaud/opt/anaconda3/bin\
-:/Users/albaud/opt/anaconda3/condabin:/opt/homebrew/bin\
-:/opt/homebrew/sbin", VARS_ADD);
-	vars("?", "0", VARS_ADD);
-}
-
 int	main(void)
 {
 	char	*prompt;
 
-	init_vars();
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;

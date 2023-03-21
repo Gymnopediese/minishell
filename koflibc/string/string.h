@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 17:53:38 by albaud            #+#    #+#             */
-/*   Updated: 2022/10/31 11:44:02 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/21 11:24:14 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_itoa(int nb);
 char	*ft_itob(int nb, char *base);
 
 char	*ft_strncpy(char *s1, char *s2, int n);
-char	*ft_strdup(char *src);
+char	*ft_strdup(const char *src);
 
 char	*ft_str_remove_at(char *str, int index, int len, int free_);
 

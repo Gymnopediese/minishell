@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:15 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 10:58:18 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:31:37 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ void	ft_env(char **args, int argc, int fd)
 	(void) argc;
 	(void) fd;
 
-	vars(0, 0, VARS_PRINT);
+	print_vars();
 }
