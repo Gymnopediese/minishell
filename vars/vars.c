@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2023/02/12 11:38:39 by albaud           ###   ########.fr       */
-=======
-/*   Updated: 2023/02/09 11:30:04 by bphilago         ###   ########.fr       */
->>>>>>> parent of 4cf0605 (Vars upgarde !)
-=======
-/*   Updated: 2023/02/09 11:30:04 by bphilago         ###   ########.fr       */
->>>>>>> parent of 4cf0605 (Vars upgarde !)
+/*   Created: 2023/03/21 10:59:09 by bphilago          #+#    #+#             */
+/*   Updated: 2023/03/21 10:59:11 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

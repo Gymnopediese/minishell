@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 09:45:44 by albaud            #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2023/02/12 11:39:23 by albaud           ###   ########.fr       */
-=======
-/*   Updated: 2023/02/07 13:29:03 by bphilago         ###   ########.fr       */
->>>>>>> parent of 4cf0605 (Vars upgarde !)
-=======
-/*   Updated: 2023/02/07 13:29:03 by bphilago         ###   ########.fr       */
->>>>>>> parent of 4cf0605 (Vars upgarde !)
+/*   Created: 2023/03/21 10:58:48 by bphilago          #+#    #+#             */
+/*   Updated: 2023/03/21 10:58:50 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
