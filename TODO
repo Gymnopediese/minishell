@@ -1,9 +1,13 @@
 PROTECT:		FORK, PIPES, WRITE, CLOSE, OPEN, MALLOC::ALLOK(fermer le program proprement)
 PARSING:		GERER LES PARSE ERRORS PAS TROP DURE A FAIRE MAIS FLEM
 TRACK SEGFAULT:	IN THE PARSER
-ENV:			GERER L'ENVIRONEMENT EXECV, ENV
-BUILTS IN:		EXPORT, ENV, UNSET(normalement ok)
+ENV:			GERER L'ENVIRONEMENT EXECV, ENV (Probleme avec le path sinon ok)
 SUJET:			UTILISER TOUTES LES FONCTION OU PRESQUE
 SIGNAUX:		GERER RL_REPLACE_LINE
+STRDUP			ATTENTION CAR N'UTILISE PAS ALLOK MAIS malloc
+ctrl + d ne marche pas si on est en train d'ecrire
+free avec le garbage collector dans del_vars (je sais pas comment il fonctionne)
+a on le droit au errno (je pense pas)
 les executables ne marchent pas avec /bin/...
 les chemins qui commencent par ~ ne marchent pas
+verifier si env == export

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/21 11:28:53 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:13:34 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,29 +93,26 @@ void	exec_line(t_slst *args)
 		if (exec != -1)
 		{
 			temp = ft_itoa(exec);
-			add_vars("?", temp);
+			add_vars("?", temp, 1); //export ou pas ?
 			free(temp);
 		}
 		else if (ft_strtablen(argv->args) == 1)
-			declare_variable(argv->args[0]);
+			declare_variable(argv->args[0], 0); //export ou pas ?
 	}
 	//ft_putnbrn(exec);
 	priorities(args, argv, !exec);
 	exec_line(args);
 }
 
-int	main(void)
+int	main(__attribute__((unused)) int argc,
+	__attribute__((unused)) char **argv, char **envp)
 {
 	char	*prompt;
 
+	import_env(envp);
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
-	add_history("cat Makefile | wc");
-	add_history("ls > test >> test | cat -e");
-	add_history("norminette | grep -v OK");
-	add_history("echo -n salut");
-	add_history("(ls asd && ls) || ls");
 	while (1)
 	{
 		connect_signals();

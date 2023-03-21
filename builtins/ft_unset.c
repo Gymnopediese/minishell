@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:37 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 11:32:03 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:49:15 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_unset(char **args, int argc, int fd)
 	else
 	{
 		while (++i < argc)
-			add_vars(args[i], ""); //TODO true_delete
+			del_vars(args[i]);
 	}
-	if (errno)
-		ft_putendl_fd(strerror(errno), 2);
+	//if (errno) pas le droit au errno
+		//ft_putendl_fd(strerror(errno), 2);
 }

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:26 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 11:38:30 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:07:05 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_export(char **args, int argc, int fd)
 	(void) fd;
 
 	if (argc > 1)
-		declare_variable(args[1]);
+		declare_variable(args[1], 1);
 	else
-		print_vars();
+		print_vars(1);
 }

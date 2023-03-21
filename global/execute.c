@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 11:33:05 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:28:23 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*get_executable(char *exec)
 	return (0);
 }
 
+
+
 int	exute_process(t_args *argv, const char	*file, int *fd)
 {
 	close(fd[0]);
@@ -57,7 +59,7 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 	else
 		dup2(STDOUT_FILENO, STDOUT_FILENO);
-	execve(file, argv->args, 0);
+	execve(file, argv->args, export_env());
 	ft_putstr_fd(file, 2);
 	ft_putendl_fd(" failed to execute\n", 2);
 	return (1);
