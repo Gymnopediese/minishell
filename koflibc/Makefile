@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+         #
+#    By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/17 18:46:11 by albaud            #+#    #+#              #
-#    Updated: 2022/11/02 22:04:05 by albaud           ###   ########.fr        #
+#    Updated: 2023/03/21 11:04:57 by bphilago         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 
 .c.o 	:
-		${CC} ${CFLAGS} -I /usr/X11/include -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 		
 all 	: $(NAME)
 
