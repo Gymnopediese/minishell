@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/21 11:33:24 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:36:49 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 {
 	int			i;
 	char		*var_name;
-	char		value_size;
 	const char	*data;
 
 	i = 0;
@@ -56,9 +55,8 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 	ft_strncpy(var_name, prompt + *index, i);
 	*index += i;
 	data = get_vars_value(var_name);
-	value_size = ft_strlen(data);
 	i = -1;
-	while (++i < value_size)
+	while (data[++i])
 	{
 		buffer->b[buffer->i++] = data[i];
 		handle_buffer(buffer, res);

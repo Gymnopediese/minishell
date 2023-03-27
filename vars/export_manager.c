@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 13:02:36 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:41:06 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	declare_variable(char *declaration, char export)
 	if (!declaration[i])
 		return ;
 	declaration[i] = 0;
+	printf("%s and %s\n", declaration, &declaration[i + 1]);
 	add_vars(declaration, &declaration[i + 1], export);
 }
 
@@ -48,7 +49,7 @@ void	import_env(char **env)
 
 	i = -1;
 	while (env[++i] != 0)
-		declare_variable(env[i], 1);
+		declare_variable(strdup(env[i]), 1);
 }
 
 char	**export_env(void) //TODO split

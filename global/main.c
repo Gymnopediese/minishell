@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/21 13:13:34 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:30:17 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,15 @@ int	main(__attribute__((unused)) int argc,
 	__attribute__((unused)) char **argv, char **envp)
 {
 	char	*prompt;
+	t_slst	*list;
 
 	import_env(envp);
+	printf("%s\n", get_vars_value("PATH"));
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
+	add_history("echo $PATH");
+	printf("%i\n", get_vars_value("PATH")[5]);
 	while (1)
 	{
 		connect_signals();
@@ -122,7 +126,9 @@ int	main(__attribute__((unused)) int argc,
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);
-			exec_line(parser(prompt));
+			list = parser(prompt);
+			put_slst(list);
+			exec_line(list);
 		}
 		free(prompt);
 	}

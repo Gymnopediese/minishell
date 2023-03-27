@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 13:28:23 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:45:15 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ char	*get_executable(char *exec)
 	char	buff[777];
 
 	i = -1;
-	if (exec && exec[0] == '.' && exec[1] == '/')
+	ft_putendl(exec);
+	if (exec && exec[0] == '/')
+	{
+		if (access(exec, F_OK) == 0)
+			return (exec);//todot else erno; paths
+	}
+	else if (exec && exec[0] == '.' && exec[1] == '/')
 	{
 		if (access(&exec[2], F_OK) == 0)
 			return (exec);//todot else erno; paths
@@ -32,7 +38,7 @@ char	*get_executable(char *exec)
 			ft_garbage_colector(0, 1, 1);
 		while (paths[++i])
 		{
-			strcpy(buff, paths[i]); //todo ft_strcpy
+			ft_strcpy(buff, paths[i]);
 			ft_strcat(buff, "/");
 			ft_strcat(buff, exec);
 			if (access(buff, F_OK) == 0)
