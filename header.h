@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 13:01:10 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:00:50 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void		handle_double_quote(char *prompt,
 void		handle_simple_quote(char *prompt,
 				int *index, t_buff *buffer, char *res);
 void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
+void		handle_vague(t_buff *buffer, char *res);
 void		put_slst(t_slst *lst);
 t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);

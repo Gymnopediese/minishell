@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/27 11:30:37 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/27 12:07:00 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	*index += 1;
 	while (prompt[*index] == ' ')
 		*index += 1;
-	//TODO HANDLE PARSE ERRORS, ALLL OF THEM
-	//if (ft_index(prompt[*index]))
-	//	parse_error(prompt[*index], prompt[*index + 1]);
+	// if (ft_index(prompt[*index]))
+	// 	parse_error(prompt[*index], prompt[*index + 1]);
 	return (1);
 }
 
@@ -63,6 +62,9 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 	}
 	else if (prompt[*index] == '\'' && ++*index)
 		handle_simple_quote(prompt, index, buffer, res);
+	else if (prompt[*index] == '~' && (prompt[*index + 1] == ' '
+			|| prompt[*index + 1] == 0) && buffer->i == 0 && ++*index)
+		handle_vague(buffer, res);
 	else if (prompt[*index] == '$' && ++*index)
 		handle_var(prompt, index, buffer, res);
 	else

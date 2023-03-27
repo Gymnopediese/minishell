@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 11:36:49 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/27 12:00:43 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,20 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 	while (data[++i])
 	{
 		buffer->b[buffer->i++] = data[i];
+		handle_buffer(buffer, res);
+	}
+}
+
+void	handle_vague(t_buff *buffer, char *res)
+{
+	int		i;
+	char	*path;
+
+	path = get_vars_value("ZDOTDIR");
+	i = -1;
+	while (path[++i])
+	{
+		buffer->b[buffer->i++] = path[i];
 		handle_buffer(buffer, res);
 	}
 }
