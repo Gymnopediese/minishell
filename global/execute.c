@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/27 11:45:15 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/28 15:09:42 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*get_executable(char *exec)
 	char	buff[777];
 
 	i = -1;
-	ft_putendl(exec);
 	if (exec && exec[0] == '/')
 	{
 		if (access(exec, F_OK) == 0)
@@ -52,17 +51,19 @@ char	*get_executable(char *exec)
 	return (0);
 }
 
-
-
 int	exute_process(t_args *argv, const char	*file, int *fd)
 {
 	close(fd[0]);
 	if (argv->read || pipi()->to_pipe == 1)
+	{
 		dup2(pipi()->fd[0], STDIN_FILENO);
+	}
 	else
 		dup2(0, STDIN_FILENO);
 	if (argv->end == PIPE || argv->right->size || argv->rright->size)
+	{
 		dup2(fd[1], STDOUT_FILENO);
+	}
 	else
 		dup2(STDOUT_FILENO, STDOUT_FILENO);
 	execve(file, argv->args, export_env());
@@ -105,7 +106,7 @@ int	execute(t_args *args)
 	if (file == 0)
 		return (-1);
 	pipe(fd);
-	ft_putstra_clean(args->args);
+	// ft_putstra_clean(args->args);
 	pid = fork();
 	if (pid == 0)
 		return (exute_process(args, file, fd));

@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 11:30:17 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/28 15:08:13 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,24 +99,24 @@ void	exec_line(t_slst *args)
 		else if (ft_strtablen(argv->args) == 1)
 			declare_variable(argv->args[0], 0); //export ou pas ?
 	}
-	//ft_putnbrn(exec);
 	priorities(args, argv, !exec);
 	exec_line(args);
 }
 
 int	main(__attribute__((unused)) int argc,
 	__attribute__((unused)) char **argv, char **envp)
-{
+{	
 	char	*prompt;
 	t_slst	*list;
 
 	import_env(envp);
-	printf("%s\n", get_vars_value("PATH"));
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
 	add_history("echo $PATH");
-	printf("%i\n", get_vars_value("PATH")[5]);
+	add_history("make && ./minishell");
+	add_history("echo salut | cat -e");
+	printf("welcom to our minishell :)\n");
 	while (1)
 	{
 		connect_signals();
@@ -127,7 +127,7 @@ int	main(__attribute__((unused)) int argc,
 		{
 			add_history(prompt);
 			list = parser(prompt);
-			put_slst(list);
+			//put_slst(list);
 			exec_line(list);
 		}
 		free(prompt);

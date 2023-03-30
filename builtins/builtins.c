@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 11:20:19 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/28 15:05:21 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	builtins(t_args *args)
 
 	argc = ft_strtablen(args->args);
 	if (args->end == PIPE || args->right->size || args->rright->size)
+	{
 		pipe(fd);
+	}
 	else
 		fd[1] = 1;
 	if (ft_strcmp(args->args[0], "echo") == 0)
@@ -42,6 +44,7 @@ int	builtins(t_args *args)
 	{
 		close(fd[1]);
 		filename_injection(args, fd[0]);
+		pipi()->to_pipe = 1;
 		close(fd[0]);
 	}
 	return (1);

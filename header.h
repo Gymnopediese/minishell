@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/27 12:00:50 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/28 14:42:37 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ typedef struct s_slst
 	int		size;
 }	t_slst;
 
+// char	**args;
+// t_slst	*right;
+// t_slst	*rright;
+// int		end;
+// int		read;
 typedef struct s_args
 {
 	char	**args;
