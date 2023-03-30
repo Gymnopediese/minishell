@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filename_injection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2022/12/09 11:46:16 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:07:19 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	filename_injection(t_args *args, int read_fd)
 	char	buffer[1000];
 	int		size;
 	int		*fds;
-	int		fds_len;
+	size_t	fds_len;
 
 	fds_len = args->right->size + args->rright->size;
-	fds = allok(fds_len, sizeof(int), 1);
+	ft_mf(MALLOC, (void **)&fds, sizeof(int) * fds_len);
 	open_fds(args, fds);
 	size = 1;
 	if (args->end == PIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/28 15:09:42 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:29:13 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_executable(char *exec)
 	{
 		paths = ft_split(get_vars_value("PATH"), ':');
 		if (paths == 0)
-			ft_garbage_colector(0, 1, 1);
+			finish("Erreur : PATH null\n");
 		while (paths[++i])
 		{
 			ft_strcpy(buff, paths[i]);
@@ -43,7 +43,7 @@ char	*get_executable(char *exec)
 			if (access(buff, F_OK) == 0)
 			{
 				ft_free_pp((void **)paths);
-				return (ft_strdup(buff));
+				return (ft_safecpy(buff)); // Est ce qu'on peut le free rapidement apres
 			}
 		}
 		ft_free_pp((void **)paths);

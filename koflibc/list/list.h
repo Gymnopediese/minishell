@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 17:25:49 by albaud            #+#    #+#             */
-/*   Updated: 2022/10/31 19:31:00 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 14:23:54 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		ft_size(t_list *begin_list);
 void	ft_free_node(t_list *node, int pointers);
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_indexof_list(t_list *list_ptr, void *data_ref, int (*cmp)());
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 t_list	*ft_create_elem(void *data);

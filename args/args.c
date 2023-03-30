@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 11:28:46 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:09:56 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	arg_num(t_slink *link)
+size_t	arg_num(t_slink *link)
 {
-	int	res;
+	size_t	res;
 
 	res = 0;
 	while (link)
@@ -34,14 +34,16 @@ t_args	*allok_args(t_slst *args)
 {
 	t_args	*res;
 
-	res = allok(sizeof(*res), 1, 1);
-	res->args = allok(sizeof(char *), arg_num(args->first), 1);
-	res->right = allok(sizeof(*res->right), 1, 1);
-	res->rright = allok(sizeof(*res->right), 1, 1);
+	ft_mf(MALLOC, (void **)&res, sizeof(*res));
+	ft_mf(MALLOC, (void **)&(res->args), sizeof(char *) * arg_num(args->first));
+	ft_mf(MALLOC, (void **)&(res->right), sizeof(*res->right));
+	ft_mf(MALLOC, (void **)&(res->rright), sizeof(*res->right));
 	res->right->first = 0;
 	res->right->last = 0;
+	res->right->size = 0;
 	res->rright->first = 0;
 	res->rright->last = 0;
+	res->rright->size = 0;
 	res->read = 0;
 	res->end = 0;
 	return (res);

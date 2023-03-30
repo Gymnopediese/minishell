@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/27 12:07:00 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:02:11 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_word(char *prompt, int *index)
 	}
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
-		ft_garbage_colector(0, 1, 1);
+		finish("Error in get_next_word\n");
 	return (res);
 }
 
@@ -104,7 +104,7 @@ t_slst	*parser(char *prompt)
 	char	*arg;
 
 	i = 0;
-	res = allok(sizeof(*res), 1, 1);
+	ft_mf(MALLOC, (void **)&res, sizeof(*res));
 	res->first = 0;
 	res->last = 0;
 	res->size = 0;
@@ -119,6 +119,8 @@ t_slst	*parser(char *prompt)
 		{
 			slst_add_back(res, arg, TEXT, level(2));
 		}
+		else
+			free(arg);
 		if (mode(-1))
 			slst_add_back(res, "pipe", mode(-1), level(2));
 	}

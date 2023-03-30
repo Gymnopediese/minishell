@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:48 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 11:32:18 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:32:41 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	finish(char *message)
 	close(pipi()->fd[1]);
 	free_vars();
 	clear_history();
-	ft_garbage_colector(0, 1, 1); // EN dernier
+	ft_mf(FREE_ALL, 0, 0); // EN dernier
 }

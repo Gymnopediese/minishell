@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 12:00:43 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:53:20 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_buffer(t_buff *buffer, char *res)
 	{
 		res = ft_strjoin(res, buffer->b);
 		if (res == 0)
-			ft_garbage_colector(0, 1, 1);
+			finish("Error when handle buffer\n");
 		buffer->i = 0;
 	}
 }
@@ -51,10 +51,11 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 	while (prompt[*index + i] && prompt[*index + i] != '"'
 		&& prompt[*index + i] != ' ' && prompt[*index + i] != '\'')
 		++i;
-	var_name = allok(sizeof(*var_name), (i + 1), 1);
+	ft_mf(MALLOC, (void **)&var_name, sizeof(*var_name) * (i + 1));
 	ft_strncpy(var_name, prompt + *index, i);
 	*index += i;
 	data = get_vars_value(var_name);
+	ft_mf(FREE, (void **)&var_name, 0);
 	i = -1;
 	while (data[++i])
 	{

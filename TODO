@@ -7,10 +7,5 @@ SIGNAUX:		GERER RL_REPLACE_LINE
 STRDUP			ATTENTION CAR N'UTILISE PAS ALLOK MAIS malloc
 
 free avec le garbage collector dans del_vars (je sais pas comment il fonctionne)
-a on le droit au errno (je pense pas)
-les executables ne marchent pas avec /bin/...
-les chemins qui commencent par ~ ne marchent pas
+les chemins qui commencent par ~ semble bien marcher mais pas encore full test
 verifier si env == export
-
-
-ctrl + d ne marche pas si on est en train d'ecrire: C NORMAL 
