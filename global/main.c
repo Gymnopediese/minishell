@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/02 10:46:50 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/02 10:49:54 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	exec_line(t_slst *args)
 		exec = execute(argv);
 		if (exec != -1)
 		{
-			temp = ft_itoa(exec);
+			temp = ft_itoa(exec); //malloc non protege
 			add_vars("?", temp, 1); //export ou pas ?
 			free(temp);
 		}
@@ -103,8 +103,24 @@ void	exec_line(t_slst *args)
 	exec_line(args);
 }
 
+// A deplacer dans un autre fichier
+char	*ft_safecpy(const char *src)
+{
+	int		i;
+	int		len;
+	char	*str;
+
+	len = ft_strlen(src);
+	ft_mf(MALLOC, (void *)&str, sizeof(*str) * (len + 1));
+	i = -1;
+	while (++i < len)
+		str[i] = src[i];
+	str[i] = 0;
+	return (str);
+}
+
 int	main(__attribute__((unused)) int argc,
-	__attribute__((unused)) char **argv, char **envp)
+	__attribute__((unused)) char **argv, __attribute__((unused))char **envp)
 {	
 	char	*prompt;
 	t_slst	*list;
@@ -113,10 +129,10 @@ int	main(__attribute__((unused)) int argc,
 	pipi()->fd[0] = 0;
 	pipi()->fd[1] = 1;
 	pipi()->to_pipe = 0;
-	add_history("echo $PATH");
-	add_history("make && ./minishell");
-	add_history("echo salut | cat -e");
-	printf("welcom to our minishell :)\n");
+	//add_history("echo $PATH");
+	//add_history("make && ./minishell");
+	//add_history("echo salut | cat -e");
+	printf("welcome to our minishell :)\n");
 	while (1)
 	{
 		connect_signals();

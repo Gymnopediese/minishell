@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/21 13:15:40 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:40:00 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ void	add_vars(const char *name, char *data, char export)
 		{
 			if (ft_strcmp((char *)link->content.name, (char *)name) == 0)
 			{
-				free(link->content.data);
-				link->content.data = ft_strdup(data);
+				ft_mf(FREE, (void *)&link->content.data, 0);
+				link->content.data = ft_safecpy(data);
 				link->content.export |= export;
 				return ;
 			}
 			link = link->next;
 		}
 	}
-	vlst_add_front(vars, (t_var){ft_strdup(name), ft_strdup(data), export});
+	vlst_add_front(vars, (t_var){ft_safecpy(name), ft_safecpy(data), export});
 }
 
 
@@ -64,6 +64,7 @@ void	del_vars(const char *name)
 	t_vlink		*tmp;
 	t_vlink		*prev;
 
+	printf("Enter del vars\n");
 	vars = *get_vars();
 	tmp = vars;
 	prev = 0;
@@ -71,13 +72,13 @@ void	del_vars(const char *name)
 	{
 		if (!ft_strcmp(vars->content.name, (char *)name))
 		{
-			free(tmp->content.data);
-			free((void *)tmp->content.name);
+			ft_mf(FREE, (void **)&tmp->content.name, 0);
+			ft_mf(FREE, (void **)&tmp->content.data, 0);
 			if (prev)
 				prev->next = tmp->next;
 			else
 				*get_vars() = vars->next;
-			free(vars); //free avec le garbage collector
+			ft_mf(FREE, (void **)&vars, 0);
 			return ;
 		}
 		prev = tmp;
@@ -94,10 +95,10 @@ void	free_vars(void)
 	tmp = vars;
 	while (tmp)
 	{
-		free(tmp->content.data);
-		free((void *)tmp->content.name);
+		ft_mf(FREE, (void **)&tmp->content.data, 0);
+		ft_mf(FREE, (void **)&tmp->content.name, 0);
 		tmp = vars->next;
+		ft_mf(FREE, (void **)&vars, 0);
 		vars = tmp;
-		ft_putstr("Free\n");
 	}
 }

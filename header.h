@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/28 14:42:37 by albaud           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:02:11 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 # define VARS_ADD 2
 # define VARS_FREE 3
 # define VARS_DEL 4
+// Pour ft_mf
+# define MALLOC 0
+# define FREE 1
+# define FREE_ALL 2
 
 enum
 {
@@ -84,7 +88,7 @@ typedef struct s_slst
 {
 	t_slink	*first;
 	t_slink	*last;
-	int		size;
+	size_t	size;
 }	t_slst;
 
 // char	**args;
@@ -104,6 +108,10 @@ typedef struct s_args
 # include "builtins/builtins.h"
 
 void		rl_replace_line(const char *text, int clear_undo);
+// ft_mf
+void		ft_mf(int op, void **ptr, size_t size);
+// Non defini
+char		*ft_safecpy(const char *src);
 // parser.c
 int			is_symbole(char c);
 t_slst		*parser(char *prompt);
