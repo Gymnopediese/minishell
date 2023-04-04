@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/02 10:50:12 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 12:32:58 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,19 @@ void	import_env(char **env)
 
 	i = -1;
 	while (env[++i] != 0)
-		declare_variable(ft_safecpy(env[i]), 1);
+		declare_variable(env[i], 1);
+}
+
+void	free_env(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+	{
+		free(env[i]);
+	}
+	free(env);
 }
 
 char	**export_env(void) //TODO split
@@ -68,7 +80,7 @@ char	**export_env(void) //TODO split
 			size += 1;
 		current = current->next;
 	}
-	ft_mf(MALLOC, (void **)&result, sizeof(char *) * (size + 1));
+	result = ft_malloc(sizeof(char *) * (size + 1));
 	result[size] = 0;
 	current = *vars;
 	i = -1;
@@ -77,8 +89,8 @@ char	**export_env(void) //TODO split
 		if (!current->content.export)
 			continue ;
 		size = ft_strlen(current->content.name);
-		ft_mf(MALLOC, (void **)(result + i), sizeof(char *)
-			* (size + ft_strlen(current->content.data) + 2));
+		*(result + i) = ft_malloc(sizeof(char *)
+				* (size + ft_strlen(current->content.data) + 2));
 		ft_strcpy(result[i], current->content.name);
 		result[i][size] = '=';
 		ft_strcpy(result[i] + size + 1, current->content.data);

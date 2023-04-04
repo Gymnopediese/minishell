@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/03 14:54:38 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 12:29:52 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@
 # define VARS_ADD 2
 # define VARS_FREE 3
 # define VARS_DEL 4
-// Pour ft_mf
-# define MALLOC 0
-# define FREE 1
-# define FREE_ALL 2
 
 enum
 {
@@ -105,11 +101,13 @@ typedef struct s_args
 	int		read;
 }	t_args;
 
+void		free_slist(t_slst *slist);
+
 # include "builtins/builtins.h"
 
 void		rl_replace_line(const char *text, int clear_undo);
 // ft_mf
-void		ft_mf(int op, void **ptr, size_t size);
+void		*ft_malloc(size_t size);
 // Non defini
 char		*ft_safecpy(const char *src);
 // parser.c
@@ -144,7 +142,7 @@ t_args		*slst_to_tab(t_slst *args);
 void		connect_signals(void);
 //parse_error
 void		parse_error(char a, char b);
-void		finish(char *message);
+void		finish(char *message, int return_value);
 //builtins
 int			execute(t_args *args);
 int			filename_injection(t_args *args, int read_fd);

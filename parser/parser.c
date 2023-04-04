@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/03 15:08:43 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 12:26:58 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ char	*get_next_word(char *prompt, int *index)
 	char		*res;
 
 	buffer.i = 0;
-	res = ft_calloc(1, 1);
-	if (res == 0)
-		finish("Calloc error\n");
+	res = ft_malloc(1);
 	handle_buffer(&buffer, res);
 	while (prompt[*index] && prompt[*index] != ' ')
 	{
@@ -95,7 +93,7 @@ char	*get_next_word(char *prompt, int *index)
 	}
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
-		finish("Error in get_next_word\n");
+		finish("Error in get_next_word\n", 1);
 	return (res);
 }
 
@@ -106,7 +104,7 @@ t_slst	*parser(char *prompt)
 	char	*arg;
 
 	i = 0;
-	ft_mf(MALLOC, (void **)&res, sizeof(*res));
+	res = ft_malloc(sizeof(*res));
 	res->first = 0;
 	res->last = 0;
 	res->size = 0;
@@ -117,7 +115,7 @@ t_slst	*parser(char *prompt)
 		while (prompt[i] && prompt[i] == ' ')
 			i++;
 		arg = get_next_word(prompt, &i);
-		if (arg && arg[0] && !wildcards(arg, res))
+		if (arg[0] && !wildcards(arg, res))
 		{
 			slst_add_back(res, arg, TEXT, level(2));
 		}

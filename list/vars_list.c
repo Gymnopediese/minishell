@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:31:03 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/30 14:41:58 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:06:38 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_vlink	*vlst_new(t_var content)
 {
 	t_vlink	*new_lst;
 
-	ft_mf(MALLOC, (void **)&new_lst, sizeof(*new_lst));
+	new_lst = ft_malloc(sizeof(*new_lst));
 	new_lst->content = content;
 	new_lst->next = 0;
 	return (new_lst);

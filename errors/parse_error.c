@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:48 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/30 16:32:41 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:23:13 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_error(char a, char b)
 	//todo: new line
 }
 
-void	finish(char *message)
+void	finish(char *message, int return_value) // Mettre argument retour
 {
 	if (message != 0)
 		ft_putstr_fd(message, 2);
@@ -29,5 +29,5 @@ void	finish(char *message)
 	close(pipi()->fd[1]);
 	free_vars();
 	clear_history();
-	ft_mf(FREE_ALL, 0, 0); // EN dernier
+	exit(return_value);
 }

@@ -3,38 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/03 15:34:31 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:31:07 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
 //utilise notre varibale path pour trouver une version valid de lexecutable 
-char	*get_executable(char *exec)
+int	get_executable(char *exec, char buff[])
 {
 	char	**paths;
 	int		i;
-	char	buff[777];
 
 	i = -1;
 	if (exec && exec[0] == '/')
 	{
-		if (access(exec, F_OK) == 0)
-			return (exec);//todot else erno; paths
+		if (access(exec, F_OK) == 0) // error no executable
+		{
+			ft_strcpy(buff, exec);
+			return (1);
+		}
+		
 	}
 	else if (exec && exec[0] == '.' && exec[1] == '/')
 	{
 		if (access(&exec[2], F_OK) == 0)
-			return (exec);//todot else erno; paths
+		{
+			ft_strcpy(buff, exec);
+			return (1);
+		}
 	}
 	else
 	{
 		paths = ft_split(get_vars_value("PATH"), ':');
 		if (paths == 0)
-			finish("Erreur : PATH null\n");
+			finish("Erreur : PATH null\n", 2);
 		while (paths[++i])
 		{
 			ft_strcpy(buff, paths[i]);
@@ -43,7 +49,7 @@ char	*get_executable(char *exec)
 			if (access(buff, F_OK) == 0)
 			{
 				ft_free_pp((void **)paths);
-				return (ft_safecpy(buff)); // Est ce qu'on peut le free rapidement apres
+				return (1);
 			}
 		}
 		ft_free_pp((void **)paths);
@@ -53,6 +59,8 @@ char	*get_executable(char *exec)
 
 int	exute_process(t_args *argv, const char	*file, int *fd)
 {
+	char	**env;
+
 	close(fd[0]);
 	if (argv->read || pipi()->to_pipe == 1)
 	{
@@ -66,10 +74,22 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	}
 	else
 		dup2(STDOUT_FILENO, STDOUT_FILENO);
-	execve(file, argv->args, export_env());
+	env = export_env();
+	execve(file, argv->args, env);
+	ft_free_pp((void **)env);
 	ft_putstr_fd(file, 2);
-	ft_putendl_fd(" failed to execute\n", 2);
+	ft_putstr_fd(" failed to execute\n", 2);
 	return (1);
+}
+
+void	free_args(t_args *argv)
+{
+	free_slist(argv->right);
+	free_slist(argv->rright);
+	free(argv->args);
+	free(argv->right);
+	free(argv->rright);
+	free(argv);
 }
 
 int	wait_execution(t_args *argv, int *fd)
@@ -91,29 +111,27 @@ int	wait_execution(t_args *argv, int *fd)
 	else
 		pipi()->to_pipe = 1;
 	close(fd[0]);
+	free_args(argv);
 	return (status_code);
 }
 
 // Execute "file" and return it's return value
 int	execute(t_args *args)
 {
-	int			pid;
-	char	*file;
-	int			fd[2];
+	int		pid;
+	char	file[1024];
+	int		fd[2];
 
 	errno = 0;
-	file = get_executable(args->args[0]);
-	if (file == 0)
-		return (-1);
+	if (!get_executable(args->args[0], file))
+		return (127);
 	pipe(fd);
-	// ft_putstra_clean(args->args);
+	ft_putstra_clean(args->args);
 	pid = fork();
 	if (pid == 0)
 		return (exute_process(args, file, fd));
 	else
 	{
-		free(file);
-		ft_free_pp((void **)args->args);
 		return (wait_execution(args, fd));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/03 15:11:38 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:13:05 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	wildcards(char *arg, t_slst *res)
 	{
 		mode(0);
 		if (wildcards_match(glob[i], arg) == 0 && ++match)
-			slst_add_back(res, strdup(glob[i]), TEXT, level(2));
+			slst_add_back(res, ft_safecpy(glob[i]), TEXT, level(2));
 	}
 	if (!match)
 	{

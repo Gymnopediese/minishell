@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/03 15:11:43 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:35:46 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,9 @@ void	exec_line(t_slst *args)
 	wait(&exec);
 	if (args->first == 0)
 		return ;
-	argv = slst_to_tab(args);
 	exec = 0;
-	if (args->first == 0)
-		return ;
+	argv = slst_to_tab(args);
+	ft_putstra_clean(argv->args);
 	if (builtins(argv) == -1)
 	{
 		exec = execute(argv);
@@ -118,7 +117,7 @@ char	*ft_safecpy(const char *src)
 	char	*str;
 
 	len = ft_strlen(src);
-	ft_mf(MALLOC, (void *)&str, sizeof(*str) * (len + 1));
+	str = ft_malloc(sizeof(*str) * (len + 1));
 	i = -1;
 	while (++i < len)
 		str[i] = src[i];
@@ -131,6 +130,7 @@ int	main(__attribute__((unused)) int argc,
 {	
 	char	*prompt;
 	t_slst	*list;
+	t_slst	to_free;
 
 	import_env(envp);
 	pipi()->fd[0] = 0;
@@ -145,13 +145,15 @@ int	main(__attribute__((unused)) int argc,
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
-			finish("No problemo\n");
+			finish("No problemo\n", 0);
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);
 			list = parser(prompt);
-			//put_slst(list);
+			to_free.first = list->first;
 			exec_line(list);
+			free_slist(&to_free);
+			// Ici free la list
 		}
 		free(prompt);
 	}

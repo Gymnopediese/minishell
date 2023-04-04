@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/30 16:40:00 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:10:46 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	add_vars(const char *name, char *data, char export)
 		{
 			if (ft_strcmp((char *)link->content.name, (char *)name) == 0)
 			{
-				ft_mf(FREE, (void *)&link->content.data, 0);
+				free(link->content.data);
 				link->content.data = ft_safecpy(data);
 				link->content.export |= export;
 				return ;
@@ -56,7 +56,6 @@ void	add_vars(const char *name, char *data, char export)
 	}
 	vlst_add_front(vars, (t_var){ft_safecpy(name), ft_safecpy(data), export});
 }
-
 
 void	del_vars(const char *name)
 {
@@ -72,13 +71,13 @@ void	del_vars(const char *name)
 	{
 		if (!ft_strcmp(vars->content.name, (char *)name))
 		{
-			ft_mf(FREE, (void **)&tmp->content.name, 0);
-			ft_mf(FREE, (void **)&tmp->content.data, 0);
+			free(tmp->content.name);
+			free(tmp->content.data);
 			if (prev)
 				prev->next = tmp->next;
 			else
 				*get_vars() = vars->next;
-			ft_mf(FREE, (void **)&vars, 0);
+			free(vars);
 			return ;
 		}
 		prev = tmp;
@@ -95,10 +94,10 @@ void	free_vars(void)
 	tmp = vars;
 	while (tmp)
 	{
-		ft_mf(FREE, (void **)&tmp->content.data, 0);
-		ft_mf(FREE, (void **)&tmp->content.name, 0);
+		free(tmp->content.data);
+		free(tmp->content.name);
 		tmp = vars->next;
-		ft_mf(FREE, (void **)&vars, 0);
+		free(vars);
 		vars = tmp;
 	}
 }

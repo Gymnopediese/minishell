@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/30 15:07:19 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:55:46 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	filename_injection(t_args *args, int read_fd)
 	size_t	fds_len;
 
 	fds_len = args->right->size + args->rright->size;
-	ft_mf(MALLOC, (void **)&fds, sizeof(int) * fds_len);
+	fds = ft_malloc(sizeof(int) * fds_len);
 	open_fds(args, fds);
 	size = 1;
 	if (args->end == PIPE)
@@ -73,10 +73,14 @@ int	filename_injection(t_args *args, int read_fd)
 	{
 		size = read(read_fd, buffer, 999);
 		if (size == -1)
+		{
+			free(fds);
 			return (0);
+		}
 		buffer[size] = 0;
 		write_in_fds(buffer, fds, fds_len, args->end);
 	}
 	close_fds(fds, fds_len);
+	free(fds);
 	return (0);
 }

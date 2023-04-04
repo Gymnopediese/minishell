@@ -2,6 +2,7 @@
 	"files.associations": {
 		"struct.h": "c",
 		"header.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"wait.h": "c"
 	}
 }

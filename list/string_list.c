@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:56:30 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/30 15:31:49 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:32:10 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ t_slink	*slst_new(char *str, int type, int level)
 {
 	t_slink	*new_lst;
 
-	ft_mf(MALLOC, (void **)&new_lst, sizeof(t_slink));
-	new_lst->content = str;
-	ft_garbage_colector(str, 0, 1); // TODO je sais pas ce que ca fait
+	new_lst = ft_malloc(sizeof(t_slink));
+	new_lst->content = str; // Verifier si free
 	new_lst->type = type;
 	new_lst->level = level;
 	new_lst->next = 0;
@@ -62,5 +61,21 @@ void	slst_add_front(t_slst *lst, char *str, int type, int level)
 		lst->first = new_link;
 		lst->last = new_link;
 		lst->size = 1;
+	}
+}
+
+void	free_slist(t_slst *slist)
+{
+	t_slink		*vars;
+	t_slink		*tmp;
+
+	vars = slist->first;
+	tmp = vars;
+	while (tmp)
+	{
+		free(tmp->content);
+		tmp = vars->next;
+		free(vars);
+		vars = tmp;
 	}
 }

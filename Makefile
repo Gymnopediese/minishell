@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: albaud <albaud@student.42.fr>              +#+  +:+       +#+         #
+#    By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/09 10:47:51 by albaud            #+#    #+#              #
-#    Updated: 2023/04/03 14:55:18 by albaud           ###   ########.fr        #
+#    Updated: 2023/04/04 13:33:21 by bphilago         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,3 +50,10 @@ run: all
 	./minishell
 
 .PHONY : all c recompile re clean fclean run
+
+
+malloc:
+	export MallocStackLogging=1
+
+unmalloc:
+	unset MallocStackLogging
