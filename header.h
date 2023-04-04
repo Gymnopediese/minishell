@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/30 16:02:11 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:54:38 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,4 +158,5 @@ int			is_the_end(t_slink *link);
 void		put_pipi(void);
 int			is_redirection(t_slink *link);
 
+void		priorities(t_slst *args, t_args *argv, int success);
 #endif

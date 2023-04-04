@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/30 17:02:11 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:08:43 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
 	*index += 1;
 	while (prompt[*index] == ' ')
 		*index += 1;
-	// if (ft_index(prompt[*index]))
-	// 	parse_error(prompt[*index], prompt[*index + 1]);
+	if (is_symbole(prompt[*index]))
+		parse_error(prompt[*index], prompt[*index + 1]);
 	return (1);
 }
 
@@ -60,6 +60,8 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 		buffer->b[buffer->i++] = prompt[*index];
 		*index += 1;
 	}
+	else if (prompt[*index] == '*' && ++*index)
+		buffer->b[buffer->i++] = -1;
 	else if (prompt[*index] == '\'' && ++*index)
 		handle_simple_quote(prompt, index, buffer, res);
 	else if (prompt[*index] == '~' && (prompt[*index + 1] == ' '

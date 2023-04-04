@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:37 by bphilago          #+#    #+#             */
-/*   Updated: 2023/03/21 12:49:15 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:01:17 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_unset(char **args, int argc, int fd)
 	(void) fd;
 	i = 0;
 	errno = 0;
-	if (argc == 1)
+	if (argc == 1 && ++errno)
 		ft_putendl_fd("unset: not enough arguments", 2);
 	else
 	{

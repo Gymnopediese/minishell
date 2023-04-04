@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/27 12:05:51 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:11:38 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	wildcards_match(char *tomatch, char *target)
 	j = 0;
 	while (target[++i])
 	{
-		if (target[i] == '*')
+		if (target[i] == -1)
 		{
-			while (target[i] && target[i] == '*')
+			while (target[i] && target[i] == -1)
 				i++;
 			while (tomatch[j] && tomatch[j] != target[i])
 				j++;
@@ -45,7 +45,7 @@ int	wildcards(char *arg, t_slst *res)
 	int		i;
 	int		match;
 
-	if (ft_contain_subs(arg, "*") == 0)
+	if (ft_strcontain(arg, -1) == 0)
 		return (0);
 	glob = ft_glob(getcwd(v, 777), 0);
 	len = ft_strtablen(glob);
@@ -59,6 +59,10 @@ int	wildcards(char *arg, t_slst *res)
 	}
 	if (!match)
 	{
+		i = -1;
+		while (arg[++i])
+			if (arg[i] == -1)
+				arg[i] = '*';
 		ft_putstr_fd("minish: no matches found: ", 2);
 		ft_putstr_fd(arg, 2);
 	}

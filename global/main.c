@@ -6,7 +6,7 @@
 /*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/02 10:49:54 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:11:43 by albaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,45 @@ void	put_pipi(void)
 	ft_putendl("printing pipi done");
 }
 
-//gere les priorité
-void	priorities(t_slst *args, t_args *argv, int success)
-{
-	t_slink	*start;
+// //gere les priorité
+// void	priorities(t_slst *args, t_args *argv, int success)
+// {
+// 	t_slink	*start;
 
-	start = args->first;
-	if (argv->end == OR && success)
-	{
-		while (start && start->level >= args->first->level)
-		{
-			if (start->type == AND && start->level == args->first->level)
-			{
-				start = start->next;
-				break ;
-			}
-			start = start->next;
-		}
-	}
-	else if (argv->end == AND && !success)
-	{
-		while (start && start->level >= args->first->level)
-		{
-			if (start->type == OR && start->level == args->first->level)
-			{
-				start = start->next;
-				break ;
-			}
-			start = start->next;
-		}
-	}
-	else
-	{
-		while (start && !is_the_end(start))
-			start = start->next;
-		if (start != 0)
-			start = start->next;
-	}
-	args->first = start;
-}
+// 	start = args->first;
+// 	if (argv->end == OR && success)
+// 	{
+// 		while (start && start->level >= args->first->level)
+// 		{
+// 			if (start->type == AND && start->level == args->first->level)
+// 			{
+// 				start = start->next;
+// 				break ;
+// 			}
+// 			start = start->next;
+// 		}
+// 	}
+// 	else if (argv->end == AND && !success)
+// 	{
+// 		while (start && start->level >= args->first->level)
+// 		{
+// 			if (start->type == OR && start->level == args->first->level)
+// 			{
+// 				start = start->next;
+// 				break ;
+// 			}
+// 			start = start->next;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		while (start && !is_the_end(start))
+// 			start = start->next;
+// 		if (start != 0)
+// 			start = start->next;
+// 	}
+// 	args->first = start;
+// }
 
 void	exec_line(t_slst *args)
 {
@@ -98,6 +98,13 @@ void	exec_line(t_slst *args)
 		}
 		else if (ft_strtablen(argv->args) == 1)
 			declare_variable(argv->args[0], 0); //export ou pas ?
+	}
+	else
+	{
+		exec = errno;
+		temp = ft_itoa(exec); //malloc non protege
+		add_vars("?", temp, 1); //export ou pas ?
+		free(temp);
 	}
 	priorities(args, argv, !exec);
 	exec_line(args);
