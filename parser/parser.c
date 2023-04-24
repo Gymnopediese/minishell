@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 12:26:58 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 11:40:14 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 	return (1);
 }
 
-char	*get_next_word(char *prompt, int *index)
+static char	*get_next_word(char *prompt, int *index)
 {
 	t_buff		buffer;
 	char		*res;
@@ -122,7 +122,7 @@ t_slst	*parser(char *prompt)
 		else
 			free(arg);
 		if (mode(-1))
-			slst_add_back(res, "pipe", mode(-1), level(2));
+			slst_add_back(res, strdup("pipe"), mode(-1), level(2));
 	}
 	return (res);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tate <tate@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 03:23:14 by tate              #+#    #+#             */
-/*   Updated: 2022/07/03 03:25:45 by tate             ###   ########.fr       */
+/*   Updated: 2023/04/24 12:56:40 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *s1, char *s2)
+char	*ft_strcpy(char *s1, const char *s2)
 {
 	int	i;
 

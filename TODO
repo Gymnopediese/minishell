@@ -6,6 +6,5 @@ SUJET:			UTILISER TOUTES LES FONCTION OU PRESQUE
 SIGNAUX:		GERER RL_REPLACE_LINE
 STRDUP			ATTENTION CAR N'UTILISE PAS ALLOK MAIS malloc
 
-free avec le garbage collector dans del_vars (je sais pas comment il fonctionne)
 les chemins qui commencent par ~ semble bien marcher mais pas encore full test
 verifier si env == export

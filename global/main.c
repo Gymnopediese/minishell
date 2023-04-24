@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/04 13:35:46 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:08:00 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,51 +30,21 @@ void	put_pipi(void)
 {
 	ft_putendl("printing pipi");
 	ft_putia_clean(pipi()->fd, 2);
-	ft_putnbrn(pipi()->to_pipe);
+	//ft_putnbrn(pipi()->to_pipe);
 	ft_putendl("printing pipi done");
 }
 
-// //gere les priorité
-// void	priorities(t_slst *args, t_args *argv, int success)
-// {
-// 	t_slink	*start;
+static void	free_argv(t_args *argv)
+{
+	free_slist(argv->right);
+	free_slist(argv->rright);
+	free(argv->args);
+	free(argv->right);
+	free(argv->rright);
+	free(argv);
+}
 
-// 	start = args->first;
-// 	if (argv->end == OR && success)
-// 	{
-// 		while (start && start->level >= args->first->level)
-// 		{
-// 			if (start->type == AND && start->level == args->first->level)
-// 			{
-// 				start = start->next;
-// 				break ;
-// 			}
-// 			start = start->next;
-// 		}
-// 	}
-// 	else if (argv->end == AND && !success)
-// 	{
-// 		while (start && start->level >= args->first->level)
-// 		{
-// 			if (start->type == OR && start->level == args->first->level)
-// 			{
-// 				start = start->next;
-// 				break ;
-// 			}
-// 			start = start->next;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		while (start && !is_the_end(start))
-// 			start = start->next;
-// 		if (start != 0)
-// 			start = start->next;
-// 	}
-// 	args->first = start;
-// }
-
-void	exec_line(t_slst *args)
+static void	exec_line(t_slst *args)
 {
 	int		exec;
 	char	*temp;
@@ -85,18 +55,20 @@ void	exec_line(t_slst *args)
 		return ;
 	exec = 0;
 	argv = slst_to_tab(args);
-	ft_putstra_clean(argv->args);
+	//ft_putstra_clean(argv->args);
 	if (builtins(argv) == -1)
 	{
 		exec = execute(argv);
-		if (exec != -1)
+		if (exec != -1 && exec != 127) // TODO : Esst ce que != est ok ?
 		{
-			temp = ft_itoa(exec); //malloc non protege
-			add_vars("?", temp, 1); //export ou pas ?
+			temp = ft_itoa(exec); // TODO : malloc non protege
+			add_vars("?", temp, 1); // TODO : export ou pas ?
 			free(temp);
 		}
-		else if (ft_strtablen(argv->args) == 1)
-			declare_variable(argv->args[0], 0); //export ou pas ?
+		else if (ft_strtablen(argv->args) == 1) //TODO : tester si a un =
+		{
+			declare_variable(argv->args[0], 0); //TODO : export ou pas ?
+		}
 	}
 	else
 	{
@@ -106,6 +78,7 @@ void	exec_line(t_slst *args)
 		free(temp);
 	}
 	priorities(args, argv, !exec);
+	free_argv(argv);
 	exec_line(args);
 }
 
@@ -130,7 +103,6 @@ int	main(__attribute__((unused)) int argc,
 {	
 	char	*prompt;
 	t_slst	*list;
-	t_slst	to_free;
 
 	import_env(envp);
 	pipi()->fd[0] = 0;
@@ -145,15 +117,13 @@ int	main(__attribute__((unused)) int argc,
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
-			finish("No problemo\n", 0);
+			finish("", 0);
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);
 			list = parser(prompt);
-			to_free.first = list->first;
 			exec_line(list);
-			free_slist(&to_free);
-			// Ici free la list
+			free(list);
 		}
 		free(prompt);
 	}

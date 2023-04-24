@@ -6,14 +6,14 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 13:31:07 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:03:53 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
 //utilise notre varibale path pour trouver une version valid de lexecutable 
-int	get_executable(char *exec, char buff[])
+int	get_executable(const char *exec, char buff[])
 {
 	char	**paths;
 	int		i;
@@ -26,7 +26,6 @@ int	get_executable(char *exec, char buff[])
 			ft_strcpy(buff, exec);
 			return (1);
 		}
-		
 	}
 	else if (exec && exec[0] == '.' && exec[1] == '/')
 	{
@@ -82,16 +81,6 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	return (1);
 }
 
-void	free_args(t_args *argv)
-{
-	free_slist(argv->right);
-	free_slist(argv->rright);
-	free(argv->args);
-	free(argv->right);
-	free(argv->rright);
-	free(argv);
-}
-
 int	wait_execution(t_args *argv, int *fd)
 {
 	int	wstatus;
@@ -111,27 +100,25 @@ int	wait_execution(t_args *argv, int *fd)
 	else
 		pipi()->to_pipe = 1;
 	close(fd[0]);
-	free_args(argv);
 	return (status_code);
 }
 
 // Execute "file" and return it's return value
-int	execute(t_args *args)
+int	execute(t_args *argv)
 {
 	int		pid;
 	char	file[1024];
 	int		fd[2];
 
 	errno = 0;
-	if (!get_executable(args->args[0], file))
+	if (!get_executable(argv->args[0], file))
 		return (127);
 	pipe(fd);
-	ft_putstra_clean(args->args);
 	pid = fork();
 	if (pid == 0)
-		return (exute_process(args, file, fd));
+		return (exute_process(argv, file, fd));
 	else
 	{
-		return (wait_execution(args, fd));
+		return (wait_execution(argv, fd));
 	}
 }

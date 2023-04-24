@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:56:30 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 13:32:10 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 11:38:19 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_slink	*slst_new(char *str, int type, int level)
 	t_slink	*new_lst;
 
 	new_lst = ft_malloc(sizeof(t_slink));
-	new_lst->content = str; // Verifier si free
+	new_lst->content = str; // TODO : Verifier si free
 	new_lst->type = type;
 	new_lst->level = level;
 	new_lst->next = 0;

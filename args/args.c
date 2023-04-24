@@ -6,13 +6,13 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/04 13:35:08 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 12:48:17 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-size_t	arg_num(t_slink *link)
+size_t	arg_num(const t_slink *link)
 {
 	size_t	res;
 
@@ -30,7 +30,7 @@ size_t	arg_num(t_slink *link)
 	return (res);
 }
 
-t_args	*allok_args(t_slst *args)
+static t_args	*allok_args(const t_slst *args)
 {
 	t_args	*res;
 
@@ -92,7 +92,7 @@ void	treat_element(t_args *res, t_slink *node, int *i)
 	}
 }
 
-t_args	*slst_to_tab(t_slst *args)
+t_args	*slst_to_tab(const t_slst *args)
 {
 	t_args	*res;
 	t_slink	*node;
@@ -105,8 +105,7 @@ t_args	*slst_to_tab(t_slst *args)
 		pipe(pipi()->fd);
 	while (node && !is_the_end(node))
 	{
-		res->args[i+1] = 0;
-		ft_putstra_clean(res->args);
+		res->args[i + 1] = 0;
 		treat_element(res, node, &i);
 		node = node->next;
 	}

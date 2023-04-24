@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 17:53:38 by albaud            #+#    #+#             */
-/*   Updated: 2023/03/21 12:26:00 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 12:57:57 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_itoa(int nb);
 char	*ft_itob(int nb, char *base);
 
 char	*ft_strncpy(char *s1, char *s2, int n);
-char	*ft_strcpy(char *s1, char *s2);
+char	*ft_strcpy(char *s1, const char *s2);
 char	*ft_strdup(const char *src);
 
 char	*ft_str_remove_at(char *str, int index, int len, int free_);
@@ -50,7 +50,7 @@ char	*ft_replace(char *to_ch, char *to_re, char *re);
 char	*ft_replacen(char *to_ch, char *to_re, char *re, int ammount);
 
 char	*ft_join(char **arr, char *glue);
-char	*ft_strcat(char *dest, char *src);
+char	*ft_strcat(char *dest, const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 char	*ft_strstr(char *str, char *to_find);

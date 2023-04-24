@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 12:29:52 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:51:37 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ typedef struct s_args
 void		free_slist(t_slst *slist);
 
 # include "builtins/builtins.h"
-
-void		rl_replace_line(const char *text, int clear_undo);
+void		rl_replace_line (const char *text, int clear_undo);
 // ft_mf
 void		*ft_malloc(size_t size);
 // Non defini
@@ -138,13 +137,13 @@ void		handle_simple_quote(char *prompt,
 void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
 void		handle_vague(t_buff *buffer, char *res);
 void		put_slst(t_slst *lst);
-t_args		*slst_to_tab(t_slst *args);
+t_args		*slst_to_tab(const t_slst *args);
 void		connect_signals(void);
 //parse_error
 void		parse_error(char a, char b);
 void		finish(char *message, int return_value);
 //builtins
-int			execute(t_args *args);
+int			execute(t_args *argv);
 int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);
 int			fd_fd_injection(int dst, int src);
@@ -152,9 +151,9 @@ int			wildcards(char *arg, t_slst *res);
 int			mode(int m);
 int			level(int m);
 t_pipe		*pipi(void);
-int			is_the_end(t_slink *link);
+int			is_the_end(const t_slink *link);
 void		put_pipi(void);
-int			is_redirection(t_slink *link);
+int			is_redirection(const t_slink *link);
 
-void		priorities(t_slst *args, t_args *argv, int success);
+void		priorities(t_slst *args, const t_args *argv, int success);
 #endif

@@ -6,7 +6,7 @@
 #    By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/09 10:47:51 by albaud            #+#    #+#              #
-#    Updated: 2023/04/04 13:33:21 by bphilago         ###   ########.fr        #
+#    Updated: 2023/04/24 13:47:14 by bphilago         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CFLAGS	= -Wall -Wextra -Werror
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		gcc -g -Wall -Werror -Wextra ${OBJS} ${LIB} -o ${NAME} -lreadline
+		gcc -g -Wall -Werror -Wextra ${OBJS} ${LIB} -o ${NAME} -lreadline  -I/Users/bphilago/.brew/opt/readline/include -L/Users/bphilago/.brew/opt/readline/lib
 
 c:
 	find *.c */*.c | tr '\n' ' '
