@@ -8,3 +8,5 @@ STRDUP			ATTENTION CAR N'UTILISE PAS ALLOK MAIS malloc
 
 les chemins qui commencent par ~ semble bien marcher mais pas encore full test
 verifier si env == export
+ajouter les messages d'erreur pour "foo"
+les tests avec cd -, just cd et cd ~ ne marchent pas

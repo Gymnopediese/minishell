@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/24 12:01:36 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:18:07 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	del_vars(const char *name)
 	t_vlink		*tmp;
 	t_vlink		*prev;
 
-	printf("Enter del vars\n");
 	vars = *get_vars();
 	tmp = vars;
 	prev = 0;
