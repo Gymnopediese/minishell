@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:48 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 12:23:13 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:03:45 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	parse_error(char a, char b)
 {
 	if (is_symbole(a) && is_symbole(b))
-		printf("minish: parse error near `%c%c'", a, b);
-	if (is_symbole(a))
-		printf("minish: parse error near `%c'", a);
-	//todo: new line
+		printf("minish: syntax error near unexpected token `%c%c'\n", a, b);
+	else if (is_symbole(a))
+		printf("minish: syntax error near unexpected token `%c'\n", a);
+	rl_replace_line("", 0);// TODO arreter de lire le reste des arguments
 }
 
 void	finish(char *message, int return_value) // Mettre argument retour

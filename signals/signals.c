@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/24 14:07:25 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:55:47 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 void	void_signal(int sig)
 {
 	(void) sig;
+	ft_putstr("\b\b  \b\b");
+	rl_redisplay();
 }
 
 void	new_line_signal(int sig)
 {
 	(void) sig;
-	printf("\33[2K\r$>\n"); // TODO Full fraude, voir si on peut faire autrement
+	printf("\b\b  \b\b\n"); // TODO Full fraude, voir si on peut faire autrement
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

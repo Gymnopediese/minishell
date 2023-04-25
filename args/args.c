@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/24 12:48:17 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:21:18 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,40 +49,69 @@ static t_args	*allok_args(const t_slst *args)
 	return (res);
 }
 
+char	*ft_read_nl(int fd)
+{
+	int		size;
+	char	*buffer;
+	char	tuffer[3333 + 1];
+
+	buffer = ft_calloc(1, 1);
+	size = read(fd, tuffer, 3333);
+	while (size)
+	{
+		tuffer[size] = 0;
+		buffer = ft_strjoin(buffer, tuffer);
+		if (ft_strcontain(buffer, '\n'))
+			break ;
+		size = read(fd, tuffer, 3333);
+	}
+	return (buffer);
+}
+
 void	herdock(int fd, char *sub)
 {
 	char	*herd;
 
 	while (1)
 	{
-		herd = readline("herdoc> ");
-		if (strcmp(sub, herd) == 0)
+		ft_putstr("heredoc> ");
+		herd = ft_read_nl(0);
+		if (ft_strlen(herd) > 0)
+			herd[ft_strlen(herd) - 1] = 0;
+		if (ft_strcmp(sub, herd) == 0)
+		{
+			free(herd);
 			return ;
+		}
 		else
 			ft_putendl_fd(herd, fd);
+		free(herd);
+		herd = 0;
 	}
 }
 
-void	treat_element(t_args *res, t_slink *node, int *i)
+t_slink	*treat_element(t_args *res, t_slink *node, int *i)
 {
 	if (node->type == RIGHT)
 	{
-		slst_add_back(res->right, node->next->content, 0, 0);
+		slst_add_back(res->right, ft_safecpy(node->next->content), 0, 0);
 		node = node->next;
 	}
 	else if (node->type == RRIGHT)
 	{
 		node = node->next;
-		slst_add_back(res->rright, node->content, 0, 0);
+		slst_add_back(res->rright, ft_safecpy(node->content), 0, 0);
 	}
 	else if (node->type == LEFT && ++res->read)
 	{
 		node = node->next;
+		pipi()->to_pipe = 1;
 		fd_injection(node->content, pipi()->fd[1]);
 	}
-	else if (node->type == LLEFT)
+	else if (node->type == LLEFT && ++res->read)
 	{
 		node = node->next;
+		pipi()->to_pipe = 1;
 		herdock(pipi()->fd[1], node->content);
 	}
 	else
@@ -90,6 +119,8 @@ void	treat_element(t_args *res, t_slink *node, int *i)
 		*i += 1;
 		res->args[*i] = node->content;
 	}
+	node = node->next;
+	return (node);
 }
 
 t_args	*slst_to_tab(const t_slst *args)
@@ -106,8 +137,7 @@ t_args	*slst_to_tab(const t_slst *args)
 	while (node && !is_the_end(node))
 	{
 		res->args[i + 1] = 0;
-		treat_element(res, node, &i);
-		node = node->next;
+		node = treat_element(res, node, &i);
 	}
 	if (node)
 		res->end = node->type;

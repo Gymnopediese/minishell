@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/24 11:40:14 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:27:10 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_slst	*parser(char *prompt)
 	while (prompt[i])
 	{
 		mode(0);
-		while (prompt[i] && prompt[i] == ' ')
+		while (prompt[i] && prompt[i] == ' ') // TODO is white space
 			i++;
 		arg = get_next_word(prompt, &i);
 		if (arg[0] && !wildcards(arg, res))
@@ -122,7 +122,7 @@ t_slst	*parser(char *prompt)
 		else
 			free(arg);
 		if (mode(-1))
-			slst_add_back(res, strdup("pipe"), mode(-1), level(2));
+			slst_add_back(res, ft_safecpy("pipe"), mode(-1), level(2));
 	}
 	return (res);
 }

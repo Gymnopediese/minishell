@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/04 12:55:46 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:03:52 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	open_fds(t_args *args, int *fds)
 	start = args->right->first;
 	while (start)
 	{
-		fds[index++] = open(ft_strjoin(DEBUG_PATH, start->content),
+		fds[index++] = open(start->content,
 				O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		start = start->next;
 	}
 	start = args->rright->first;
 	while (start)
 	{
-		fds[index++] = open(ft_strjoin(DEBUG_PATH, start->content),
+		fds[index++] = open(start->content,
 				O_WRONLY | O_APPEND | O_CREAT, 0666);
 		start = start->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/24 13:51:37 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:10:38 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		add_vars(const char *name, char *data, char export);
 void		free_vars(void);
 void		del_vars(const char *name);
 //export_manager
-void		print_vars(char export);
+void		print_vars(char export, int fd);
 void		declare_variable(char *declaration, char export);
 void		import_env(char **env);
 char		**export_env(void);

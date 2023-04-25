@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/04 12:24:37 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:13:20 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handle_double_quote(char *prompt, int *index, t_buff *buffer, char *res)
 	*index += 1;
 }
 
-void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
+void	handle_var(char *prompt, int *index, t_buff *buffer, char *res) // TODO : imprimer $ quand seul
 {
 	int			i;
 	char		*var_name;

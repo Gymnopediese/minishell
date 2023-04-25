@@ -6,7 +6,7 @@
 #    By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/09 10:47:51 by albaud            #+#    #+#              #
-#    Updated: 2023/04/24 13:47:14 by bphilago         ###   ########.fr        #
+#    Updated: 2023/04/25 16:04:12 by bphilago         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,20 +23,20 @@ LIB		= koflibc/libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 
-.c.o 	:
+all		:	${NAME}
+
+.c.o	:
 		${CC} -g ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all: ${NAME}
-
-${NAME}: ${OBJS}
+${NAME}	:	${OBJS}
 		gcc -g -Wall -Werror -Wextra ${OBJS} ${LIB} -o ${NAME} -lreadline  -I/Users/bphilago/.brew/opt/readline/include -L/Users/bphilago/.brew/opt/readline/lib
-
-c:
-	find *.c */*.c | tr '\n' ' '
 
 recompile :
 	make re -C koflibc
 	make re
+
+run : all
+	./minishell
 
 re : fclean all
 
@@ -46,14 +46,4 @@ fclean : clean
 clean :
 	rm -f $(OBJS)
 
-run: all
-	./minishell
-
-.PHONY : all c recompile re clean fclean run
-
-
-malloc:
-	export MallocStackLogging=1
-
-unmalloc:
-	unset MallocStackLogging
+.PHONY : all recompile re clean fclean run

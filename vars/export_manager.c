@@ -6,13 +6,13 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/04 12:32:58 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:10:25 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	print_vars(char export)
+void	print_vars(char export, int fd)
 {
 	t_vlink	*vars;
 
@@ -21,9 +21,9 @@ void	print_vars(char export)
 	{
 		if (!export || vars->content.export)
 		{			
-			ft_putstr((char *)vars->content.name);
-			ft_putchar('=');
-			ft_putendl(vars->content.data);
+			ft_putstr_fd((char *)vars->content.name, fd);
+			ft_putchar_fd('=', fd);
+			ft_putendl_fd(vars->content.data, fd);
 		}
 		vars = vars->next;
 	}

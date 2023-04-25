@@ -1,12 +1,9 @@
 PROTECT:		FORK, PIPES, WRITE, CLOSE, OPEN, MALLOC::ALLOK(fermer le program proprement)
 PARSING:		GERER LES PARSE ERRORS PAS TROP DURE A FAIRE MAIS FLEM
-TRACK SEGFAULT:	IN THE PARSER
-ENV:			GERER L'ENVIRONEMENT EXECV, ENV (Probleme avec le path sinon ok)
+TRACK SEGFAULT:	IN THE PARSER A tester ???
 SUJET:			UTILISER TOUTES LES FONCTION OU PRESQUE
-SIGNAUX:		GERER RL_REPLACE_LINE
-STRDUP			ATTENTION CAR N'UTILISE PAS ALLOK MAIS malloc
 
+ctrl + d ne marche pas si un message execution failed avant
 les chemins qui commencent par ~ semble bien marcher mais pas encore full test
+env | grep ? et norminette
 verifier si env == export
-ajouter les messages d'erreur pour "foo"
-les tests avec cd -, just cd et cd ~ ne marchent pas
