@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 15:29:34 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:53:48 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	builtins(t_args *args)
 {
-	int	fd[2];
+	int	fd[2]; // TODO : utiliser le bon fd
 	int	argc;
 
 	argc = ft_strtablen(args->args);
@@ -29,7 +29,7 @@ int	builtins(t_args *args)
 	else if (ft_strcmp(args->args[0], "cd") == 0)
 		ft_cd(args->args, argc, fd[1]);
 	else if (ft_strcmp(args->args[0], "pwd") == 0)
-		ft_pwd(args->args, argc, fd[1]);
+		ft_pwd(args->args, fd[1]);
 	else if (ft_strcmp(args->args[0], "export") == 0)
 		ft_export(args->args, argc, fd[1]);
 	else if (ft_strcmp(args->args[0], "unset") == 0)

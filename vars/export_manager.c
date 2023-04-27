@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/25 16:10:25 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:30:09 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,14 @@ char	**export_env(void) //TODO split
 	result[size] = 0;
 	current = *vars;
 	i = -1;
-	while (current && ++i >= 0)
+	while (current)
 	{
 		if (!current->content.export)
+		{
+			current = current->next;
 			continue ;
+		}
+		++i;
 		size = ft_strlen(current->content.name);
 		*(result + i) = ft_malloc(sizeof(char *)
 				* (size + ft_strlen(current->content.data) + 2));

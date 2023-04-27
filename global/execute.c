@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/25 16:27:08 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:16:27 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	char	**env;
 
 	close(fd[0]);
-	if (argv->read || pipi()->to_pipe == 1)
+	if (argv->read || pipi()->to_pipe == 1 || argv->end == PIPE)
 	{
 		dup2(pipi()->fd[0], STDIN_FILENO);
 	}
@@ -94,7 +94,6 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	if (argv->end == PIPE || argv->right->size || argv->rright->size)
 	{
 		dup2(fd[1], STDOUT_FILENO);
-		printf("a merde\n");
 	}
 	else
 		dup2(STDOUT_FILENO, STDOUT_FILENO);
@@ -103,7 +102,7 @@ int	exute_process(t_args *argv, const char	*file, int *fd)
 	ft_putstr_fd("minishell: permission denied: ", 2); // TODO close les pipes
 	ft_putstr_fd(file, 2);
 	ft_putchar_fd('\n', 2);
-	return (1);
+	return (0);
 }
 
 int	wait_execution(t_args *argv, int *fd)
@@ -113,7 +112,7 @@ int	wait_execution(t_args *argv, int *fd)
 
 	errno = 0;
 	status_code = 0;
-	wait(&wstatus);
+	//wait(&wstatus);
 	if (WIFEXITED(wstatus))
 		status_code = WEXITSTATUS(wstatus);
 	close(fd[1]);

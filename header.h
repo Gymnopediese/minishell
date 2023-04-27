@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/25 16:10:38 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:54:18 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_slst
 	t_slink	*first;
 	t_slink	*last;
 	size_t	size;
+	int		pipe_nbr;
 }	t_slst;
 
 // char	**args;
@@ -99,12 +100,14 @@ typedef struct s_args
 	t_slst	*rright;
 	int		end;
 	int		read;
+	int		pipes[2];
 }	t_args;
 
 void		free_slist(t_slst *slist);
 
 # include "builtins/builtins.h"
 void		rl_replace_line (const char *text, int clear_undo);
+void		free_t_slink(t_slink *to_free);
 // ft_mf
 void		*ft_malloc(size_t size);
 // Non defini

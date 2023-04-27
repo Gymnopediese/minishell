@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:57:20 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/24 12:51:11 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:20:33 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_slink	*p_or(t_slink *start, const t_slst *args)
 	return (start);
 }
 
-static void	free_t_slink(t_slink *to_free)
+void	free_t_slink(t_slink *to_free)
 {
 	free(to_free->content);
 	to_free->content = 0;

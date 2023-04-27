@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albaud <albaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:37 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/03 15:01:17 by albaud           ###   ########.fr       */
+/*   Updated: 2023/04/27 12:42:16 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_unset(char **args, int argc, int fd)
+void	ft_unset(char **args, int argc, int fd) // TODO ne marcche plus
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 16:14:35 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:55:10 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ static void	exec_line(t_slst *args)
 	int		exec;
 	t_args	*argv;
 
-	wait(&exec);
+	//wait(&exec);
+	create_pipes()
 	if (args->first == 0)
 		return ;
 	errno = 0;
@@ -135,14 +136,14 @@ int	main(__attribute__((unused)) int argc,
 	//add_history("echo $PATH");
 	//add_history("make && ./minishell");
 	add_history("< test | cat -e");
-	add_history("<< salut | cat -e");
+	add_history("echo \"hello\" | grep \"hello\"");
 	printf("welcome to our minishell :)\n");
 	while (1)
 	{
 		connect_signals();
 		prompt = readline("$> ");
 		if (!prompt)
-			finish("", 0);
+			finish("exit\n", 0);
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);

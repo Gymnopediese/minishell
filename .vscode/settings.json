@@ -5,6 +5,8 @@
 		"history.h": "c",
 		"wait.h": "c",
 		"sources.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"iterator": "c",
+		"complex": "c"
 	}
 }

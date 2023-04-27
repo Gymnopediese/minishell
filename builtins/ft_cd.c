@@ -6,13 +6,13 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 14:08:04 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:43:54 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	ft_cd(char **args, int argc, int fd)
+void	ft_cd(char **args, int argc, int fd) // TODO imprimer erreur
 {
 	(void) fd;
 	errno = 0;

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/25 15:27:10 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:49:19 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,30 @@ static char	*get_next_word(char *prompt, int *index)
 	{
 		if (!handler(prompt, index, &buffer, res))
 			break ;
+		if (errno)
+		{
+			free(res);
+			return (0);
+		}
 	}
 	res = ft_strjoin(res, buffer.b);
 	if (res == 0)
 		finish("Error in get_next_word\n", 1);
 	return (res);
+}
+
+static void	free_t_slst(t_slst *start)
+{
+	t_slink	*tmp;
+	t_slink	*next;
+
+	tmp = start->first;
+	while (tmp)
+	{
+		next = tmp->next;
+		free_t_slink(tmp);
+		tmp = next;
+	}
 }
 
 t_slst	*parser(char *prompt)
@@ -105,6 +124,7 @@ t_slst	*parser(char *prompt)
 
 	i = 0;
 	res = ft_malloc(sizeof(*res));
+	res->pipe_nbr = 0;
 	res->first = 0;
 	res->last = 0;
 	res->size = 0;
@@ -115,13 +135,18 @@ t_slst	*parser(char *prompt)
 		while (prompt[i] && prompt[i] == ' ') // TODO is white space
 			i++;
 		arg = get_next_word(prompt, &i);
+		if (!arg)
+		{
+			free_t_slst(res);
+			return (0);
+		}
 		if (arg[0] && !wildcards(arg, res))
 		{
 			slst_add_back(res, arg, TEXT, level(2));
 		}
 		else
 			free(arg);
-		if (mode(-1))
+		if (mode(-1) && ++res->pipe_nbr)
 			slst_add_back(res, ft_safecpy("pipe"), mode(-1), level(2));
 	}
 	return (res);

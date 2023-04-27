@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 16:13:20 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:44:26 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res) // TODO : i
 	}
 }
 
-void	handle_vague(t_buff *buffer, char *res)
+void	handle_vague(t_buff *buffer, char *res) // TODO gerer ~/
 {
 	int		i;
 	char	*path;

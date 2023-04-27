@@ -3,7 +3,5 @@ PARSING:		GERER LES PARSE ERRORS PAS TROP DURE A FAIRE MAIS FLEM
 TRACK SEGFAULT:	IN THE PARSER A tester ???
 SUJET:			UTILISER TOUTES LES FONCTION OU PRESQUE
 
-ctrl + d ne marche pas si un message execution failed avant
 les chemins qui commencent par ~ semble bien marcher mais pas encore full test
-env | grep ? et norminette
 verifier si env == export
