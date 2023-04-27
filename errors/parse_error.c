@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:48 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 12:50:48 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:49:43 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	finish(char *message, int return_value) // Mettre argument retour
 {
 	if (message != 0)
 		ft_putstr_fd(message, 2);
-	close(pipi()->fd[0]);
-	close(pipi()->fd[1]);
+	// TODO close les pipes
 	free_vars();
 	clear_history();
 	exit(return_value);

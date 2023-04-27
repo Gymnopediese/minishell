@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 13:54:18 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:22:14 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +63,8 @@ typedef struct s_var
 
 typedef struct s_pipe
 {
-	int	fd[2];
-	int	to_pipe;
+	int	input;
+	int	output;
 }	t_pipe;
 
 typedef struct s_vlink
@@ -100,7 +101,7 @@ typedef struct s_args
 	t_slst	*rright;
 	int		end;
 	int		read;
-	int		pipes[2];
+	t_pipe	pipes;
 }	t_args;
 
 void		free_slist(t_slst *slist);
@@ -120,10 +121,11 @@ t_vlink		**get_vars(void);
 char		*get_vars_value(const char *name);
 void		add_vars(const char *name, char *data, char export);
 void		free_vars(void);
-void		del_vars(const char *name);
+int			del_vars(char *name);
+void		export_var(const char *name);
 //export_manager
-void		print_vars(char export, int fd);
-void		declare_variable(char *declaration, char export);
+void		print_vars(char export, int fd, int mode);
+int			declare_variable(char *declaration, char export);
 void		import_env(char **env);
 char		**export_env(void);
 // vars_list.c
@@ -140,7 +142,7 @@ void		handle_simple_quote(char *prompt,
 void		handle_var(char *prompt, int *index, t_buff *buffer, char *res);
 void		handle_vague(t_buff *buffer, char *res);
 void		put_slst(t_slst *lst);
-t_args		*slst_to_tab(const t_slst *args);
+t_args		*slst_to_tab(const t_slst *args, int fd_write);
 void		connect_signals(void);
 //parse_error
 void		parse_error(char a, char b);
@@ -151,12 +153,16 @@ int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);
 int			fd_fd_injection(int dst, int src);
 int			wildcards(char *arg, t_slst *res);
+
 int			mode(int m);
 int			level(int m);
-t_pipe		*pipi(void);
 int			is_the_end(const t_slink *link);
 void		put_pipi(void);
 int			is_redirection(const t_slink *link);
+// Pipes
+t_pipe		get_pipe_nbr(int index);
+void		set_pipes(int pipe_nbr);
+void		close_pipe(t_pipe to_close);
 
 void		priorities(t_slst *args, const t_args *argv, int success);
 #endif

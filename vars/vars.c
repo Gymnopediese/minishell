@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/24 14:18:07 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:41:24 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_vars(const char *name, char *data, char export)
 	vlst_add_front(vars, (t_var){ft_safecpy(name), ft_safecpy(data), export});
 }
 
-void	del_vars(const char *name)
+int	del_vars(char *name)
 {
 	t_vlink		*vars;
 	t_vlink		*tmp;
@@ -68,7 +68,7 @@ void	del_vars(const char *name)
 	prev = 0;
 	while (tmp)
 	{
-		if (!ft_strcmp(vars->content.name, (char *)name))
+		if (!ft_strcmp(vars->content.name, name))
 		{
 			free(tmp->content.name);
 			free(tmp->content.data);
@@ -77,11 +77,12 @@ void	del_vars(const char *name)
 			else
 				*get_vars() = vars->next;
 			free(vars);
-			return ;
+			return (1);
 		}
 		prev = tmp;
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
 void	free_vars(void)

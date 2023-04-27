@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:25:00 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 12:49:57 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:34:37 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../header.h"
 
 int			builtins(t_args *args);
+void		ft_exit(char **args, int argc, int fd);
 void		ft_cd(char **args, int argc, int fd);
 void		ft_echo(char **args, int argc, int fd);
 void		ft_pwd(char **args, int fd);

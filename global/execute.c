@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 13:16:27 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:22:44 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,57 +80,24 @@ int	get_executable(const char *exec, char buff[])
 	return (get_from_paths(exec, buff));
 }
 
-int	exute_process(t_args *argv, const char	*file, int *fd)
+static int	execute_process(t_args *argv, const char *file)
 {
 	char	**env;
 
-	close(fd[0]);
-	if (argv->read || pipi()->to_pipe == 1 || argv->end == PIPE)
-	{
-		dup2(pipi()->fd[0], STDIN_FILENO);
-	}
-	else
-		dup2(0, STDIN_FILENO);
-	if (argv->end == PIPE || argv->right->size || argv->rright->size)
-	{
-		dup2(fd[1], STDOUT_FILENO);
-	}
-	else
-		dup2(STDOUT_FILENO, STDOUT_FILENO);
 	env = export_env();
+	dup2(argv->pipes.input, STDIN_FILENO);
+	dup2(argv->pipes.output, STDOUT_FILENO);
 	execve(file, argv->args, env);
 	ft_putstr_fd("minishell: permission denied: ", 2); // TODO close les pipes
 	ft_putstr_fd(file, 2);
 	ft_putchar_fd('\n', 2);
+	close_pipe(argv->pipes);
 	return (0);
 }
 
-int	wait_execution(t_args *argv, int *fd)
+static void tmp_signal(int s)
 {
-	int	wstatus;
-	int	status_code;
-
-	errno = 0;
-	status_code = 0;
-	//wait(&wstatus);
-	if (WIFEXITED(wstatus))
-		status_code = WEXITSTATUS(wstatus);
-	close(fd[1]);
-	close(pipi()->fd[1]);
-	close(pipi()->fd[0]);
-	filename_injection(argv, fd[0]);
-	if (argv->end != PIPE)
-		pipi()->to_pipe = 0;
-	else
-		pipi()->to_pipe = 1;
-	close(fd[0]);
-	return (status_code);
-}
-
-static void test(int t) // TODO faire propre
-{
-	(void) t;
-	if (t == SIGQUIT)
+	if (s == SIGQUIT)
 		printf("Quit: 3");
 	printf("\n");
 }
@@ -140,19 +107,18 @@ int	execute(t_args *argv)
 {
 	int		pid;
 	char	file[1024];
-	int		fd[2];
 
 	errno = 0;
 	if (!get_executable(argv->args[0], file))
 		return (127);
-	pipe(fd);
 	pid = fork();
 	if (pid == 0)
-		return (exute_process(argv, file, fd));
+		return (execute_process(argv, file));
 	else
 	{
-		signal(SIGINT, test);
-		signal(SIGQUIT, test);
-		return (wait_execution(argv, fd));
+		signal(SIGINT, tmp_signal);
+		signal(SIGQUIT, tmp_signal);
+		close_pipe(argv->pipes);
+		return (1);
 	}
 }

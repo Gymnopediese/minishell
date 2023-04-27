@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:58:58 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 15:03:52 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:19:10 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ void	open_fds(t_args *args, int *fds)
 	}
 }
 
-void	write_in_fds(char *buffer, int *fds, int fds_len, int pip)
+void	write_in_fds(char *buffer, int *fds, int fds_len)
 {
 	int	i;
 
 	i = -1;
 	while (++i < fds_len)
 		ft_putstr_fd(buffer, fds[i]);
-	if (pip == PIPE)
-		ft_putstr_fd(buffer, pipi()->fd[1]);
 }
 
 void	close_fds(int *fds, int fds_len)
@@ -56,19 +54,17 @@ void	close_fds(int *fds, int fds_len)
 		close(fds[i]);
 }
 
-int	filename_injection(t_args *args, int read_fd)
+int	filename_injection(t_args *argv, int read_fd)
 {
 	char	buffer[1000];
 	int		size;
 	int		*fds;
 	size_t	fds_len;
 
-	fds_len = args->right->size + args->rright->size;
+	fds_len = argv->right->size + argv->rright->size;
 	fds = ft_malloc(sizeof(int) * fds_len);
-	open_fds(args, fds);
+	open_fds(argv, fds);
 	size = 1;
-	if (args->end == PIPE)
-		pipe(pipi()->fd);
 	while (size)
 	{
 		size = read(read_fd, buffer, 999);
@@ -78,7 +74,7 @@ int	filename_injection(t_args *args, int read_fd)
 			return (0);
 		}
 		buffer[size] = 0;
-		write_in_fds(buffer, fds, fds_len, args->end);
+		write_in_fds(buffer, fds, fds_len);
 	}
 	close_fds(fds, fds_len);
 	free(fds);

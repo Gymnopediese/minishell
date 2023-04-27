@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/25 15:21:18 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:35:16 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	herdock(int fd, char *sub)
 	}
 }
 
-t_slink	*treat_element(t_args *res, t_slink *node, int *i)
+t_slink	*treat_element(t_args *res, t_slink *node, int *i, int fd_write)
 {
 	if (node->type == RIGHT)
 	{
@@ -105,14 +105,12 @@ t_slink	*treat_element(t_args *res, t_slink *node, int *i)
 	else if (node->type == LEFT && ++res->read)
 	{
 		node = node->next;
-		pipi()->to_pipe = 1;
-		fd_injection(node->content, pipi()->fd[1]);
+		fd_injection(node->content, fd_write);
 	}
 	else if (node->type == LLEFT && ++res->read)
 	{
 		node = node->next;
-		pipi()->to_pipe = 1;
-		herdock(pipi()->fd[1], node->content);
+		herdock(fd_write, node->content);
 	}
 	else
 	{
@@ -123,7 +121,7 @@ t_slink	*treat_element(t_args *res, t_slink *node, int *i)
 	return (node);
 }
 
-t_args	*slst_to_tab(const t_slst *args)
+t_args	*slst_to_tab(const t_slst *args, int fd_write)
 {
 	t_args	*res;
 	t_slink	*node;
@@ -132,16 +130,13 @@ t_args	*slst_to_tab(const t_slst *args)
 	i = -1;
 	node = args->first;
 	res = allok_args(args);
-	if (pipi()->to_pipe == 0)
-		pipe(pipi()->fd);
 	while (node && !is_the_end(node))
 	{
 		res->args[i + 1] = 0;
-		node = treat_element(res, node, &i);
+		node = treat_element(res, node, &i, fd_write);
 	}
 	if (node)
 		res->end = node->type;
-	close(pipi()->fd[1]);
 	res->args[++i] = 0;
 	return (res);
 }

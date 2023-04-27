@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 13:55:10 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:09:17 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ void	put_slst(t_slst *lst)
 		n = n->next;
 	}
 	ft_putendl("printing list done");
-}
-
-void	put_pipi(void)
-{
-	ft_putendl("printing pipi");
-	ft_putia_clean(pipi()->fd, 2);
-	//ft_putnbrn(pipi()->to_pipe);
-	ft_putendl("printing pipi done");
 }
 
 static void	free_argv(t_args *argv)
@@ -64,7 +56,7 @@ int	try_builtins(t_args *argv)
 	return (1);
 }
 
-int try_execute(t_args *argv)
+int	try_execute(t_args *argv)
 {
 	char	*temp;
 
@@ -77,10 +69,10 @@ int try_execute(t_args *argv)
 	return (1);
 }
 
-int try_declare(t_args *argv)
+int	try_declare(t_args *argv)
 {
 	if (ft_strtablen(argv->args) == 1
-		&& is_variable_declaration(argv->args[0]))
+		&& is_variable_declaration(argv->args[0])) 
 	{
 		declare_variable(argv->args[0], 0);
 		return (1);
@@ -88,23 +80,27 @@ int try_declare(t_args *argv)
 	return (0);
 }
 
-static void	exec_line(t_slst *args)
+static void	exec_line(t_slst *args, int exec_nbr)
 {
-	int		exec;
 	t_args	*argv;
 
 	//wait(&exec);
-	create_pipes()
 	if (args->first == 0)
 		return ;
 	errno = 0;
-	argv = slst_to_tab(args);
-	//ft_putstra_clean(argv->args);
-	if (!try_builtins(argv) && !try_declare(argv) && !try_execute(argv))
-		;
+	if (exec_nbr == 0)
+		argv = slst_to_tab(args, STDIN_FILENO);
+	else
+		argv = slst_to_tab(args, get_pipe_nbr(exec_nbr - 1).output);
+	argv->pipes = get_pipe_nbr(exec_nbr);
+	if (!try_builtins(argv) && !try_declare(argv))
+	{
+		if (!try_execute(argv))
+			printf("ERRRRROOOORRR\n");// TODO Gerer l'erreur
+	}
 	priorities(args, argv, !errno);
 	free_argv(argv);
-	exec_line(args);
+	exec_line(args, exec_nbr + 1);
 }
 
 // A deplacer dans un autre fichier
@@ -123,6 +119,30 @@ char	*ft_safecpy(const char *src)
 	return (str);
 }
 
+void	close_pipe(t_pipe to_close) // TODO essayer de fermer le pipe d'avant quand un program termine
+{
+	if (to_close.input != STDIN_FILENO)
+		close(to_close.input);
+	if (to_close.output != STDOUT_FILENO)
+		close(to_close.output);
+}
+
+int	wait_executions(void)
+{
+	int	wstatus;
+	int	status_code;
+
+	errno = 0;
+	status_code = 0;
+	while (wait(&wstatus) != -1)
+	{
+		if (WIFEXITED(wstatus))
+			status_code = WEXITSTATUS(wstatus);
+		//filename_injection(argv, fd[0]);
+	}
+	return (status_code);
+}
+
 int	main(__attribute__((unused)) int argc,
 	__attribute__((unused)) char **argv, __attribute__((unused))char **envp)
 {	
@@ -130,9 +150,6 @@ int	main(__attribute__((unused)) int argc,
 	t_slst	*list;
 
 	import_env(envp);
-	pipi()->fd[0] = 0;
-	pipi()->fd[1] = 1;
-	pipi()->to_pipe = 0;
 	//add_history("echo $PATH");
 	//add_history("make && ./minishell");
 	add_history("< test | cat -e");
@@ -147,8 +164,10 @@ int	main(__attribute__((unused)) int argc,
 		if (prompt[0] != 0)
 		{
 			add_history(prompt);
-			list = parser(prompt);
-			exec_line(list);
+			list = parser(prompt); // TODO Est ce que list peut etre null ?
+			set_pipes(list->pipe_nbr);
+			exec_line(list, 0);
+			wait_executions();
 			free(list);
 		}
 		free(prompt);
