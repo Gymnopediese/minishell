@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 13:09:07 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:04:07 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	**export_env(void)
 	t_vlink	*current;
 	t_vlink	**vars;
 	int		size;
-	int		i;
 	char	**result;
 
 	vars = get_vars();

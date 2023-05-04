@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:25:48 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:08:16 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	free_argv(t_args *argv)
 	free(argv);
 }
 
-static int	is_variable_declaration(char *instruction)
+int	is_variable_declaration(char *instruction)
 {
 	if (ft_strcontain(instruction, '='))
 		return (1);
@@ -40,8 +40,11 @@ static void	exec_line(t_slst *args)
 		return ;
 	errno = 0;
 	argv = slst_to_tab(args);
-	if (!try_builtins(argv) && !try_declare(argv) && !try_execute(argv))
-		;
+	if (!try_builtins(argv) && !try_declare(argv) && !try_execute(argv)
+		&& argv->end != PIPE)
+	{
+		fd_fd_injection(STDOUT_FILENO, pipi()->fd[0]);
+	}
 	priorities(args, argv, !errno);
 	free_argv(argv);
 	exec_line(args);
@@ -68,9 +71,11 @@ int	main(__attribute__((unused)) int argc,
 		{
 			add_history(prompt);
 			list = parser(prompt);
-			exec_line(list);
+			if (list)
+				exec_line(list);
 			free(list);
 		}
+		pipi()->to_pipe = 0;
 		free(prompt);
 	}
 }

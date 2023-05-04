@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:54:02 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 13:36:53 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:54:16 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	execute_proccess(t_args *argv, const char	*file, int *fd)
 	char	**env;
 
 	close(fd[0]);
-	if (argv->read || pipi()->to_pipe == 1)
+	if (argv->read || pipi()->to_pipe != 0)
 	{
 		dup2(pipi()->fd[0], STDIN_FILENO);
 	}

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 12:50:05 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:11:46 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_pwd(char **args, int fd)
 {
-	char	v[778];
+	char	v[1024];
 
 	(void) args;
-	ft_putendl_fd(getcwd(v, 777), fd);
+	ft_putendl_fd(getcwd(v, 1023), fd);
 }

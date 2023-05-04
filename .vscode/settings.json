@@ -9,6 +9,8 @@
 		"iterator": "c",
 		"complex": "c",
 		"bitset": "c",
-		"__node_handle": "c"
+		"__node_handle": "c",
+		"fcntl.h": "c",
+		"builtins.h": "c"
 	}
 }

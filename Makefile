@@ -6,16 +6,19 @@
 #    By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/09 10:47:51 by albaud            #+#    #+#              #
-#    Updated: 2023/05/04 13:34:42 by bphilago         ###   ########.fr        #
+#    Updated: 2023/05/04 14:07:09 by bphilago         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-FILES	= args/args.c args/args_utils.c bonus/levels.c bonus/wildcards.c builtins/builtins.c\
-			builtins/ft_cd.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_pwd.c\
-			builtins/ft_unset.c builtins/ft_exit.c errors/parse_error.c global/execute.c global/ft_mf.c global/main.c global/pipi.c global/execute_utils.c\
+FILES	= args/args.c args/args_utils.c\
+			bonus/levels.c bonus/wildcards.c\
+			builtins/builtins.c builtins/ft_cd.c builtins/ft_echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_pwd.c\
+			builtins/ft_unset.c builtins/ft_exit.c\
+			errors/parse_error.c\
+			global/execute.c global/ft_mf.c global/main.c global/pipi.c global/execute_utils.c global/try.c\
 			injection/fd_fd_injection.c injection/fd_injection.c injection/filename_injection.c list/string_list.c\
-			list/vars_list.c parser/parser.c parser/parser_handler.c signals/signals.c vars/vars.c bonus/ft_glob.c\
+			list/vars_list.c vars/declare_vars.c parser/parser.c parser/pipe_handle.c parser/parser_handler.c signals/signals.c vars/vars.c bonus/ft_glob.c\
 			bonus/ft_count_dir.c vars/export_manager.c bonus/priorities.c
 OBJS 	= ${FILES:.c=.o}
 INCL	= ./

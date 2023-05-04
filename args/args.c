@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 13:21:16 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:22:54 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:02:27 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ size_t	arg_num(const t_slink *link)
 	return (res);
 }
 
-static t_args	*allok_args(const t_slst *args)
+t_args	*allok_args(const t_slst *args)
 {
 	t_args	*res;
 
@@ -49,35 +49,13 @@ static t_args	*allok_args(const t_slst *args)
 	return (res);
 }
 
-char	*ft_read_nl(int fd)
-{
-	int		size;
-	char	*buffer;
-	char	tuffer[3333 + 1];
-
-	buffer = ft_calloc(1, 1);
-	size = read(fd, tuffer, 3333);
-	while (size)
-	{
-		tuffer[size] = 0;
-		buffer = ft_strjoin(buffer, tuffer);
-		if (ft_strcontain(buffer, '\n'))
-			break ;
-		size = read(fd, tuffer, 3333);
-	}
-	return (buffer);
-}
-
 void	herdock(int fd, char *sub)
 {
 	char	*herd;
 
 	while (1)
 	{
-		ft_putstr("heredoc> ");
-		herd = ft_read_nl(0);
-		if (ft_strlen(herd) > 0)
-			herd[ft_strlen(herd) - 1] = 0;
+		herd = readline("pipe heredoc> ");
 		if (ft_strcmp(sub, herd) == 0)
 		{
 			free(herd);

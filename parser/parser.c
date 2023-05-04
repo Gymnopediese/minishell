@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 13:33:50 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:12:08 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 		buffer->b[buffer->i++] = -1;
 	else if (prompt[*index] == '\'' && ++*index)
 		handle_simple_quote(prompt, index, buffer, res);
-	else if (prompt[*index] == '~' && (prompt[*index + 1] == ' '
-			|| prompt[*index + 1] == 0) && buffer->i == 0 && ++*index)
+	else if (prompt[*index] == '~' && (ft_strcontain("/ \t", prompt[*index + 1])
+			|| !prompt[*index + 1]) && buffer->i == 0 && ++*index)
 		handle_vague(buffer, res);
 	else if (prompt[*index] == '$' && ++*index)
 		handle_var(prompt, index, buffer, res);
@@ -48,11 +48,13 @@ static char	*get_next_word(char *prompt, int *index)
 	while (prompt[*index] && prompt[*index] != ' ')
 	{
 		if (!handler(prompt, index, &buffer, res))
-			break ;
-		if (errno)
 		{
-			free(res);
-			return (0);
+			if (errno == 1)
+			{
+				free(res);
+				return (0);
+			}
+			break ;
 		}
 	}
 	res = ft_strjoin(res, buffer.b);
@@ -73,6 +75,7 @@ static int	free_t_slst(t_slst *start)
 		free_t_slink(tmp);
 		tmp = next;
 	}
+	free(start);
 	return (1);
 }
 

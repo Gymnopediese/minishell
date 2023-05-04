@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:25:47 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:44:02 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ void	handle_vague(t_buff *buffer, char *res)
 	int		i;
 	char	*path;
 
-	if (buffer->i != 0)
-	{
-		buffer->b[buffer->i++] = '~';
-		handle_buffer(buffer, res);
-		return ;
-	}
 	path = get_vars_value("ZDOTDIR");
 	i = -1;
 	while (path[++i])

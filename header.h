@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 13:41:36 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:03:34 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_args
 }	t_args;
 
 void		free_slist(t_slst *slist);
-
+int			builtins(t_args *args);
 void		rl_replace_line(const char *text, int clear_undo);
 void		free_t_slink(t_slink *to_free);
 // ft_mf
@@ -160,6 +160,10 @@ int			execute_proccess(t_args *argv, const char	*file, int *fd);
 int			try_builtins(t_args *argv);
 int			try_execute(t_args *argv);
 int			try_declare(t_args *argv);
+// args_utils.c
+void		herdock(int fd, char *sub);
+t_args		*allok_args(const t_slst *args);
+int			is_variable_declaration(char *instruction);
 
 void		priorities(t_slst *args, const t_args *argv, int success);
 #endif

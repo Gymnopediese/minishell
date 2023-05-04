@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:43:12 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:12:17 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:37:48 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,22 @@ void	add_vars(const char *name, char *data, char export)
 
 int	del_vars(char *name)
 {
-	t_vlink		*vars;
 	t_vlink		*tmp;
 	t_vlink		*prev;
 
-	vars = *get_vars();
-	tmp = vars;
+	tmp = *get_vars();
 	prev = 0;
 	while (tmp)
 	{
-		if (!ft_strcmp(vars->content.name, name))
+		if (!ft_strcmp(tmp->content.name, name))
 		{
 			free(tmp->content.name);
 			free(tmp->content.data);
 			if (prev)
 				prev->next = tmp->next;
 			else
-				*get_vars() = vars->next;
-			free(vars);
+				*get_vars() = (*get_vars())->next;
+			free(tmp);
 			return (1);
 		}
 		prev = tmp;

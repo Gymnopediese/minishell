@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:26 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 12:58:55 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:10:50 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_export(char **args, int argc, int fd)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(args[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			errno = 1;
 		}
 	}
 }

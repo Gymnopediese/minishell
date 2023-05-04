@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:15 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 14:36:52 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:12:01 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void	ft_exit(char **args, int argc, int fd)
 	{
 		if (argc == 2)
 			finish("exit\n", ft_atoi(args[1]));
-		else if (++errno)
+		else
+		{
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
+			errno = 1;
+		}
 	}
 	else
 	{

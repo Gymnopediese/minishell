@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:32:45 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:37:17 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:53:45 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_slink	*treat_element(t_args *res, t_slink *node, int *i)
 		pipi()->to_pipe = 1;
 		herdock(pipi()->fd[1], node->content);
 	}
-	else if (++(*i))
-		res->args[*i] = node->content;
+	else
+		res->args[++(*i)] = node->content;
 	node = node->next;
 	return (node);
 }

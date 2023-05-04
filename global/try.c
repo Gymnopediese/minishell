@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:02:47 by bphilago          #+#    #+#             */
-/*   Updated: 2023/05/04 13:05:14 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:36:00 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	try_declare(t_args *argv)
 	if (ft_strtablen(argv->args) == 1
 		&& is_variable_declaration(argv->args[0]))
 	{
-		declare_variable(argv->args[0], 0);
+		declare_variable(argv->args[0], 2);
 		return (1);
 	}
 	return (0);
