@@ -101,7 +101,7 @@ typedef struct s_args
 	t_slst	*rright;
 	int		end;
 	int		read;
-	t_pipe	pipes;
+	t_pipe	pipe;
 }	t_args;
 
 void		free_slist(t_slst *slist);
@@ -148,7 +148,7 @@ void		connect_signals(void);
 void		parse_error(char a, char b);
 void		finish(char *message, int return_value);
 //builtins
-int			execute(t_args *argv);
+int			execute(t_args *argv, t_pipe *pipes, int exec_nbr, int pipe_nbr);
 int			filename_injection(t_args *args, int read_fd);
 int			fd_injection(char *filename, int fd);
 int			fd_fd_injection(int dst, int src);

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 17:09:17 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:37:10 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,29 @@ int	try_builtins(t_args *argv)
 	return (1);
 }
 
-int	try_execute(t_args *argv)
+void	create_pipe(t_pipe *pipes, int index, int pipe_nbr)
+{
+	t_pipe	tmp;
+
+	if (index == 0)
+		pipes[index].input = STDIN_FILENO;
+	if (pipe_nbr == 0 || index == pipe_nbr)
+		pipes[index].output = STDOUT_FILENO;
+	else
+	{
+		pipe((int *)&tmp);
+		pipes[index].output = tmp.output;
+		pipes[index + 1].input = tmp.input;
+	}
+}
+
+int	try_execute(t_args *argv, t_pipe *pipes, int exec_nbr, int pipe_nbr)
 {
 	char	*temp;
 
 	if (ft_strtablen(argv->args) == 0)
 		return (0);
-	errno = execute(argv);
+	errno = execute(argv, pipes, exec_nbr, pipe_nbr);
 	temp = ft_itoa(errno); // TODO : malloc non protege
 	add_vars("?", temp, 0);
 	free(temp);
@@ -80,27 +96,36 @@ int	try_declare(t_args *argv)
 	return (0);
 }
 
-static void	exec_line(t_slst *args, int exec_nbr)
+static void	exec_line(t_slst *args, t_pipe *pipes, int exec_nbr)
 {
 	t_args	*argv;
 
-	//wait(&exec);
 	if (args->first == 0)
 		return ;
 	errno = 0;
+	create_pipe(pipes, exec_nbr, args->pipe_nbr);
 	if (exec_nbr == 0)
-		argv = slst_to_tab(args, STDIN_FILENO);
+		argv = slst_to_tab(args, STDIN_FILENO); // On ne peut pas ecrire dans STDIN
 	else
-		argv = slst_to_tab(args, get_pipe_nbr(exec_nbr - 1).output);
-	argv->pipes = get_pipe_nbr(exec_nbr);
-	if (!try_builtins(argv) && !try_declare(argv))
 	{
-		if (!try_execute(argv))
+		argv = slst_to_tab(args, pipes[exec_nbr - 1].output);
+		if (args->pipe_nbr != 0 && exec_nbr != args->pipe_nbr)
+			close(pipes[exec_nbr - 1].output);
+	}
+	argv->pipe = pipes[exec_nbr];
+	if (try_builtins(argv) || try_declare(argv))
+	{
+		if (exec_nbr != 0)
+			close(pipes[exec_nbr].input);
+	}
+	else
+	{
+		if (!try_execute(argv, pipes, exec_nbr, args->pipe_nbr))
 			printf("ERRRRROOOORRR\n");// TODO Gerer l'erreur
 	}
 	priorities(args, argv, !errno);
 	free_argv(argv);
-	exec_line(args, exec_nbr + 1);
+	exec_line(args, pipes, exec_nbr + 1);
 }
 
 // A deplacer dans un autre fichier
@@ -138,7 +163,7 @@ int	wait_executions(void)
 	{
 		if (WIFEXITED(wstatus))
 			status_code = WEXITSTATUS(wstatus);
-		//filename_injection(argv, fd[0]);
+		// filename_injection(argv, fd[0]);
 	}
 	return (status_code);
 }
@@ -148,6 +173,7 @@ int	main(__attribute__((unused)) int argc,
 {	
 	char	*prompt;
 	t_slst	*list;
+	t_pipe	*pipes;
 
 	import_env(envp);
 	//add_history("echo $PATH");
@@ -165,10 +191,11 @@ int	main(__attribute__((unused)) int argc,
 		{
 			add_history(prompt);
 			list = parser(prompt); // TODO Est ce que list peut etre null ?
-			set_pipes(list->pipe_nbr);
-			exec_line(list, 0);
+			pipes = ft_malloc(sizeof(*pipes) * (list->pipe_nbr + 1));
+			exec_line(list, pipes, 0);
 			wait_executions();
 			free(list);
+			free(pipes);
 		}
 		free(prompt);
 	}

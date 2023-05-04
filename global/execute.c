@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:02:23 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 16:22:44 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:23:27 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ static int	execute_process(t_args *argv, const char *file)
 	char	**env;
 
 	env = export_env();
-	dup2(argv->pipes.input, STDIN_FILENO);
-	dup2(argv->pipes.output, STDOUT_FILENO);
+	dup2(argv->pipe.input, STDIN_FILENO);
+	dup2(argv->pipe.output, STDOUT_FILENO);
 	execve(file, argv->args, env);
 	ft_putstr_fd("minishell: permission denied: ", 2); // TODO close les pipes
 	ft_putstr_fd(file, 2);
 	ft_putchar_fd('\n', 2);
-	close_pipe(argv->pipes);
+	close_pipe(argv->pipe);
 	return (0);
 }
 
@@ -103,7 +103,7 @@ static void tmp_signal(int s)
 }
 
 // Execute "file" and return it's return value
-int	execute(t_args *argv)
+int	execute(t_args *argv, t_pipe *pipes, int exec_nbr, int pipe_nbr)
 {
 	int		pid;
 	char	file[1024];
@@ -113,12 +113,18 @@ int	execute(t_args *argv)
 		return (127);
 	pid = fork();
 	if (pid == 0)
+	{
+		if (pipe_nbr != 0 && exec_nbr != pipe_nbr)
+			close(pipes[exec_nbr + 1].input);
+		argv->pipe = pipes[exec_nbr];
 		return (execute_process(argv, file));
+	}
 	else
 	{
 		signal(SIGINT, tmp_signal);
 		signal(SIGQUIT, tmp_signal);
-		close_pipe(argv->pipes);
+		if (exec_nbr != 0)
+			close(pipes[exec_nbr].input);
 		return (1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 13:49:19 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:52:42 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_slst	*parser(char *prompt)
 		}
 		else
 			free(arg);
-		if (mode(-1) && ++res->pipe_nbr)
+		if (mode(-1) && (prompt[i] != '|' || ++res->pipe_nbr))
 			slst_add_back(res, ft_safecpy("pipe"), mode(-1), level(2));
 	}
 	return (res);
