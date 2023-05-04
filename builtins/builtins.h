@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 11:25:00 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 12:49:57 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:02:01 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void		ft_pwd(char **args, int fd);
 void		ft_unset(char **args, int argc, int fd);
 void		ft_export(char **args, int argc, int fd);
 void		ft_env(char **args, int argc, int fd);
+void		ft_exit(char **args, int argc, int fd);
 
 #endif

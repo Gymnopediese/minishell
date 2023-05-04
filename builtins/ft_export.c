@@ -6,20 +6,31 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:26 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 12:39:26 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:58:55 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
+#include "../header.h"
+
 void	ft_export(char **args, int argc, int fd)
 {
-	(void) args;
-	(void) argc;
-	(void) fd;
+	int	i;
 
-	if (argc > 1)
-		declare_variable(args[1], 1); // TODO Export sans changer la valeur
-	else
-		print_vars(1, fd);
+	if (argc == 1)
+	{
+		print_vars(1, fd, 1);
+		return ;
+	}
+	i = 0;
+	while (++i < argc)
+	{
+		if (!declare_variable(args[i], 1))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+		}
+	}
 }

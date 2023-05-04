@@ -6,39 +6,44 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:02:15 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 13:53:48 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:39:43 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
+int	exec_builtins(t_args *args, int argc, int fd)
+{
+	if (ft_strcmp(args->args[0], "echo") == 0)
+		ft_echo(args->args, argc, fd);
+	else if (ft_strcmp(args->args[0], "cd") == 0)
+		ft_cd(args->args, argc, fd);
+	else if (ft_strcmp(args->args[0], "pwd") == 0)
+		ft_pwd(args->args, fd);
+	else if (ft_strcmp(args->args[0], "export") == 0)
+		ft_export(args->args, argc, fd);
+	else if (ft_strcmp(args->args[0], "unset") == 0)
+		ft_unset(args->args, argc, fd);
+	else if (ft_strcmp(args->args[0], "env") == 0)
+		ft_env(args->args, argc, fd);
+	else if (ft_strcmp(args->args[0], "exit") == 0)
+		ft_exit(args->args, argc, fd);
+	else
+		return (-1);
+	return (0);
+}
+
 int	builtins(t_args *args)
 {
-	int	fd[2]; // TODO : utiliser le bon fd
+	int	fd[2];
 	int	argc;
 
 	argc = ft_strtablen(args->args);
 	if (args->end == PIPE || args->right->size || args->rright->size)
-	{
 		pipe(fd);
-	}
 	else
 		fd[1] = 1;
-	if (ft_strcmp(args->args[0], "echo") == 0)
-		ft_echo(args->args, argc, fd[1]);
-	else if (ft_strcmp(args->args[0], "cd") == 0)
-		ft_cd(args->args, argc, fd[1]);
-	else if (ft_strcmp(args->args[0], "pwd") == 0)
-		ft_pwd(args->args, fd[1]);
-	else if (ft_strcmp(args->args[0], "export") == 0)
-		ft_export(args->args, argc, fd[1]);
-	else if (ft_strcmp(args->args[0], "unset") == 0)
-		ft_unset(args->args, argc, fd[1]);
-	else if (ft_strcmp(args->args[0], "env") == 0)
-		ft_env(args->args, argc, fd[1]);
-	else if (ft_strcmp(args->args[0], "exit") == 0)
-		finish("", 0); // TODO : retourner l'argument
-	else
+	if (exec_builtins(args, argc, fd[1]) == -1)
 		return (-1);
 	if (args->end == PIPE || args->right->size || args->rright->size)
 	{

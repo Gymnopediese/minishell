@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:57:53 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 13:54:18 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:41:36 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/errno.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include "builtins/builtins.h"
 
 // Pour Vars
 # define VARS_PRINT 0
@@ -76,7 +77,7 @@ typedef struct s_slink
 {
 	char			*content;
 	struct s_slink	*next;
-	int				type;//todo: enum
+	int				type;
 	int				level;
 }	t_slink;
 
@@ -88,11 +89,6 @@ typedef struct s_slst
 	int		pipe_nbr;
 }	t_slst;
 
-// char	**args;
-// t_slst	*right;
-// t_slst	*rright;
-// int		end;
-// int		read;
 typedef struct s_args
 {
 	char	**args;
@@ -105,8 +101,7 @@ typedef struct s_args
 
 void		free_slist(t_slst *slist);
 
-# include "builtins/builtins.h"
-void		rl_replace_line (const char *text, int clear_undo);
+void		rl_replace_line(const char *text, int clear_undo);
 void		free_t_slink(t_slink *to_free);
 // ft_mf
 void		*ft_malloc(size_t size);
@@ -120,10 +115,10 @@ t_vlink		**get_vars(void);
 char		*get_vars_value(const char *name);
 void		add_vars(const char *name, char *data, char export);
 void		free_vars(void);
-void		del_vars(const char *name);
-//export_manager
-void		print_vars(char export, int fd);
-void		declare_variable(char *declaration, char export);
+int			del_vars(char *name);
+// export_manager
+void		print_vars(char export, int fd, int mode);
+int			declare_variable(char *declaration, char export);
 void		import_env(char **env);
 char		**export_env(void);
 // vars_list.c
@@ -143,6 +138,7 @@ void		put_slst(t_slst *lst);
 t_args		*slst_to_tab(const t_slst *args);
 void		connect_signals(void);
 //parse_error
+int			handle_pipes(const char *prompt, int *index);
 void		parse_error(char a, char b);
 void		finish(char *message, int return_value);
 //builtins
@@ -157,6 +153,13 @@ t_pipe		*pipi(void);
 int			is_the_end(const t_slink *link);
 void		put_pipi(void);
 int			is_redirection(const t_slink *link);
+// execute_utils
+int			get_executable(const char *exec, char buff[]);
+int			execute_proccess(t_args *argv, const char	*file, int *fd);
+// try.c
+int			try_builtins(t_args *argv);
+int			try_execute(t_args *argv);
+int			try_declare(t_args *argv);
 
 void		priorities(t_slst *args, const t_args *argv, int success);
 #endif

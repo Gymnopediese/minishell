@@ -6,13 +6,13 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:46:18 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 12:30:09 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:09:07 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-void	print_vars(char export, int fd)
+void	print_vars(char export, int fd, int mode)
 {
 	t_vlink	*vars;
 
@@ -20,26 +20,15 @@ void	print_vars(char export, int fd)
 	while (vars)
 	{
 		if (!export || vars->content.export)
-		{			
+		{		
+			if (mode)
+				ft_putstr_fd("declare -x ", fd);
 			ft_putstr_fd((char *)vars->content.name, fd);
 			ft_putchar_fd('=', fd);
 			ft_putendl_fd(vars->content.data, fd);
 		}
 		vars = vars->next;
 	}
-}
-
-void	declare_variable(char *declaration, char export)
-{
-	int	i;
-
-	i = -1;
-	while (declaration[++i] && declaration[i] != '=')
-		;
-	if (!declaration[i])
-		return ;
-	declaration[i] = 0;
-	add_vars(declaration, &declaration[i + 1], export);
 }
 
 void	import_env(char **env)
@@ -63,26 +52,13 @@ void	free_env(char **env)
 	free(env);
 }
 
-char	**export_env(void) //TODO split
+void	export_vars(char **result, t_vlink *first)
 {
 	t_vlink	*current;
-	t_vlink	**vars;
 	int		size;
 	int		i;
-	char	**result;
 
-	vars = get_vars();
-	current = *vars;
-	size = 0;
-	while (current)
-	{
-		if (current->content.export)
-			size += 1;
-		current = current->next;
-	}
-	result = ft_malloc(sizeof(char *) * (size + 1));
-	result[size] = 0;
-	current = *vars;
+	current = first;
 	i = -1;
 	while (current)
 	{
@@ -101,5 +77,27 @@ char	**export_env(void) //TODO split
 		result[i][size + ft_strlen(current->content.data) + 1] = 0;
 		current = current->next;
 	}
+}
+
+char	**export_env(void)
+{
+	t_vlink	*current;
+	t_vlink	**vars;
+	int		size;
+	int		i;
+	char	**result;
+
+	vars = get_vars();
+	current = *vars;
+	size = 0;
+	while (current)
+	{
+		if (current->content.export)
+			size += 1;
+		current = current->next;
+	}
+	result = ft_malloc(sizeof(char *) * (size + 1));
+	result[size] = 0;
+	export_vars(result, *vars);
 	return (result);
 }

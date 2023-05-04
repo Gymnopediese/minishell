@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 11:27:06 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/27 12:44:26 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:25:47 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,23 @@ void	handle_double_quote(char *prompt, int *index, t_buff *buffer, char *res)
 			*index += 1;
 		}
 		handle_buffer(buffer, res);
-
 	}
 	*index += 1;
 }
 
-void	handle_var(char *prompt, int *index, t_buff *buffer, char *res) // TODO : imprimer $ quand seul
+void	handle_var(char *prompt, int *index, t_buff *buffer, char *res)
 {
 	int			i;
 	char		*var_name;
 	const char	*data;
 
 	i = 0;
+	if (prompt[*index + i] == ' ')
+	{
+		buffer->b[buffer->i++] = '$';
+		handle_buffer(buffer, res);
+		return ;
+	}
 	while (prompt[*index + i] && prompt[*index + i] != '"'
 		&& prompt[*index + i] != ' ' && prompt[*index + i] != '\'')
 		++i;
@@ -64,11 +69,17 @@ void	handle_var(char *prompt, int *index, t_buff *buffer, char *res) // TODO : i
 	}
 }
 
-void	handle_vague(t_buff *buffer, char *res) // TODO gerer ~/
+void	handle_vague(t_buff *buffer, char *res)
 {
 	int		i;
 	char	*path;
 
+	if (buffer->i != 0)
+	{
+		buffer->b[buffer->i++] = '~';
+		handle_buffer(buffer, res);
+		return ;
+	}
 	path = get_vars_value("ZDOTDIR");
 	i = -1;
 	while (path[++i])

@@ -6,7 +6,7 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:23:03 by albaud            #+#    #+#             */
-/*   Updated: 2023/04/04 13:13:05 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:42:00 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,21 @@ int	wildcards_match(char *tomatch, char *target)
 	return (target[i] - tomatch[j]);
 }
 
+int	wildcards_error(int match, char *arg)
+{
+	int		i;
+
+	if (!match)
+	{
+		i = -1;
+		while (arg[++i])
+			if (arg[i] == -1)
+				arg[i] = '*';
+		ft_putstr_fd("minish: no matches found: ", 2);
+		ft_putstr_fd(arg, 2);
+	}
+}
+
 int	wildcards(char *arg, t_slst *res)
 {
 	char	**glob;
@@ -57,15 +72,7 @@ int	wildcards(char *arg, t_slst *res)
 		if (wildcards_match(glob[i], arg) == 0 && ++match)
 			slst_add_back(res, ft_safecpy(glob[i]), TEXT, level(2));
 	}
-	if (!match)
-	{
-		i = -1;
-		while (arg[++i])
-			if (arg[i] == -1)
-				arg[i] = '*';
-		ft_putstr_fd("minish: no matches found: ", 2);
-		ft_putstr_fd(arg, 2);
-	}
+	wildcards_error(match, arg);
 	ft_free_pp((void **)glob);
 	return (1);
 }

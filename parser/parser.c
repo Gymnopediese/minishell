@@ -6,60 +6,19 @@
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:58:59 by bphilago          #+#    #+#             */
-/*   Updated: 2023/04/27 13:49:19 by bphilago         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:33:50 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-
-int	handle_pipes(const char *prompt, int *index, t_buff *buffer, char *res)
-{
-	(void) buffer;
-	(void) res;
-
-	if (prompt[*index] == '|' && prompt[*index + 1] == '|' && ++*index)
-		mode(OR);
-	else if (prompt[*index] == '&' && prompt[*index + 1] == '&' && ++*index)
-		mode (AND);
-	else if (prompt[*index] == '|')
-		mode (PIPE);
-	else if (prompt[*index] == '<' && prompt[*index + 1] == '<' && ++*index)
-		mode(LLEFT);
-	else if (prompt[*index] == '<')
-		mode(LEFT);
-	else if (prompt[*index] == '>' && prompt[*index + 1] == '>' && ++*index)
-		mode(RRIGHT);
-	else if (prompt[*index] == '>')
-		mode(RIGHT);
-	else if (prompt[*index] == '(')
-		level(1);
-	else if (prompt[*index] == ')')
-		level(-1);
-	*index += 1;
-	while (prompt[*index] == ' ')
-		*index += 1;
-	if (is_symbole(prompt[*index]))
-		parse_error(prompt[*index], prompt[*index + 1]);
-	return (1);
-}
-
-int	is_symbole(char c)
-{
-	return (ft_str_index_of("()|<>&", c) != -1);
-}
 
 int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 {
 	if (prompt[*index] == '"' && ++*index)
 		handle_double_quote(prompt, index, buffer, res);
 	else if (is_symbole(prompt[*index])
-		&& handle_pipes(prompt, index, buffer, res))
+		&& handle_pipes(prompt, index))
 		return (0);
-	else if (prompt[*index] == '\\' && ++*index)
-	{
-		buffer->b[buffer->i++] = prompt[*index];
-		*index += 1;
-	}
 	else if (prompt[*index] == '*' && ++*index)
 		buffer->b[buffer->i++] = -1;
 	else if (prompt[*index] == '\'' && ++*index)
@@ -69,7 +28,7 @@ int	handler(char *prompt, int *index, t_buff *buffer, char *res)
 		handle_vague(buffer, res);
 	else if (prompt[*index] == '$' && ++*index)
 		handle_var(prompt, index, buffer, res);
-	else
+	else if ((prompt[*index] == '\\' && ++(*index)) || 1)
 	{
 		buffer->b[buffer->i++] = prompt[*index];
 		*index += 1;
@@ -102,7 +61,7 @@ static char	*get_next_word(char *prompt, int *index)
 	return (res);
 }
 
-static void	free_t_slst(t_slst *start)
+static int	free_t_slst(t_slst *start)
 {
 	t_slink	*tmp;
 	t_slink	*next;
@@ -114,6 +73,7 @@ static void	free_t_slst(t_slst *start)
 		free_t_slink(tmp);
 		tmp = next;
 	}
+	return (1);
 }
 
 t_slst	*parser(char *prompt)
@@ -124,26 +84,18 @@ t_slst	*parser(char *prompt)
 
 	i = 0;
 	res = ft_malloc(sizeof(*res));
-	res->pipe_nbr = 0;
-	res->first = 0;
-	res->last = 0;
-	res->size = 0;
+	ft_bzero(res, sizeof(*res));
 	level(0);
 	while (prompt[i])
 	{
 		mode(0);
-		while (prompt[i] && prompt[i] == ' ') // TODO is white space
+		while (prompt[i] && (prompt[i] == ' ' || prompt[i] == '\t'))
 			i++;
 		arg = get_next_word(prompt, &i);
-		if (!arg)
-		{
-			free_t_slst(res);
+		if (!arg && free_t_slst(res))
 			return (0);
-		}
 		if (arg[0] && !wildcards(arg, res))
-		{
 			slst_add_back(res, arg, TEXT, level(2));
-		}
 		else
 			free(arg);
 		if (mode(-1) && ++res->pipe_nbr)

@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_dir.c                                     :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bphilago <bphilago@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 15:30:44 by albaud            #+#    #+#             */
-/*   Updated: 2023/05/04 13:12:49 by bphilago         ###   ########.fr       */
+/*   Created: 2023/03/21 10:58:15 by bphilago          #+#    #+#             */
+/*   Updated: 2023/04/27 14:36:52 by bphilago         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-#include <dirent.h>
 
-int	ft_count_dir(char *dirname, int mode)
-{	
-	DIR				*d;
-	struct dirent	*dir;
-	int				counter;
-
-	d = opendir(dirname);
-	counter = 0;
-	if (d)
+void	ft_exit(char **args, int argc, int fd)
+{
+	(void) fd;
+	if (argc == 1)
+		finish("exit\n", 0);
+	if (ft_isnum(args[1]))
 	{
-		dir = readdir(d);
-		while (dir != NULL)
-		{
-			if (mode || dir->d_name[0] != '.')
-				counter++;
-			dir = readdir(d);
-		}
-		closedir(d);
+		if (argc == 2)
+			finish("exit\n", ft_atoi(args[1]));
+		else if (++errno)
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
 	}
-	return (counter);
+	else
+	{
+		printf("minishell: %s: exit: numeric argument required\n", args[1]);
+		finish("exit\n", 255);
+	}
 }
